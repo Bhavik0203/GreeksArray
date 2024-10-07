@@ -1,0 +1,72 @@
+.textgradient {
+    background: linear-gradient(
+      45deg, 
+      #f08033, 
+      /* #d45c05, */
+      #0080a0, 
+      #007b80
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* This line ensures compatibility with other browsers */
+  }
+  
+/* styles.css or in your component CSS module */
+.text-container {
+  max-width: 600px; /* Adjust this value to fit your desired line length */
+  line-height: 1.6;
+}
+
+  /* Ensure the header is hidden initially */
+#header-wrapper {
+    opacity: 0;
+  }
+  
+/* Ensure the header is hidden initially */
+.Header {
+  opacity: 0;
+  display: none;
+  transition: opacity 0.5s ease-out;
+}
+
+/* Show the header when the state is true */
+.Header.show {
+  display: block;
+  opacity: 1;
+}
+
+/* Ensure the header is initially hidden with opacity 0 */
+.header-hidden {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+
+/* Show the header with opacity 1 */
+.header-visible {
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}
+
+  /* Show the header only when the intro-slider is hidden */
+  #header-wrapper.show {
+    display: block;
+    opacity: 1;
+  }
+  
+/* Hero.css */
+.welcome-section {
+  background: linear-gradient(135deg, #8dfcfc, #f5d395); /* Teal and orange gradient */
+  width: 100%;
+  /* height: 100vh;  */
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  padding: 20px; /* Optional padding */
+  box-sizing: border-box;
+}
+
+.body-content{
+  margin-top: auto;
+}
+   

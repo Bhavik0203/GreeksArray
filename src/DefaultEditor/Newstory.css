@@ -1,0 +1,100 @@
+/* '.NET', '.NET Core', '.NET MAUI', '.NET Standard', 'Active Directory', 'ADO.NET', 'Agile Development', 'AI','AJAX', 'AlbertAGPT', 'Alexa Skills', 'Algorand', 'Algorithms in C#', 'Android', 'Angular', 'ArcObject', 'ASP.NET', 'ASP.NET Core',"Augmented Reality", "Avalanche", "AWS", "Azure", "Backbonejs", "Big Data", "BizTalk Server", "Blazor", "Blockchain", "Bootstrap","Bot Framework", "Business", "Business Intelligence(BI)", "C#", "C# Corner", "C# Strings", "C, C++, MFC", "Career Advice", "Careers and Jobs", "Chapters","ChatGPT", "Cloud", "Coding Best Practices", "Cognitive Services", "COM Interop", "Compact Framework", "Copilot Studio", "Cortana Development", "Cosmos DB", "Cryptocurrency", 
+    'Cryptography', 'Crystal Reports', 'CSS', 'Current Affairs', 'Custom Controls', 'Cyber Security', 'Data Mining', 'Data Science','Databases & DBA', 'Design Patterns & Practices', 'DevExpress', 'DevOps', 'DirectX', 'Dynamics CRM', 'Enterprise Development', 'Entity Framework', 'Error Zone', 'Exception Handling',"F#", "Files, Directory, IO", "Flutter", "Games Programming", "GDI+", "Generative AI", "GO", "Google Cloud", "Google Development", "Graphics Design","Graphite Studio", "Hardware", "Hiring and Recruitment", "HoloLens", "How do I", "HTML 5", "Internet & Web", "Internet of Things", "Ionic", "Java","Java and .NET", "JavaScript", "JQuery", "JSON", "JSP", "Knockout", "Kotlin", "Langchain", "Leadership", "Learn .NET",
+    'Learn iOS Programming', 'LINQ', 'Machine Learning', 'Metaverse', 'Microsoft 365', 'Microsoft Fabric', 'Microsoft Office', 'Microsoft Phone','Microsoft Teams', 'Mobile Development', 'MongoDB', 'MuleSoft', 'MySQL', 'NEAR', 'NetBeans', 'Networking', 'NFT', 'NoCode LowCode',"Node.js", "Office Development", "OOP/OOD", "Open Source", "Operating Systems", "Oracle", "Outsourcing", "Philosophy", "PHP", "Polygon","PostgreSQL", "Power Apps", "Power Automate", "Power BI", "Power Pages", "Printing in C#", "Products", "Progress", "Progressive Web Apps", "Project Management","Public Speaking", "Python", "Q#", "QlikView", "Quantum Computing", "R", "React", "React Native", "Reports using C#",
+    'Robotics & Hardware', 'RPA', 'Ruby on Rails', 'RUST', 'Salesforce', 'Security', 'Servers', 'ServiceNow','SharePoint', 'SignalR', 'Smart Devices', 'Software Architecture/Engineering', 'Software Testing', 'Solana', 'Solidity', 'SQL', 'SQL Server', 'Startups',"Stratis Blockchain", "Swift", "SyncFusion", "Threading", "Tools", "TypeScript", "Unity", "UWP", "Visual Basic .NET", "Visual Studio","Vue.js", "WCF", "Wearables", "Web API", "Web Design", "Web Development", "Web3", "Windows", "Windows Controls", "Windows Forms", "Windows PowerShell","Windows Services", "Workflow Foundation", "WPF", "Xamarin", "XAML", "XML", "XNA", "XSharp"
+  */
+
+
+  /* import React, { useState } from 'react';
+import axios from 'axios';
+
+const BlogSubmission = () => {
+  const [blogTitle, setBlogTitle] = useState('');
+  const [blogDescription, setBlogDescription] = useState('');
+  const [blogContent, setBlogContent] = useState('');
+  const [blogImage, setBlogImage] = useState(null);
+  const [categoryId, setCategoryId] = useState('Java'); 
+  const [responseMessage, setResponseMessage] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('Id', '');
+    formData.append('BlogTitle', blogTitle);
+    formData.append('BlogDescription', blogDescription);
+    formData.append('BlogContent', blogContent);
+    formData.append('BlogImage', blogImage);
+    formData.append('CategoryId', categoryId);
+
+    try {
+      const response = await axios.post(
+        'http://geeksarray-001-site5.atempurl.com/api/Blog?isActive=true',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiIxIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiJhbmtpdDEyMyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFETUlOIiwiZXhwIjoxNzI3MzYyNDUwLCJpc3MiOiJodHRwczovL2dlZWtzYXJyYXkuY29tLyIsImF1ZCI6Imh0dHBzOi8vZ2Vla3NhcnJheS5jb20vIn0.a2ZomyW6I-yKI9n8wit9q-9rkgCeB16OH-15Sk3z9Sg'
+          }
+        }
+      );
+      setResponseMessage('Blog submitted successfully!');
+    } catch (error) {
+      setResponseMessage('Error submitting blog: ' + error.response?.data || error.message);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    setBlogImage(e.target.files[0]);
+  };
+
+  return (
+    <div>
+      <h2>Submit Blog</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Blog Title *</label>
+          <input
+            type="text"
+            value={blogTitle}
+            onChange={(e) => setBlogTitle(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Blog Description *</label>
+          <input
+            type="text"
+            value={blogDescription}
+            onChange={(e) => setBlogDescription(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Blog Content *</label>
+          <textarea
+            value={blogContent}
+            onChange={(e) => setBlogContent(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Blog Image</label>
+          <input type="file" onChange={handleImageChange} />
+        </div>
+        <div>
+          <label>Category ID *</label>
+          <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
+            <option value="Java">Java</option>
+            <option value="JavaScript">JavaScript</option>
+            
+          </select>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      {responseMessage && <p>{responseMessage}</p>}
+    </div>
+  );
+};
+
+export default BlogSubmission; */

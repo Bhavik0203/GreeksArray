@@ -1,0 +1,433 @@
+import React, { useState, useEffect } from "react";
+import camera from "../assets/Images/Blogimg/digital-camera.png";
+import avatar from '../assets/Images/Avatar/user_1.jpg';
+import SuccessModal from './SuccessModal';
+import { Link } from "react-router-dom";
+import axios from 'axios';
+
+const Write = () => {
+  const [isTyping, setIsTyping] = useState(false);
+  const [isCodeWriting, setIsCodeWriting] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [isPlusClicked, setIsPlusClicked] = useState(false);
+  const [blogTitle, setBlogTitle] = useState("");
+  const [blogDescription, setBlogDescription] = useState("");
+  const [blogContent, setBlogContent] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+
+  const categories = [
+    '.NET', '.NET Core', '.NET MAUI', '.NET Standard', 'Active Directory', 'ADO.NET', 'Agile Development', 'AI','AJAX', 'AlbertAGPT', 'Alexa Skills', 'Algorand', 'Algorithms in C#', 'Android', 'Angular', 'ArcObject', 'ASP.NET', 'ASP.NET Core',"Augmented Reality", "Avalanche", "AWS", "Azure", "Backbonejs", "Big Data", "BizTalk Server", "Blazor", "Blockchain", "Bootstrap","Bot Framework", "Business", "Business Intelligence(BI)", "C#", "C# Corner", "C# Strings", "C, C++, MFC", "Career Advice", "Careers and Jobs", "Chapters","ChatGPT", "Cloud", "Coding Best Practices", "Cognitive Services", "COM Interop", "Compact Framework", "Copilot Studio", "Cortana Development", "Cosmos DB", "Cryptocurrency",
+    'Cryptography', 'Crystal Reports', 'CSS', 'Current Affairs', 'Custom Controls', 'Cyber Security', 'Data Mining', 'Data Science','Databases & DBA', 'Design Patterns & Practices', 'DevExpress', 'DevOps', 'DirectX', 'Dynamics CRM', 'Enterprise Development', 'Entity Framework', 'Error Zone', 'Exception Handling',"F#", "Files, Directory, IO", "Flutter", "Games Programming", "GDI+", "Generative AI", "GO", "Google Cloud", "Google Development", "Graphics Design","Graphite Studio", "Hardware", "Hiring and Recruitment", "HoloLens", "How do I", "HTML 5", "Internet & Web", "Internet of Things", "Ionic", "Java","Java and .NET", "JavaScript", "JQuery", "JSON", "JSP", "Knockout", "Kotlin", "Langchain", "Leadership", "Learn .NET",
+    'Learn iOS Programming', 'LINQ', 'Machine Learning', 'Metaverse', 'Microsoft 365', 'Microsoft Fabric', 'Microsoft Office', 'Microsoft Phone','Microsoft Teams', 'Mobile Development', 'MongoDB', 'MuleSoft', 'MySQL', 'NEAR', 'NetBeans', 'Networking', 'NFT', 'NoCode LowCode',"Node.js", "Office Development", "OOP/OOD", "Open Source", "Operating Systems", "Oracle", "Outsourcing", "Philosophy", "PHP", "Polygon","PostgreSQL", "Power Apps", "Power Automate", "Power BI", "Power Pages", "Printing in C#", "Products", "Progress", "Progressive Web Apps", "Project Management","Public Speaking", "Python", "Q#", "QlikView", "Quantum Computing", "R", "React", "React Native", "Reports using C#",
+    'Robotics & Hardware', 'RPA', 'Ruby on Rails', 'RUST', 'Salesforce', 'Security', 'Servers', 'ServiceNow','SharePoint', 'SignalR', 'Smart Devices', 'Software Architecture/Engineering', 'Software Testing', 'Solana', 'Solidity', 'SQL', 'SQL Server', 'Startups',"Stratis Blockchain", "Swift", "SyncFusion", "Threading", "Tools", "TypeScript", "Unity", "UWP", "Visual Basic .NET", "Visual Studio","Vue.js", "WCF", "Wearables", "Web API", "Web Design", "Web Development", "Web3", "Windows", "Windows Controls", "Windows Forms", "Windows PowerShell","Windows Services", "Workflow Foundation", "WPF", "Xamarin", "XAML", "XML", "XNA", "XSharp"
+  ];
+  
+  const handleInput = () => {
+    const titleText = document.getElementById("editorTitle").innerText.trim();
+    const bodyText = document.getElementById("editorBody").innerText.trim();
+    const bodyContent = document.getElementById("editorContent").innerText.trim();
+
+    setBlogTitle(titleText !== "Title" ? titleText : "");
+    setBlogDescription(bodyText !== "Add Description" ? bodyText : "");
+    setBlogContent(bodyContent !== "Your Content..." ? bodyContent : "");
+    setCategoryId(categoryId !== "Category" ? categoryId : "");
+
+    setIsTyping(!!(titleText || bodyText || bodyContent));
+  };
+
+  useEffect(() => {
+    const titleElem = document.getElementById("editorTitle");
+    const bodyElem = document.getElementById("editorBody");
+    const contentElem = document.getElementById("editorContent");
+
+    if (!titleElem.innerText.trim()) titleElem.innerText = "Title";
+    if (!bodyElem.innerText.trim()) bodyElem.innerText = "Add Description";
+    if (!contentElem.innerText.trim()) contentElem.innerText = "Your Content...";
+
+    const handleFocus = (elem, defaultText) => {
+      if (elem.innerText === defaultText) elem.innerText = "";
+    };
+
+    const handleBlur = (elem, defaultText) => {
+      if (!elem.innerText.trim()) elem.innerText = defaultText;
+    };
+
+    titleElem.addEventListener("focus", () => handleFocus(titleElem, "Title"));
+    titleElem.addEventListener("blur", () => handleBlur(titleElem, "Title"));
+
+    bodyElem.addEventListener("focus", () => handleFocus(bodyElem, "Add Description"));
+    bodyElem.addEventListener("blur", () => handleBlur(bodyElem, "Add Description"));
+
+    contentElem.addEventListener("focus", () => handleFocus(contentElem, "Your Content..."));
+    contentElem.addEventListener("blur", () => handleBlur(contentElem, "Your Content..."));
+
+    return () => {
+      titleElem.removeEventListener("focus", () => {});
+      titleElem.removeEventListener("blur", () => {});
+      bodyElem.removeEventListener("focus", () => {});
+      bodyElem.removeEventListener("blur", () => {});
+      contentElem.removeEventListener("focus", () => {});
+      contentElem.removeEventListener("blur", () => {});
+    };
+  }, []);
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) setImageFile(file);
+  };
+
+  const applyBold = () => {
+    document.execCommand("bold");
+  };
+
+  const applyItalic = () => {
+    document.execCommand("italic");
+  };
+
+  const handleCodeWriting = () => {
+    setIsCodeWriting(!isCodeWriting);
+  };
+
+  const handlePlusClick = () => {
+    setIsPlusClicked((prev) => !prev);
+  };
+
+  const handleSubmitBlog = async () => {
+    if (!blogTitle || !blogDescription || !blogContent || !imageFile) {
+      alert("Please complete all fields including image upload.");
+      return;
+    }
+  
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      alert('Authentication token not found. Please log in.');
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append("id", 0);
+    formData.append("blogTitle", blogTitle);
+    formData.append("blogDescription", blogDescription);
+    formData.append("blogContent", blogContent);
+    formData.append("blogImage", imageFile);
+    formData.append("categoryId", categoryId);
+  console.log(formData)
+    try {
+      const response = await fetch("http://geeksarray-001-site5.atempurl.com/api/Blog?isActive=true", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(`Failed to post blog: ${errorData.message || "Server error"}`);
+      } else {
+        setShowModal(true);
+      }
+    } catch (error) {
+      alert("An error occurred while posting the blog.");
+    }
+  };
+  // const CategoryList = () => {
+  //   // const [categories, setCategories] = useState([]); // State to store categories data
+  //   const [error, setError] = useState(''); // State to store error messages
+  
+  //   useEffect(() => {
+  //     // Function to fetch categories from API
+  //     const fetchCategories = async () => {
+  //       try {
+  //         const response = await axios.get(
+  //           'http://geeksarray-001-site5.atempurl.com/api/Admin/categories'
+            
+  //         );
+  //         console.log(response.data)
+  //         setCategories(response.data); // Store the response data in the categories state
+  //       } catch (error) {
+  //         setError('Error fetching categories. Please try again later.'); // Set error state
+  //         console.error('Error fetching categories:', error);
+  //       }
+  //     };
+  
+  //     // Call the fetchCategories function when component mounts
+  //     fetchCategories();
+  //   }, []);
+  
+  //   CategoryList()
+  //   // Return the list of categories or an error message
+  //   return (
+  //     <div>
+  //       {error && <p>{error}</p>}
+  //       <ul>
+  //         {categories.map((category) => (
+  //           <li key={category.id}>{category.name}</li>
+  //         ))}
+  //       </ul>
+  //     </div>
+  //   );
+  // };
+  
+  return (
+    <div style={styles.draftEditor}>
+      <header style={styles.editorHeader}>
+        <div style={styles.logo}><Link to="/">geeksArray</Link></div>
+        <div style={styles.editorActions}>
+          <button
+            style={{ ...styles.publishButton, backgroundColor: isTyping ? "#04870f" : "#d3d3d3" }}
+            disabled={!isTyping}
+            onClick={handleSubmitBlog}
+          >
+            Publish
+          </button>
+          <div style={styles.userIcon}>
+            <Link to="/Profile">
+              <img src={avatar} alt="User Avatar" style={styles.userAvatar} />
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <div style={styles.editorBodyContainer}>
+        <div style={styles.verticalDivider}></div>
+
+        <div style={styles.editorBody}>
+          <h1
+            id="editorTitle"
+            contentEditable={true}
+            style={styles.editorTitle}
+            onInput={handleInput}
+          ></h1>
+
+          <p
+            id="editorBody"
+            contentEditable={true}
+            style={styles.editorPlaceholder}
+            onInput={handleInput}
+          ></p>
+          
+          <p
+            id="editorContent"
+            contentEditable={true}
+            style={styles.editorPlaceholder}
+            onInput={handleInput}
+          ></p>
+          <br></br>
+          <div style={styles.categoryDropdownWrapper}>
+              <select
+                id="categorySelect"
+                style={styles.selectElement}
+                value={categoryId}
+                onChange={(e) => setCategoryId(e.target.value)}
+                required>
+                  {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+              </select>
+            </div>
+
+
+          <div style={styles.iconBar}>
+            <div style={styles.plusIcon} onClick={handlePlusClick}>
+              {isPlusClicked ? "x" : "+"}
+            </div>
+
+            {isPlusClicked && (
+              <>
+                <button style={styles.iconButton}>
+                  <img src={camera} alt="Upload" style={styles.iconImage} />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    style={styles.fileInput}
+                    onChange={handleImageUpload}
+                  />
+                </button>
+                <button style={styles.iconButton} onClick={applyBold}>
+                  <strong>B</strong>
+                </button>
+                <button style={styles.iconButton} onClick={applyItalic}>
+                  <em>I</em>
+                </button>
+                <button style={styles.iconButton} onClick={handleCodeWriting}>
+                  <i className="fas fa-code" style={styles.icon}></i>
+                </button>
+              </>
+            )}
+          </div>
+
+          {imageFile && (
+            <div style={styles.imagePreview}>
+              <img src={URL.createObjectURL(imageFile)} alt="Uploaded" style={styles.uploadedImage} />
+            </div>
+          )}
+
+          {isCodeWriting && (
+            <div style={styles.codeWritingArea}>
+              <textarea placeholder="Write your code here..." style={styles.codeEditor}></textarea>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {showModal && <SuccessModal isOpen={showModal} onClose={() => setShowModal(false)} />}
+    </div>
+  );
+  
+};
+
+// Inline Styles
+const styles = {
+  draftEditor: {
+    margin: "0",
+    padding: "20px",
+    maxWidth: "1200px",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  editorHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "50px",
+  },
+  logo: {
+    fontSize: "24px",
+    fontWeight: "bold",
+  },
+  editorActions: {
+    display: "flex",
+    alignItems: "center",
+  },
+  publishButton: {
+    color: "white",
+    padding: "10px 20px",
+    border: "none",
+    borderRadius: "20px",
+    fontSize: "16px",
+    cursor: "pointer",
+    marginRight: "20px",
+  },
+
+iconImage: {
+    width: '24px', // Adjust size as needed
+    height: '24px', // Adjust size as needed
+},
+  userIcon: {
+    display: "flex",
+    alignItems: "center",
+  },
+  userAvatar: {
+    width: "40px",
+    height: "40px",
+    borderRadius: "50%",
+  },
+  editorBodyContainer: {
+    display: "flex",
+    alignItems: "flex-start",
+    marginTop: "50px",
+  },
+  verticalDivider: {
+    width: "1px",
+    backgroundColor: "#ccc",
+    height: "200px",
+    marginRight: "20px",
+  },
+  editorBody: {
+    textAlign: "left",
+  },
+  editorTitle: {
+    fontSize: "48px",
+    fontWeight: "bold",
+    color: "#333",
+    outline: "none",
+    marginBottom: "20px",
+  },
+  editorPlaceholder: {
+    fontSize: "24px",
+    color: "#000",
+    outline: "none",
+  },
+  iconBar: {
+    display: "flex",
+    alignItems: "center",
+    marginTop: "20px",
+  },
+  plusIcon: {
+    fontSize: "30px",
+    marginRight: "20px",
+    cursor: "pointer",
+    border: "1px solid #ccc",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "40px",
+    height: "40px",
+  },
+  iconRow: {
+    display: "flex",
+    alignItems: "center",
+  },
+  iconButton: {
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    padding: "10px",
+    position: "relative",
+  },
+  icon: {
+    fontSize: "24px",
+    color: "#4CAF50",
+  },
+  fileInput: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    opacity: 0,
+    cursor: "pointer",
+  },
+  imagePreview: {
+    marginTop: "20px",
+    display: "flex",
+    justifyContent: "center",
+  },
+  uploadedImage: {
+    maxWidth: "100%", // Ensure it scales with the container
+    height: "auto", // Maintain aspect ratio
+    border: "1px solid #ccc", // Optional: add a border for visibility
+    borderRadius: "5px",
+  },
+  codeWritingArea: {
+    marginTop: "20px",
+  },
+  codeEditor: {
+    width: "100%",
+    height: "100px",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+    padding: "10px",
+  },
+  categoryDropdownWrapper: {
+    maxHeight: '150px', // Sets max height for the scrollable container
+    overflowY: 'auto',  // Enables vertical scrolling
+    padding: '5px',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+  },
+  selectElement: {
+    padding: '5px',
+    width: '100%',
+    border: 'none',
+    outline: 'none',
+  },
+};
+
+export default Write;
