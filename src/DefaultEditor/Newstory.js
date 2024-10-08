@@ -117,7 +117,7 @@ const Newstory = () => {
 
 
   const handleSubmitBlog = async () => {
-    if (!blogTitle || !blogDescription || !blogContent ) {
+    if (!blogTitle || !blogDescription || !blogContent || !imageFile ) {
       alert("Please complete all fields including image upload.");
       return;
     }
@@ -159,7 +159,7 @@ const Newstory = () => {
   return (
     <div style={styles.draftEditor}>
       <header style={styles.editorHeader}>
-        <div style={styles.logo}><Link to="/">geeksArray</Link></div>
+        <div style={styles.logo}><Link to="/Allblogs">geeksArray</Link></div>
         <div style={styles.editorActions}>
           <button
             style={{ ...styles.publishButton, backgroundColor: isTyping ? "#04870f" : "#d3d3d3" }}
@@ -200,6 +200,12 @@ const Newstory = () => {
             style={styles.editorPlaceholder}
             onInput={handleInput}
           ></p>
+          <button style={styles.iconButton} onClick={applyBold}>
+                  <strong>B</strong>
+                </button>
+                <button style={styles.iconButton} onClick={applyItalic}>
+                  <em>I</em>
+                </button>
           <br />
           <div style={styles.categoryDropdownWrapper}>
           <select
@@ -361,6 +367,8 @@ const styles = {
   },
   imagePreview: {
     marginTop: '10px',
+    display:'flex',
+    justifyContent:'center'
   },
   uploadedImage: {
     maxWidth: "100%", // Ensure it scales with the container

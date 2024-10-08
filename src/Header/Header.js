@@ -194,14 +194,16 @@ const Header = ({ show }) => {
                   >
                     Go To Profile
                   </button>
-                  <button
-                    type="button"
-                    className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold ml-1"
-                    onClick={handleLogout}
-                  >
-                  Log Out
-                  </button>
+                  
                 </Link>
+                <Link to="/sign-in"              
+                ><button
+                type="button"
+                className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold ml-1"
+                onClick={handleLogout}
+              >
+              Log Out
+              </button></Link>
               </>
             ) : (
               <>

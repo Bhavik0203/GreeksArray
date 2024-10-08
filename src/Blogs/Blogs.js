@@ -8,6 +8,7 @@ import Latestblogs from "../Latestblogs/Latestblogs";
 import CTA from "../CTA/CTA";
 import blogimg from '../assets/Images/banners/blogimg.png';
 import LikeButton from "./LikeButton";
+import PacmanLoader from 'react-spinners/PacmanLoader';
 
 const Blog = ({ readOnly = false }) => {
   const { blogId } = useParams(); // Extract blogId from the URL parameters
@@ -87,11 +88,39 @@ const Blog = ({ readOnly = false }) => {
     };
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return (
+      // <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      //   <p className="text-xl font-semibold text-green-500 animate-pulse">
+      //     Loading...
+      //   </p>
+      // </div>
+      <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        backgroundColor: 'white', // Optional background color
+      }}
+    >
+      {loading && <PacmanLoader size={50} color="#000" />}
+    </div>
+    );
+  }
   if (error) return <p>Error: {error}</p>;
 
   // Ensure `blog` is not null before rendering its properties
   if (!blog) return <p>No blog details found.</p>;
+
+  // Split the blog content into paragraphs based on new lines or other separators
+  const paragraphs = blog.blogContent
+    .split("\n") // Split content using single newlines as the separator
+    .map((para, index) => (
+      <p key={index} className="paragraph-style">
+        {para}
+      </p>
+    ));
 
   const handleAddComment = () => {
     if (newComment.trim()) {
@@ -152,7 +181,7 @@ const Blog = ({ readOnly = false }) => {
                       onClick={() => {}}
                       className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
                     >
-                      Read Blog
+                      Delect Blog
                     </button>
                   </div>
                 )}
@@ -164,11 +193,35 @@ const Blog = ({ readOnly = false }) => {
               </div>
             )}
 
-            {/* Blog Content */}
-            <p className="text-gray-500 text-xl text-justify leading-relaxed mb-6">{blog.blogContent}</p>
+           {/* Render paragraphs from blog content */}
+           <div className="paragraph-container">
+              {paragraphs}
+            </div>
 
             {/* Comments Section */}
-            
+            <div className="comments-section mt-10">
+              <h2 className="text-2xl font-bold mb-4">Comments</h2>
+              <div>
+                {userComments.map((comment, index) => (
+                  <div key={index} className="border-b border-gray-300 py-2">
+                    <p className="font-semibold">{comment.user.username}</p>
+                    <p>{comment.commentDescription}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Add New Comment */}
+              <textarea
+                className="border rounded-lg w-full p-2 mt-4"
+                rows="4"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Add a comment..."
+              />
+              <button onClick={handleAddComment} className="bg-blue-500 text-white px-4 py-2 rounded mt-2">
+                Submit Comment
+              </button>
+            </div>
           </div>
         </div>
 
@@ -176,6 +229,21 @@ const Blog = ({ readOnly = false }) => {
         <CTA />
         <Footer />
       </section>
+
+  {/* Custom CSS for paragraph styling */}
+  <style jsx="true">{`
+        .paragraph-container {
+          display: flex;
+          flex-direction: column; /* Ensure paragraphs stack vertically */
+        }
+
+        .paragraph-style {
+          margin-bottom: 1rem; /* Space between paragraphs */
+          white-space: pre-wrap; /* Preserve whitespace and line breaks */
+          text-align: left; /* Align text to the left */
+        }
+      `}</style>
+
     </>
   );
 };

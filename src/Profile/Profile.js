@@ -6,6 +6,16 @@ import { Link } from "react-router-dom";
 import blogbanner from "../assets/Images/banners/Banner 2.jpg";
 import axios from "axios";
 import blog from "../assets/noblog.gif";
+import User_1 from "../assets/Images/Avatar/user_1.jpg";
+import User_2 from "../assets/Images/Avatar/user_2.jpg";
+import User_3 from "../assets/Images/Avatar/user_3.jpg";
+import User_4 from "../assets/Images/Avatar/user_4.jpg";
+import User_5 from "../assets/Images/Avatar/user_5.jpg";
+import User_6 from "../assets/Images/Avatar/user_6.jpg";
+import User_7 from "../assets/Images/Avatar/user_7.jpg";
+import User_8 from "../assets/Images/Avatar/user_8.jpg";
+import User_9 from "../assets/Images/Avatar/user_9.jpg";
+import User_10 from "../assets/Images/Avatar/user_10.jpg";
 
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,6 +30,8 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const [userData, setUserData] = useState({});
+  const avatars = [User_1, User_10, User_2, User_3, User_4, User_5, User_6, User_7, User_8, User_9];
+  const [selectedAvatar, setSelectedAvatar] = useState(null);
   const { userName, email } = userData;
 
   // Check if the required fields are filled
@@ -289,12 +301,24 @@ const Profile = () => {
               />
 
               <label>Avatar ID</label>
-              <input
-                type="text"
-                value={avatarId}
-                onChange={(e) => setAvatarId(e.target.value)}
-                className="mb-4"
-              />
+              <div className="grid grid-cols-5 gap-4 mt-4">
+                {avatars.map((avatar, index) => (
+                  <label key={index} className="cursor-pointer">
+                    <input
+                      type="radio"
+                      name="avatar"
+                      className="hidden"
+                      onChange={() => setSelectedAvatar(index)}
+                      checked={selectedAvatar === index}
+                    />
+                    <img
+                      src={avatar}
+                      alt={`Avatar ${index + 1}`}
+                      className={`w-20 h-20 rounded-full border-2 transition-all ${selectedAvatar === index ? "border-blue-900" : "border-transparent"}`}
+                    />
+                  </label>
+                ))}
+              </div>
 
               <label>Profile Image</label>
               <input
