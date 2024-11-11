@@ -120,70 +120,99 @@ useEffect(() => {
     <>
       <section>
         <Header />
-        <h1 className="text-4xl text-black p-3">Latest Blogs by Geeks</h1>
+        <br></br>
+        <div className="flex justify-center lg:hidden"> {/* Hide on large screens and above */}
+            <form className="w-full px-4">
+              <div className="relative">
+                <input
+                  type="text"
+                  name="q"
+                  value={searchValue} // Bind input value to state
+                  onChange={handleSearchChange} // Handle input changes
+                  className="w-full border h-10 shadow p-4 rounded-full dark:text-gray-900 dark:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-400"
+                  placeholder="Search"
+                />
+                <button type="button" className="absolute top-2.5 right-3">
+                  <svg
+                    className="text-teal-400 h-5 w-5 fill-current dark:text-teal-500"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 56.966 56.966"
+                  >
+                    <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+
+        <h1 className="text-4xl text-black p-3"><b>Latest Blogs by Geeks</b></h1>
         <div className="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6 p-8">
           {/* Left Section: Latest Blogs */}
           <div className="w-full lg:w-1/3 mb-8 lg:mb-0">
-            <h2 className="text-xl font-bold mb-4">Recent Posts</h2>
+          <h2 style={{ fontSize: '25px', fontWeight: 'bold', marginBottom: '16px' }}>Recent Posts</h2>
             <ul className="space-y-4">
-              {filteredBlogs.map((blog) => (
-                <li key={blog.id}>
-                  <Link
-                    to={`/blogs/${blog.id}`}
-                    className="flex items-center space-x-2"
-                  >
-                    <img
-                      src={blogimg}
-                      alt="Recent Post Icon"
-                      className="w-8 h-8 rounded-full"
-                    />
-                    <span><b>{blog.blogTitle}</b></span>
-                  </Link>
-                  <span>
-                      {blog.blogDescription.length > 90
-                        ? `${blog.blogDescription.substring(0, 90)}...`
-                        : blog.blogDescription}
-                    </span>
-                  <p className="text-sm text-gray-500">
-                    By <span className="text-orange-500"> {blog.writer}</span>{" "}
-                    in {blog.category}
-                  </p>
-                </li>
-              ))}
-            </ul>
+  {filteredBlogs
+    .sort((a, b) => b.id - a.id) // Sort blogs by id in descending order
+    .map((blog) => (
+      <li key={blog.id}>
+        <Link
+          to={`/blogs/${blog.id}`}
+          className="flex items-center space-x-2"
+        >
+          <img
+            src={`${blog.blogImage}`}
+            alt="Recent Post Icon"
+            className="w-11 h-11 rounded-full"
+          />
+          <span><b>{blog.blogTitle}</b></span>
+        </Link>
+        <span>
+          {blog.blogDescription.length > 90
+            ? `${blog.blogDescription.substring(0, 90)}...`
+            : blog.blogDescription}
+        </span>
+        <p className="text-sm text-gray-500">
+          By <span className="text-orange-500">{blog.writer}</span> in {blog.category}
+        </p>
+      </li>
+    ))}
+</ul>
+
           </div>
           <div className="w-full lg:w-1/3 mb-8 lg:mb-0">
-            <h2 className="text-xl font-bold mb-4">Featured Columnists</h2>
+          <h2 style={{ fontSize: '25px', fontWeight: 'bold', marginBottom: '16px' }}>Popular Blogs</h2>
+
             <ul className="space-y-4">
-              {filteredBlogs.map((blog) => (
-                <li key={blog.id}>
-                  {" "}
-                  {/* Assuming each blog has a unique 'id' */}
-                  <Link
-                    to={`/blogs/${blog.id}`}
-                    className="flex items-center space-x-2"
-                  >
-                    <img
-                      src={blogimg}
-                      alt="Recent Post Icon"
-                      className="w-8 h-8 rounded-full"
-                    />
-                    
-                    <span><b>{blog.blogTitle}</b></span>
-                  </Link>
-                  
-                  <span>
-                      {blog.blogDescription.length > 90
-                        ? `${blog.blogDescription.substring(0, 90)}...`
-                        : blog.blogDescription}
-                    </span>
-                  <p className="text-sm text-gray-500">
-                    By <span className="text-orange-500"> {blog.writer}</span> in {blog.category}
-                  </p>{" "}
-                  {/* Using writer and category from the API */}
-                </li>
-              ))}
-            </ul>
+  {filteredBlogs
+    .sort((a, b) => b.likes.length - a.likes.length) // Sort blogs by likes in descending order
+    .map((blog) => (
+      <li key={blog.id}>
+        {" "}
+        {/* Assuming each blog has a unique 'id' */}
+        <Link
+          to={`/blogs/${blog.id}`}
+          className="flex items-center space-x-2"
+        >
+           <img
+            src={`${blog.blogImage}`}
+            alt="Recent Post Icon"
+            className="w-11 h-11 rounded-full"
+          />
+          <span><b>{blog.blogTitle}</b></span>
+        </Link>
+        <span>
+          {blog.blogDescription.length > 90
+            ? `${blog.blogDescription.substring(0, 90)}...`
+            : blog.blogDescription}
+        </span>
+        <p className="text-sm text-gray-500">
+          By <span className="text-orange-500">{blog.writer}</span> in {blog.category}
+        </p>{" "}
+        {/* Using writer and category from the API */}
+      </li>
+    ))}
+</ul>
+
           </div>
           {/* Right Section: Search and Recommended Blogs */}
           <div className="w-full lg:w-2/6 py-4 space-y-6 bg-gray-100 sticky" style={{ borderRadius: "20px" }}>

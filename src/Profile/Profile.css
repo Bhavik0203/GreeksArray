@@ -1,307 +1,420 @@
 .profile-container {
-    display: flex;
-    flex-direction: column;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .profile-content {
-    display: flex; /* Flexbox for horizontal layout */
-    justify-content: space-between; /* Space between the two sections */
-    gap: 20px; /* Add space between the two sections */
-    margin-top: 20px;
-  }
-  
-  /* Reading List Styles */
-  .reading-list {
-    width: 70%; /* Adjust width as needed */
-    background-color: #f8f8f8;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  .reading-list-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-  
-  .reading-images {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px; 
-    width: 90%; /* Adjust width as needed */
-    background-color: #f0f0f0;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  .text-left {
-    flex: 1; /* Ensure text takes up available space on the left */
-    margin-right: 20px; /* Add some space between text and image */
-  }
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
-  .blog-wrapper {
-    display: flex;
-    flex-direction: column; 
-    align-items: flex-start; 
-  }
-  
-  .img-right {
-    width: 100%; /* Adjust image size if needed */
-    max-width: 600px; /* Set a max-width for the image */
-    margin-bottom: 10px; /* Space between image and button */
-  }
-  
-  .inline-block {
-    font-size: 16px; /* Adjust the button text size */
-  }
-  
-  .text-gray-600 {
-    color: #4a5568; /* Gray color */
-  }
-  
-  .title-wrapper {
-    display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: flex-start; /* Align to the left */
-  }
-  
-  .title-wrapper h1 {
-    margin-bottom: 8px; /* Add space between the h1 and the paragraph */
-  }
-  
-  .author {
-    font-size: 16px; /* Adjust the font size if needed */
-    color: #555; /* Adjust the text color if needed */
-    margin: 0; /* Remove default paragraph margins */
-  }
-  
-  .content-wrapper {
-    display: flex;
-    justify-content: space-between; /* Ensures text is on the left, and the image is on the right */
-    align-items: center;
-    width: 100%; /* Take full width */
-    padding: 10px 0;
-  }
+.profile-content {
+  display: flex; /* Flexbox for horizontal layout */
+  justify-content: space-between; /* Space between the two sections */
+  gap: 20px; /* Add space between the two sections */
+  margin-top: 20px;
+}
 
-  .reading-images img {
-    width: calc(33.33% - 10px); /* Three images equally spaced */
-    object-fit: cover;
-    height: 150px; /* Adjust height as needed */
-    border-radius: 8px;
-  }
-  
-  /* Profile Sidebar Styles */
-  .profile-sidebar {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 20px; /* Adjust this value as needed */
-    background-color: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    border-radius: 8px;
-    width: 100%; /* Make sure the width doesn't exceed the parent */
-  }
-  
-  .profile-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
+/* Reading List Styles */
+.reading-list {
+  width: 70%; /* Adjust width as needed */
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.reading-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.reading-images {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px; 
+  width: 90%; /* Adjust width as needed */
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+}
+.text-left {
+  flex: 1; /* Ensure text takes up available space on the left */
+  margin-right: 20px; /* Add some space between text and image */
+}
+
+.blog-wrapper {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start; 
+}
+
+.img-right {
+  width: 100%; /* Adjust image size if needed */
+  max-width: 600px; /* Set a max-width for the image */
+  margin-bottom: 10px; /* Space between image and button */
+}
+
+.inline-block {
+  font-size: 16px; /* Adjust the button text size */
+}
+
+.text-gray-600 {
+  color: #4a5568; /* Gray color */
+}
+
+.title-wrapper {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: flex-start; /* Align to the left */
+}
+
+.title-wrapper h1 {
+  margin-bottom: 8px; /* Add space between the h1 and the paragraph */
+}
+
+.author {
+  font-size: 16px; /* Adjust the font size if needed */
+  color: #555; /* Adjust the text color if needed */
+  margin: 0; /* Remove default paragraph margins */
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-between; /* Ensures text is on the left, and the image is on the right */
+  align-items: center;
+  width: 100%; /* Take full width */
+  padding: 10px 0;
+}
+
+.reading-images img {
+  width: calc(33.33% - 10px); /* Three images equally spaced */
+  object-fit: cover;
+  height: 150px; /* Adjust height as needed */
+  border-radius: 8px;
+}
+
+/* Profile Sidebar Styles */
+.profile-sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20px; /* Adjust this value as needed */
+  background-color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%; /* Make sure the width doesn't exceed the parent */
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* Divider Styles */
 .divider {
-    margin: 16px 0; /* Adds some space above and below the divider */
-    height: 1px; /* Height of the divider */
-    background-color: #ddd; /* Divider color */
-    width: 100%; /* Full width of the container */
-  }
-  
-  .profile-avatar {
-    background-color: #1a4f42;
-    color: white;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  
-  /* Modal Overlay */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  
-  /* Modal Content */
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-  }
-  
-  .close-modal {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-  }
-  
- /* Profile Form Section */
-.profile-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px; /* Add gap between fields */
-    margin-top: 15px;
-  }
-  
-  .profile-form label {
-    font-weight: bold;
-    margin-bottom: 4px;
-  }
-  
-  .profile-form input,
-  .profile-form textarea {
-    padding: 10px;
-    border: 1px solid transparent; /* Remove default border color */
-    background-color: #f0f0f0; /* Light gray background for input fields */
-    border-radius: 4px;
-    font-size: 14px;
-    transition: border-color 0.3s ease; /* Smooth transition for focus effect */
-  }
-  
-  /* Placeholder styling */
-  .profile-form input::placeholder,
-  .profile-form textarea::placeholder {
-    color: #888; /* Light gray text for placeholders */
-    background-color: #f0f0f0; /* Background color for placeholders */
-  }
-  
-  .profile-form input:focus,
-  .profile-form textarea:focus {
-    border-color: #ddd; /* Optional: light border color on focus */
-    outline: none; /* Remove outline */
-  }
-    
-  .update-profile {
-    margin-top: 15px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+  margin: 16px 0; /* Adds some space above and below the divider */
+  height: 1px; /* Height of the divider */
+  background-color: #ddd; /* Divider color */
+  width: 100%; /* Full width of the container */
+}
 
-  /* Modal Buttons */
+.profile-avatar {
+  background-color: #1a4f42;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Profile Form Section */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Add gap between fields */
+  margin-top: 15px;
+}
+
+.profile-form label {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.profile-form input,
+.profile-form textarea {
+  padding: 10px;
+  border: 1px solid transparent; /* Remove default border color */
+  background-color: #f0f0f0; /* Light gray background for input fields */
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s ease; /* Smooth transition for focus effect */
+}
+
+/* Placeholder styling */
+.profile-form input::placeholder,
+.profile-form textarea::placeholder {
+  color: #888; /* Light gray text for placeholders */
+  background-color: #f0f0f0; /* Background color for placeholders */
+}
+
+.profile-form input:focus,
+.profile-form textarea:focus {
+  border-color: #ddd; /* Optional: light border color on focus */
+  outline: none; /* Remove outline */
+}
+  
+.update-profile {
+  margin-top: 15px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Modal Buttons */
 /* Profile.css */
 
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 500px;
-    width: 90%;
-  }
-  
-  .success-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    width: 350px; /* Width of the popup */
-    height: 200px; /* Height of the popup */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column; /* Align items in a column */
-    justify-content: center; /* Center items vertically */
-    align-items: center; /* Center items horizontally */
-    text-align: center;
-  }
-  
-  .success-popup-content {
-    display: flex;
-    flex-direction: column; /* Stack GIF and message vertically */
-    align-items: center;
-  }
-  
-  .success-gif {
-    width: 100px; /* Adjust size as needed */
-    height: 100px;
-    margin-bottom: 10px; /* Space between GIF and message */
-  }
-  
-  .success-message {
-    font-size: 16px;
-    color: #155724;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+}
+
+.success-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  width: 350px; /* Width of the popup */
+  height: 200px; /* Height of the popup */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Align items in a column */
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+  text-align: center;
+}
+
+.success-popup-content {
+  display: flex;
+  flex-direction: column; /* Stack GIF and message vertically */
+  align-items: center;
+}
+
+.success-gif {
+  width: 100px; /* Adjust size as needed */
+  height: 100px;
+  margin-bottom: 10px; /* Space between GIF and message */
+}
+
+.success-message {
+  font-size: 16px;
+  color: #155724;
+}
+
 /* CSS for Save and Cancel Buttons */
 .modal-buttons button {
-    border-radius: 12px; /* Rounded corners */
-    padding: 10px 20px;
-    margin-right: 10px;
-    border: none;
-    cursor: pointer;
+  border-radius: 12px; /* Rounded corners */
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Green Button Style */
+.save-button {
+  background-color: #28a745; /* Green background color */
+  color: white;
+  border-radius: 12px; /* Border radius for rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.save-button:hover {
+  background-color: #218838; /* Slightly darker green on hover */
+}
+
+/* Red Button Style */
+.cancel-button {
+  background-color: #f44336; /* Red background color */
+  color: white;
+  border-radius: 12px; /* Border radius for rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.cancel-button:hover {
+  background-color: #d32f2f; /* Slightly darker red on hover */
+}
+/* Base Styles for Desktop */
+
+/* Media Queries for Smaller Screens (Tablets and Mobile) */
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .profile-content {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .reading-list {
+    width: 100%; /* Full width on smaller screens */
+    padding: 15px;
+  }
+
+  .profile-sidebar {
+    position: static; /* Disable sticky positioning on smaller screens */
+    margin-top: 20px; /* Add spacing */
+    width: 100%; /* Full width */
+  }
+
+  .modal-content {
+    width: 90%; /* Reduce width for better fit */
+  }
+
+  .success-popup {
+    width: 90%; /* Adjust success popup width */
+  }
+
+  .blog-list article {
+    flex-direction: column; /* Stack content vertically */
+    width: 100%; /* Full width on smaller screens */
+  }
+
+  .blog-list img {
+    width: 100%; /* Adjust image width */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  .reading-images img {
+    width: calc(50% - 10px); /* Two images per row */
+    height: 100px; /* Adjust height */
+  }
+}
+
+@media (max-width: 480px) {
+  .reading-images img {
+    width: 100%; /* Single image per row */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  .profile-avatar {
+    width: 40px;
+    height: 40px;
     font-size: 16px;
   }
-  
-  /* Green Button Style */
-  .save-button {
-    background-color: #28a745; /* Green background color */
-    color: white;
-    border-radius: 12px; /* Border radius for rounded corners */
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+
+  .modal-content {
+    width: 95%; /* Narrower for very small screens */
   }
-  
-  .save-button:hover {
-    background-color: #218838; /* Slightly darker green on hover */
+
+  .success-popup {
+    width: 80%; /* Narrower success popup */
   }
-  
-  /* Red Button Style */
-  .cancel-button {
-    background-color: #f44336; /* Red background color */
-    color: white;
-    border-radius: 12px; /* Border radius for rounded corners */
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+@media (max-width: 768px) {
+  article {
+    flex-direction: column;
+    width: 100%; /* Full width on smaller screens */
   }
-  
-  .cancel-button:hover {
-    background-color: #d32f2f; /* Slightly darker red on hover */
+
+  .hidden {
+    display: none !important; /* Hide unnecessary elements */
   }
-  
-  
+
+  .sm\:block {
+    display: block !important;
+  }
+
+  .sm\:basis-56 {
+    width: 100%;
+  }
+
+  .sm\:p-6 {
+    padding: 10px;
+  }
+
+  .sm\:items-end {
+    align-items: flex-start;
+  }
+
+  .sm\:justify-end {
+    justify-content: flex-start;
+  }
+
+  .p-4 {
+    padding: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  article {
+    flex-direction: row;
+    width: auto;
+  }
+
+  .sm\:basis-56 {
+    width: auto;
+  }
+}
+

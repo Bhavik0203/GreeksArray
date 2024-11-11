@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import User_1 from "../assets/Images/Avatar/user_1.jpg";
@@ -16,7 +16,7 @@ import User_10 from "../assets/Images/Avatar/user_10.jpg";
 import { Link } from "react-router-dom";
 
 const Register = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const avatars = [User_1, User_10, User_2, User_3, User_4, User_5, User_6, User_7, User_8, User_9];
   const [selectedAvatar, setSelectedAvatar] = useState(null);
 
@@ -31,6 +31,7 @@ const Register = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,9 +40,9 @@ const Register = () => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    if (file && file.size > 5 * 1024 * 1024) { // 5 MB limit
+    if (file && file.size > 5 * 1024 * 1024) {
       alert("File size exceeds 5 MB limit.");
-      event.target.value = null; // Clear the file input
+      event.target.value = null;
     }
   };
 
@@ -54,21 +55,19 @@ const Register = () => {
       return;
     }
 
-    // Validate userName
     const usernameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$/;
     if (!usernameRegex.test(userName)) {
       setError("Username must be 8-15 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character.");
       return;
     }
 
-    // Add avatarId to formdata
     const payload = {
       firstName: formdata.firstName,
       lastName: formdata.lastName,
       userName: formdata.userName,
       email: formdata.email,
       password: formdata.password,
-      avatarId: selectedAvatar !== null ? selectedAvatar + 1 : null // Ensure it is between 1 and 10
+      avatarId: selectedAvatar !== null ? selectedAvatar + 1 : null,
     };
 
     try {
@@ -89,10 +88,13 @@ const Register = () => {
       }
 
       setIsSubmitted(true);
+      setShowPopup(true); // Show popup on successful registration
       setError("");
 
-      // Redirect to the profile page after successful registration
-      navigate("/new-story"); // Use navigate to redirect
+      setTimeout(() => {
+        setShowPopup(false); // Hide popup after 3 seconds
+        navigate("/Sign-in");
+      }, 3000);
 
     } catch (err) {
       console.error("Error submitting form:", err);
@@ -113,7 +115,7 @@ const Register = () => {
 
         <div className="mx-4 mb-4 -mt-16">
           <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md">
-            {/* Social Login Buttons */}
+            {/* ... Form content ... */}
             <div className="grid md:grid-cols-2 gap-8">
               {/* ... Social Login Buttons ... */}
             </div>
@@ -152,6 +154,9 @@ const Register = () => {
                   value={formdata.userName}
                   onChange={handleChange}
                 />
+                <p style={{ fontSize: '12px' }}>
+    Password must be 8-15 characters long, include uppercase, lowercase, digit, and special character.
+</p>
               </div>
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">Email</label>
@@ -236,6 +241,7 @@ const Register = () => {
               </button>
             </div>
 
+            
             <div className="text-gray-500 mt-4 text-center">
               Already have an account?{" "}
               <Link to="/Sign-In" className="text-blue-500 hover:underline">
@@ -244,6 +250,17 @@ const Register = () => {
             </div>
           </form>
         </div>
+
+        {/* Popup Notification */}
+        {showPopup && (
+          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+              <h2 className="text-lg font-bold mb-4">Sign-up Successful!</h2>
+              <p>You will be redirected to the sign-in page shortly.</p>
+            </div>
+          </div>
+        )}
+
         <Footer />
       </div>
     </>

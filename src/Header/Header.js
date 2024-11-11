@@ -9,7 +9,15 @@ const Header = ({ show }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null);
+  // const [userData, setUserData] = useState(null);
+  const [firstName, setFirstName] = useState(""); // Uncommented
+  const [lastName, setLastName] = useState("");
+  const [profileImage, setProfileImage] = useState(null); // File input for image
+  // const [avatarId, setAvatarId] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState(""); // Uncommented
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+
+  const [userData, setUserData] = useState({});
   const navigate = useNavigate(); 
   const handleMenuClick = (item) => {
     setActiveItem(item);
@@ -30,6 +38,9 @@ const Header = ({ show }) => {
     setIsLoggedIn(false); // Update state
     navigate("/Sign-In"); 
   };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
 
    // API call to get user info
@@ -56,7 +67,37 @@ const Header = ({ show }) => {
       setIsLoggedIn(false);
     }
   }, []);
+  const handleProfileImageChange = (e) => {
+    setProfileImage(e.target.files[0]); // Get the selected file
+  };
 
+  const fetchUserData = async () => {
+    const token = localStorage.getItem("authToken");
+
+    if (token) {
+      try {
+        const response = await axios.get(
+          "http://geeksarray-001-site5.atempurl.com/api/User?isActive=true",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // Set the fetched user data in state
+        setUserData(response.data);
+        setFirstName(response.data.firstName); // Set fetched firstName
+        setLastName(response.data.lastName); // Set fetched firstName
+        setAvatarUrl(response.data.profileImage);
+        
+        
+        // Set fetched avatar URL
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    }
+  };
   return (
     <header
       className={`flex shadow-sm py-3 px-4 sm:px-10 bg-black font-[sans-serif] min-h-[70px] tracking-wide relative z-50 `}
@@ -124,11 +165,11 @@ const Header = ({ show }) => {
                 } lg:after:absolute lg:after:bg-black lg:after:h-[2px] lg:after:block lg:after:top-6 lg:after:transition-all lg:after:duration-300`}
               >
                 <Link
-                  to="/Allblogs"
+                  to="/blogs"
                   className="text-white  block text-[15px]"
                   onClick={() => handleMenuClick("blog")}
                 >
-                  Blog
+                  Blogs
                 </Link>
               </li>
               <li
@@ -162,143 +203,134 @@ const Header = ({ show }) => {
           </div>
 
           <div className="flex items-center max-sm:ml-auto space-x-6 mt-3">
-            <ul>
-              <li className="relative px-1 ">
-                <svg
-                  onClick={toggleModal}
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24px"
-                  height="24px"
-                  className="cursor-pointer hover:fill-white fill-white"
-                  viewBox="0 0 512 512"
-                >
-                  <path
-                    d="M437.02 74.981C388.667 26.629 324.38 0 256 0S123.333 26.629 74.98 74.981C26.629 123.333 0 187.62 0 256s26.629 132.667 74.98 181.019C123.333 485.371 187.62 512 256 512s132.667-26.629 181.02-74.981C485.371 388.667 512 324.38 512 256s-26.629-132.667-74.98-181.019zM256 482c-66.869 0-127.037-29.202-168.452-75.511C113.223 338.422 178.948 290 256 290c-49.706 0-90-40.294-90-90s40.294-90 90-90 90 40.294 90 90-40.294 90-90 90c77.052 0 142.777 48.422 168.452 116.489C383.037 452.798 322.869 482 256 482z"
-                    data-original="#000000"
-                  />
-                </svg>
-                {isModalOpen && (
-          <div className="bg-white z-20 shadow-md py-6 px-6 sm:min-w-[320px] max-sm:min-w-[250px] absolute right-0 top-10">
-            {isLoggedIn ? (
-              <>
-                <h6 className="font-semibold text-[15px]">
-                  Welcome {userData?.firstName}
-                </h6>
-                <p className="text-sm text-gray-500 mt-1">
-                  Access your account and explore blogs.
-                </p>
-                <Link to="/Profile">
-                  <button
-                    type="button"
-                    className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold"
-                  >
-                    Go To Profile
-                  </button>
-                  
-                </Link>
-                <Link to="/sign-in"              
-                ><button
-                type="button"
-                className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold ml-1"
-                onClick={handleLogout}
-              >
-              Log Out
-              </button></Link>
-              </>
-            ) : (
-              <>
-                <p className="text-sm text-gray-500 mt-1">
-                  To access your account, please login or sign up.
-                </p>
-                <Link to="/Sign-In">
-                  <button
-                    type="button"
-                    className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold"
-                  >
-                    LOGIN / SIGNUP
-                  </button>
-                </Link>
-              </>
-            )}
-
-            <hr className="border-b-0 my-4" />
-            <ul className="space-y-1.5">
-              <li>
-                <Link
-                  to="/latest-blogs"
-                  className="text-sm text-gray-500 hover:text-black"
-                >
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/Profile"
-                  className="text-sm text-gray-500 hover:text-black"
-                >
-                  Our Publication
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/Contact-us"
-                  className="text-sm text-gray-500 hover:text-black"
-                >
-                  Contact
-                </Link>
-              </li>
-            </ul>
-            <hr className="border-b-0 my-4" />
-            <ul className="space-y-1.5">
-              <li>
-                <Link
-                  to="/terms&conditions"
-                  className="text-sm text-gray-500 hover:text-black"
-                >
-                  Terms & Conditions
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/privacy-policy"
-                  className="text-sm text-gray-500 hover:text-black"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/latest-blogs"
-                  className="text-sm text-gray-500 hover:text-black"
-                >
-                  Latest Blogs
-                </Link>
-              </li>
-            </ul>
+  <ul>
+    <li className="relative px-1">
+      <div className="cursor-pointer" onClick={toggleModal}>
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt="Avatar"
+            className="profile-avatar-image rounded-full h-10 w-10 object-cover border-2 border-blue-500"
+          />
+        ) : (
+          <div className="profile-avatar bg-blue-500 text-white h-10 w-10 flex items-center justify-center rounded-full text-xl font-bold">
+            {firstName?.charAt(0) || "B"}
           </div>
         )}
-              </li>
-            </ul>
-
-            <button
-              id="toggleOpen"
-              onClick={toggleMenu}
-              className="lg:hidden ml-7"
-            >
-              <svg
-                className="w-7 h-7"
-                fill="#000"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+      </div>
+      {isModalOpen && (
+        <div className="bg-white z-20 shadow-md py-6 px-6 sm:min-w-[320px] max-sm:min-w-[250px] absolute right-0 top-10">
+          {isLoggedIn ? (
+            <>
+              <h6 className="font-semibold text-[15px]">Welcome {userData?.firstName}</h6>
+              <p className="text-sm text-gray-500 mt-1">
+                Access your account and explore blogs.
+              </p>
+              <Link to="/Profile">
+                <button
+                  type="button"
+                  className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold"
+                >
+                  Go To Profile
+                </button>
+              </Link>
+              <Link to="/sign-in">
+                <button
+                  type="button"
+                  className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold ml-1"
+                  onClick={handleLogout}
+                >
+                  Log Out
+                </button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <p className="text-sm text-gray-500 mt-1">
+                To access your account, please login or sign up.
+              </p>
+              <Link to="/Sign-In">
+                <button
+                  type="button"
+                  className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold"
+                >
+                  LOGIN / SIGNUP
+                </button>
+              </Link>
+            </>
+          )}
+          <hr className="border-b-0 my-4" />
+          <ul className="space-y-1.5">
+            <li>
+              <Link to="/Write" className="text-sm text-gray-500 hover:text-black">
+                Write
+              </Link>
+            </li>
+            <li>
+              <Link to="/blogs" className="text-sm text-gray-500 hover:text-black">
+                Blog
+              </Link>
+            </li>
+            <li>
+              <Link to="/Profile" className="text-sm text-gray-500 hover:text-black">
+                Our Publication
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/latest-blogs"
+                className="text-sm text-gray-500 hover:text-black"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
-            </button>
-          </div>
+                About us
+              </Link>
+            </li>
+            <li>
+              <Link to="/Contact-us" className="text-sm text-gray-500 hover:text-black">
+                Contact
+              </Link>
+            </li>
+          </ul>
+          <hr className="border-b-0 my-4" />
+          <ul className="space-y-1.5">
+            <li>
+              <Link
+                to="/terms&conditions"
+                className="text-sm text-gray-500 hover:text-black"
+              >
+                Terms & Conditions
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/privacy-policy"
+                className="text-sm text-gray-500 hover:text-black"
+              >
+                Privacy Policy
+              </Link>
+            </li>
+            
+          </ul>
+        </div>
+      )}
+    </li>
+  </ul>
+
+  <button id="toggleOpen" onClick={toggleMenu} className="lg:hidden ml-7">
+    <svg
+      className=""
+      fill="#000"
+      viewBox="0 0 20 20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+        clipRule="evenodd"
+      ></path>
+    </svg>
+  </button>
+</div>
+
         </div>
       </div>
     </header>

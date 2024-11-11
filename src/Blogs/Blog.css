@@ -1,0 +1,102 @@
+
+  .user-comments {
+    border: 2px solid #000;
+    padding: 20px;
+    margin: 30px 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  /* <Link 
+                  to={`/blogs/${blog.id}`} 
+                  className="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px] text-center"
+                >
+                  Read More
+                </Link> */
+  .user-comments h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #333;
+  }
+  
+  .user-comments .comment {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .user-comments .comment:last-child {
+    border-bottom: none;
+  }
+  
+  .user-comments p {
+    margin: 4px 0;
+    color: #555;
+  }
+  
+  .user-comments .font-semibold {
+    font-weight: 600;
+  }
+  
+  .user-comments button {
+    color: #007bff;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+  }
+  
+  .user-comments button:hover {
+    text-decoration: underline;
+    color: #0056b3;
+  }
+  
+  .user-comments input[type="text"] {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .user-comments button.bg-blue-500 {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .user-comments button.bg-blue-500:hover {
+    background-color: #0056b3;
+  }
+  
+  .user-comments .loader {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  @media (max-width: 768px) {
+    .user-comments {
+      padding: 15px;
+      margin: 20px 5px;
+    }
+  
+    .user-comments h3 {
+      font-size: 20px;
+    }
+  
+    .user-comments input[type="text"] {
+      padding: 8px;
+    }
+  
+    .user-comments button.bg-blue-500 {
+      padding: 8px 12px;
+    }
+  }
+  

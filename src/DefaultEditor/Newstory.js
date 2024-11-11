@@ -2,16 +2,20 @@ import React, { useState, useEffect } from "react";
 import camera from "../assets/Images/Blogimg/digital-camera.png";
 import avatar from '../assets/Images/Avatar/user_1.jpg';
 import SuccessModal from './SuccessModal';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
 
 
 const Newstory = () => {
   
+  const { state } = useLocation();
+
   const [isTyping, setIsTyping] = useState(false);
   const [isCodeWriting, setIsCodeWriting] = useState(false);
-  const [imageFile, setImageFile] = useState(null);
+  
   const [isPlusClicked, setIsPlusClicked] = useState(false);
   const [blogTitle, setBlogTitle] = useState("");
   const [blogDescription, setBlogDescription] = useState("");
@@ -21,7 +25,7 @@ const Newstory = () => {
   const [showModal, setShowModal] = useState(false);
   const [categories, setCategories] = useState([]); 
   const [error, setError] = useState(''); 
-
+  const [imageFile, setImageFile] = useState (null);
 
   const handleInput = () => {
     const titleText = document.getElementById("editorTitle").innerText.trim();
@@ -55,7 +59,7 @@ const Newstory = () => {
     const titleElem = document.getElementById("editorTitle");
     const bodyElem = document.getElementById("editorBody");
     const contentElem = document.getElementById("editorContent");
-
+ 
     if (!titleElem.innerText.trim()) titleElem.innerText = "Title";
     if (!bodyElem.innerText.trim()) bodyElem.innerText = "Add Description";
     if (!contentElem.innerText.trim()) contentElem.innerText = "Your Content...";
@@ -87,14 +91,12 @@ const Newstory = () => {
   }, []);
 
   // Handle image upload
-  // const handleImageUpload = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) setImageFile(file);
-  // };
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) setImageFile(file);
+    setImageFile(file);
   };
+ 
  
   const applyBold = () => {
     document.execCommand("bold");
@@ -117,7 +119,7 @@ const Newstory = () => {
 
 
   const handleSubmitBlog = async () => {
-    if (!blogTitle || !blogDescription || !blogContent || !imageFile ) {
+    if (!blogTitle || !blogDescription || !blogContent ) {
       alert("Please complete all fields including image upload.");
       return;
     }
@@ -157,22 +159,29 @@ const Newstory = () => {
   };
 
   return (
+    <>
+      <Header/>
     <div style={styles.draftEditor}>
+      
       <header style={styles.editorHeader}>
-        <div style={styles.logo}><Link to="/Allblogs">geeksArray</Link></div>
+        
         <div style={styles.editorActions}>
-          <button
-            style={{ ...styles.publishButton, backgroundColor: isTyping ? "#04870f" : "#d3d3d3" }}
-            disabled={!isTyping}
-            onClick={handleSubmitBlog}
-          >
-            Publish
-          </button>
-          <div style={styles.userIcon}>
-            <Link to="/Profile">
-              <img src={avatar} alt="User Avatar" style={styles.userAvatar} />
-            </Link>
-          </div>
+        {/* <button
+  style={{
+    ...styles.publishButton,
+    backgroundColor: isTyping ? "#04870f" : "#d3d3d3",
+    disabled: !isTyping,
+    position: 'absolute',  
+    top: '90px',           
+    right: '40px',         
+    margin: '10px',       
+  }}
+  onClick={handleSubmitBlog}
+>
+  Publish
+</button> */}
+
+         
         </div>
       </header>
 
@@ -186,26 +195,20 @@ const Newstory = () => {
             style={styles.editorTitle}
             onInput={handleInput}
           ></h1>
-
+  <br></br>
           <p
             id="editorBody"
             contentEditable={true}
             style={styles.editorPlaceholder}
             onInput={handleInput}
           ></p>
-          
+          <br></br>
           <p
             id="editorContent"
             contentEditable={true}
             style={styles.editorPlaceholder}
             onInput={handleInput}
           ></p>
-          <button style={styles.iconButton} onClick={applyBold}>
-                  <strong>B</strong>
-                </button>
-                <button style={styles.iconButton} onClick={applyItalic}>
-                  <em>I</em>
-                </button>
           <br />
           <div style={styles.categoryDropdownWrapper}>
           <select
@@ -223,49 +226,41 @@ const Newstory = () => {
             ))}
           </select>
 </div>
-
-
-
-          <div style={styles.iconBar}>
-            <div style={styles.plusIcon} onClick={handlePlusClick}>
-              {isPlusClicked ? "x" : "+"}
-            </div>
-
-            {isPlusClicked && (
-              <>
-                <button style={styles.iconButton}>
-                  <img src={camera} alt="Upload" style={styles.iconImage} />
-                  <input
-                    type="file"
-                    accept="image/*"
-                    style={styles.fileInput}
-                    onChange={handleImageUpload}
-                  />
-                </button>
+<br></br>
+<br></br>
                 
-                <button style={styles.iconButton} onClick={handleCodeWriting}>
-                  <i className="fas fa-code" style={styles.icon}>code</i>
-                </button>
-              </>
+<div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+            />
+            {imageFile && (
+              <div style={styles.imagePreview}>
+                <img src={URL.createObjectURL(imageFile)} alt="Uploaded" style={styles.uploadedImage} />
+              </div>
             )}
           </div>
 
-          {imageFile && (
-            <div style={styles.imagePreview}>
-              <img src={URL.createObjectURL(imageFile)} alt="Uploaded" style={styles.uploadedImage} />
-            </div>
-          )}
-
-          {isCodeWriting && (
-            <div style={styles.codeWritingArea}>
-              <textarea placeholder="Write your code here..." style={styles.codeEditor}></textarea>
-            </div>
-          )}
+          <br /><br /><br />
+          <button
+            style={{ ...styles.publishButton, backgroundColor: isTyping ? "#04870f" : "#d3d3d3" }}
+            disabled={!isTyping}
+            onClick={handleSubmitBlog}
+          >
+            Publish
+          </button>
+          
         </div>
+         
       </div>
-
+      
+            <br></br>
       {showModal && <SuccessModal isOpen={showModal} onClose={() => setShowModal(false)} />}
+      
     </div>
+    {/* <Footer />  */}
+    </>
   );
 };
 
@@ -367,8 +362,6 @@ const styles = {
   },
   imagePreview: {
     marginTop: '10px',
-    display:'flex',
-    justifyContent:'center'
   },
   uploadedImage: {
     maxWidth: "100%", // Ensure it scales with the container

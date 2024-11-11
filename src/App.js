@@ -18,6 +18,11 @@ import Dashboard from "./AdminDashboard/Dashboard";
 import Termsandcodition from "./Termsandcodition";
 import BlogNew from "./Blogs/BlogNew";
 import PrivateRoute from "./PrivateRoute";
+import CodeSnippetButton from "./DefaultEditor/CodeSnippetButton";
+import ForgotPassword from "./SignIn/ForgotPassword";
+import OtpPage from "./SignIn/OtpPage";
+
+
 
 function App() {
   return (
@@ -26,7 +31,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/blogslider" element={<Blogslider />} />
         <Route path="/blogs/:blogId" element={<Blogs />} />
-        <Route path="/Allblogs" element={<Allblogs />} />
+        <Route path="/blogs" element={<Allblogs />} />
         <Route path="/Sign-In" element={<SignIn />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Profile" element={<Profile />} />
@@ -36,6 +41,9 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/Notification" element={<Notification />} />
         <Route path="/Comment-section" element={<Commentsection />} />
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
+        <Route path="/otp" element={<OtpPage/>} />
+        {/* <Route path="/Code" element={<CodeSnippetButton/>}/> */}
         <Route
           path="/Write"
           element={

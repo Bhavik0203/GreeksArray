@@ -92,7 +92,7 @@ const About = () => {
                 </p>
 
                 <div class="mt-12 flex gap-4 items-center flex-wrap max-md:justify-center">
-                  <Link to="/Allblogs">
+                  <Link to="/blogs">
                     <button
                       type="button"
                       class="bg-[#000]  transition-all text-white font-bold text-sm rounded-full px-6 py-3"

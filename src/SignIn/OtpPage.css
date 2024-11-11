@@ -1,0 +1,106 @@
+body {
+    background-color: #f9f9f9; /* Light background for better contrast */
+    font-family: 'Arial', sans-serif; /* Consistent font family */
+  }
+  /* 
+   */
+  section {
+    padding: 40px 20px; /* Add padding to the section */
+  }
+  
+  h1 {
+    color: #333; /* Dark text color for the header */
+    margin-bottom: 20px; /* Space below the header */
+  }
+  
+  p {
+    color: #555; /* Softer text color for paragraphs */
+    margin-bottom: 10px; /* Space below paragraphs */
+  }
+  
+  .otp-input-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Space above OTP input */
+  }
+  
+  .otp-input {
+    width: 60px; /* Adjusted width for a more comfortable touch */
+    height: 60px; /* Adjusted height for a more prominent appearance */
+    font-size: 24px; /* Larger font size for better readability */
+    text-align: center;
+    border: 2px solid #ccc; /* Slightly thicker border */
+    border-radius: 8px; /* Rounded corners */
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transition effects */
+  }
+  
+  .otp-input:focus {
+    border-color: #007bff; /* Change border color on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Subtle shadow on focus */
+  }
+  
+  button {
+    width: 100%; /* Full width for buttons */
+    padding: 12px; /* Comfortable padding */
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Text color for buttons */
+    border: none; /* Remove default border */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 16px; /* Larger font size for better readability */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+  }
+  
+  .success-message {
+    color: green; /* Green color for success messages */
+    margin-top: 10px; /* Space above success message */
+    text-align: center; /* Center align text */
+  }
+  
+  .error-message {
+    color: red; /* Red color for error messages */
+    margin-top: 10px; /* Space above error message */
+    text-align: center; /* Center align text */
+  }
+  
+  .password-container {
+    margin-top: 20px; /* Space above password fields */
+  }
+  
+  input {
+    border: 2px solid #ccc; /* Common border for input fields */
+    border-radius: 8px; /* Rounded corners */
+    padding: 12px; /* Comfortable padding */
+    font-size: 16px; /* Larger font size for inputs */
+    width: 100%; /* Full width for input fields */
+    box-sizing: border-box; /* Include padding and border in width */
+    transition: border-color 0.3s ease; /* Smooth border transition */
+  }
+  
+  input:focus {
+    border-color: #007bff; /* Change border color on focus */
+  }
+  
+  .text-center {
+    text-align: center; /* Center align text */
+  }
+  
+  .text-sm {
+    font-size: 14px; /* Smaller font size for supplementary text */
+  }
+  
+  .link {
+    color: #007bff; /* Link color */
+    text-decoration: none; /* Remove underline from links */
+  }
+  
+  .link:hover {
+    text-decoration: underline; /* Underline on hover */
+  }
+  

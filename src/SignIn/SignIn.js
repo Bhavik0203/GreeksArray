@@ -37,7 +37,7 @@ const SignIn = () => {
         localStorage.setItem("authToken", token);
         setIsSubmitted(true);
         setError("");
-        navigate("/Allblogs"); // Redirect to the home page after login
+        navigate("/blogs"); // Redirect to the home page after login
       } else {
         setError("Login failed, token not received.");
       }
@@ -108,9 +108,9 @@ const SignIn = () => {
 
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-500">
-                No account? <Link className="underline" to="/Register">Sign up</Link>
-                {/* No account? <Link className="underline" to="/Register">Sign up</Link> */}
+                No account? <Link className="underline" to="/Register"> Sign up</Link>
               </p>
+              
               <button
                 type="submit"
                 className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
@@ -118,7 +118,11 @@ const SignIn = () => {
               >
                 Sign in
               </button>
+             
             </div>
+            <p className="text-sm text-gray-500" >
+                <Link className="underline" to="/forgot-password">Forgot Password?</Link>
+              </p>
           </form>
         </div>
 

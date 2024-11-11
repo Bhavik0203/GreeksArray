@@ -1,64 +1,55 @@
+/* Base styles (apply to all screens) */
 .textgradient {
-    background: linear-gradient(
-      45deg, 
-      #f08033, 
-      /* #d45c05, */
-      #0080a0, 
-      #007b80
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent; /* This line ensures compatibility with other browsers */
-  }
-  
-/* styles.css or in your component CSS module */
+  background: linear-gradient(
+    45deg,
+    #f08033,
+    #0080a0,
+    #007b80
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent; /* Ensures compatibility with other browsers */
+}
+
 .text-container {
   max-width: 600px; /* Adjust this value to fit your desired line length */
   line-height: 1.6;
 }
 
-  /* Ensure the header is hidden initially */
 #header-wrapper {
-    opacity: 0;
-  }
-  
-/* Ensure the header is hidden initially */
+  opacity: 0;
+}
+
 .Header {
   opacity: 0;
   display: none;
   transition: opacity 0.5s ease-out;
 }
 
-/* Show the header when the state is true */
 .Header.show {
   display: block;
   opacity: 1;
 }
 
-/* Ensure the header is initially hidden with opacity 0 */
 .header-hidden {
   opacity: 0;
   transition: opacity 1s ease-out;
 }
 
-/* Show the header with opacity 1 */
 .header-visible {
   opacity: 1;
   transition: opacity 1s ease-out;
 }
 
-  /* Show the header only when the intro-slider is hidden */
-  #header-wrapper.show {
-    display: block;
-    opacity: 1;
-  }
-  
-/* Hero.css */
+#header-wrapper.show {
+  display: block;
+  opacity: 1;
+}
+
 .welcome-section {
   background: linear-gradient(135deg, #8dfcfc, #f5d395); /* Teal and orange gradient */
   width: 100%;
-  /* height: 100vh;  */
   display: flex;
   align-items: center; /* Center content vertically */
   justify-content: center; /* Center content horizontally */
@@ -66,7 +57,114 @@
   box-sizing: border-box;
 }
 
-.body-content{
+.body-content {
   margin-top: auto;
 }
-   
+
+/* Media Queries */
+
+/* Mobile Screens (max-width: 768px) */
+/* Mobile Screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .textgradient {
+    font-size: 18px; /* Smaller text for mobile */
+  }
+
+  .text-container {
+    max-width: 100%; /* Full width on mobile */
+    padding: 10px;
+  }
+
+  .Header {
+    transition: opacity 0.3s ease-out; /* Faster transition on mobile */
+  }
+
+  .welcome-section {
+    flex-direction: column; /* Stack items vertically */
+    padding: 10px; /* Reduce padding on mobile */
+    margin: 0; /* Remove any extra margins */
+    width: 100%; /* Ensure no horizontal overflow */
+    box-sizing: border-box; /* Include padding and borders in width */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+
+  .welcome-section img {
+    width: 100%; /* Ensure images are responsive */
+    height: auto;
+  }
+
+  .body-content {
+    margin-top: 0;
+    padding-bottom: 20px;
+  }
+
+  .w-full {
+    width: 100%; /* Avoid extra width causing overflow */
+  }
+
+  .custom-margin-left {
+    margin-left: 0 !important;
+  }
+  
+  .custom-margin-right {
+    margin-right: 0 !important;
+  }
+  
+  .custom-margin-bottom {
+    margin-bottom: 20px !important;
+  }
+  
+  .custom-margin-top {
+    margin-top: 20px !important;
+  }
+  
+}
+
+
+/* Tablet Screens (min-width: 768px and max-width: 1024px) */
+@media   (max-width: 1024px) {
+  .textgradient {
+    font-size: 22px; /* Medium text size for tablets */
+  }
+
+  .text-container {
+    max-width: 80%; /* Adjust width for tablet */
+  }
+
+  .Header {
+    transition: opacity 0.4s ease-out; /* Medium transition time */
+  }
+
+  .welcome-section {
+    flex-direction: row; /* Adjust layout */
+    padding: 15px; /* Slightly more padding for tablets */
+  }
+
+  .body-content {
+    margin-top: 20px;
+  }
+}
+
+/* Desktop Screens (min-width: 1024px) */
+@media (min-width: 1024px) {
+  .textgradient {
+    font-size: 26px; /* Larger text for desktop */
+  }
+
+  .text-container {
+    max-width: 60%; /* Keep line length readable */
+  }
+
+  .Header {
+    transition: opacity 0.5s ease-out; /* Slower transition for desktop */
+  }
+
+  .welcome-section {
+    flex-direction: row; /* Maintain row layout */
+    padding: 20px; /* Standard padding */
+  }
+
+  .body-content {
+    margin-top: 40px; /* Add more space for desktop */
+  }
+}
