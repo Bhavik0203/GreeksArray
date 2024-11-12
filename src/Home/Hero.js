@@ -4,11 +4,20 @@ import banner from "../assets/Images/banners/banner8.png";
 import Blogslider from "../Blogslider/Blogslider";
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
+import { Helmet } from "react-helmet";
 
 
 const Hero = () => {
   return (
     <>
+    <Helmet>
+        <title> Your Profile - GeeksArray</title>
+        <meta name="description" content="Welcome to My Awesome Website. Discover our services and explore more through our latest notices and updates." />
+        <meta name="keywords" content="Awesome Website, React, SEO, Notices, Services" />
+        <meta property="og:title" content="Home - My Awesome Website" />
+ 
+     
+      </Helmet>
       <Header />
      
 
@@ -79,7 +88,7 @@ const Hero = () => {
       />
     </div>
   </div>
-  <Footer />
+
 </div>
 
       {/* <Blogslider /> */}

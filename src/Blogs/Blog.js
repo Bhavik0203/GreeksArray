@@ -28,9 +28,9 @@ const Blogs = ({ readOnly = false }) => {
   // Fetch blog details when blogId changes
   useEffect(() => {
     const fetchBlogDetails = async () => {
-      console.log(`Fetching details for blog ID: ${blogId}`); // Log blog ID
+      console.log(`Fetching details for blog ID: ${slug}`); // Log blog ID
       try {
-        const response = await fetch(`http://geeksarray-001-site5.atempurl.com/api/Blog?blogId=${blogId}`);
+        const response = await fetch(`http://geeksarray-001-site5.atempurl.com/api/Blog?slug=${slug}`);
         if (!response.ok) {
           throw new Error("Failed to fetch blog details");
         }
@@ -113,21 +113,21 @@ const Blogs = ({ readOnly = false }) => {
     };
   }, []);
 
-  if (loading) {
-    return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          backgroundColor: 'white',
-        }}
-      >
-        {loading && <PacmanLoader size={50} color="#000" />}
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div
+  //       style={{
+  //         display: 'flex',
+  //         justifyContent: 'center',
+  //         alignItems: 'center',
+  //         height: '100vh',
+  //         backgroundColor: 'white',
+  //       }}
+  //     >
+  //       {loading && <PacmanLoader size={50} color="#000" />}
+  //     </div>
+  //   );
+  // }
 
   if (error) return <p>Error: {error}</p>;
   if (!blog) return <p>No blog details found.</p>;
@@ -159,6 +159,14 @@ const Blogs = ({ readOnly = false }) => {
 
   return (
     <>
+    <Helmet>
+        <title> {blog.blogTitle} - GeeksArray</title>
+        <meta name="description" content={blog.blogDescription} />
+        <meta name="keywords" content="Awesome Website, React, SEO, Notices, Services" />
+        <meta property="og:title" content="Home - My Awesome Website" />
+ 
+     
+      </Helmet>
       <section>
         <Header />
         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">

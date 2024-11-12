@@ -14,9 +14,11 @@ import GitLogo from "../assets/Images/Socialmediaimg/github.jpeg";
 import twitterLogo from "../assets/Images/Socialmediaimg/twitter.jpeg";
 import { Link } from "react-router-dom";
 import './Blog.css';
+import { Helmet } from "react-helmet";
 
 const Blog = ({ readOnly = false }) => {
   const { blogId } = useParams(); // Extract blogId from the URL parameters
+  const { slug } = useParams(); // Extract blogId from the URL parameters
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [blog, setBlog] = useState(null); // Initialize 'blog' and 'setBlog'
@@ -39,7 +41,7 @@ const Blog = ({ readOnly = false }) => {
     const fetchBlogDetails = async () => {
       console.log(`Fetching details for blog ID: ${blogId}`); // Log blog ID
       try {
-        const response = await fetch(`http://geeksarray-001-site5.atempurl.com/api/Blog?blogId=${blogId}`);
+        const response = await fetch(`http://geeksarray-001-site5.atempurl.com/api/Blog?slug=${slug}`);
         if (!response.ok) {
           throw new Error("Failed to fetch blog details");
         }
@@ -283,6 +285,14 @@ const Blog = ({ readOnly = false }) => {
     
   return (
     <>
+     <Helmet>
+        <title> {blog.blogTitle} - GeeksArray</title>
+        <meta name="description" content={blog.blogDescription} />
+        <meta name="keywords" content="Awesome Website, React, SEO, Notices, Services" />
+        <meta property="og:title" content="Home - My Awesome Website" />
+ 
+     
+      </Helmet>
       <section>
         <Header />
         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">

@@ -1,6 +1,6 @@
 import React, { useState } from "react"; 
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import User_1 from "../assets/Images/Avatar/user_1.jpg";
@@ -16,7 +16,7 @@ import User_10 from "../assets/Images/Avatar/user_10.jpg";
 import { Link } from "react-router-dom";
 
 const Register = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Initialize useNavigate
   const avatars = [User_1, User_10, User_2, User_3, User_4, User_5, User_6, User_7, User_8, User_9];
   const [selectedAvatar, setSelectedAvatar] = useState(null);
 
@@ -31,7 +31,7 @@ const Register = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(false); // Popup state
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,9 +40,9 @@ const Register = () => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    if (file && file.size > 5 * 1024 * 1024) {
+    if (file && file.size > 5 * 1024 * 1024) { // 5 MB limit
       alert("File size exceeds 5 MB limit.");
-      event.target.value = null;
+      event.target.value = null; // Clear the file input
     }
   };
 
@@ -55,19 +55,21 @@ const Register = () => {
       return;
     }
 
+    // Validate userName
     const usernameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$/;
     if (!usernameRegex.test(userName)) {
       setError("Username must be 8-15 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character.");
       return;
     }
 
+    // Add avatarId to formdata
     const payload = {
       firstName: formdata.firstName,
       lastName: formdata.lastName,
       userName: formdata.userName,
       email: formdata.email,
       password: formdata.password,
-      avatarId: selectedAvatar !== null ? selectedAvatar + 1 : null,
+      avatarId: selectedAvatar !== null ? selectedAvatar + 1 : null // Ensure it is between 1 and 10
     };
 
     try {
@@ -88,13 +90,13 @@ const Register = () => {
       }
 
       setIsSubmitted(true);
-      setShowPopup(true); // Show popup on successful registration
       setError("");
+      setShowPopup(true); // Show the popup on success
 
       setTimeout(() => {
-        setShowPopup(false); // Hide popup after 3 seconds
-        navigate("/Sign-in");
-      }, 3000);
+        setShowPopup(false);
+        navigate("/Sign-in"); // Redirect after 3 seconds
+      }, 3000); // 3-second delay for popup
 
     } catch (err) {
       console.error("Error submitting form:", err);
@@ -115,11 +117,6 @@ const Register = () => {
 
         <div className="mx-4 mb-4 -mt-16">
           <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md">
-            {/* ... Form content ... */}
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* ... Social Login Buttons ... */}
-            </div>
-
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">First Name</label>
@@ -155,8 +152,8 @@ const Register = () => {
                   onChange={handleChange}
                 />
                 <p style={{ fontSize: '12px' }}>
-    Password must be 8-15 characters long, include uppercase, lowercase, digit, and special character.
-</p>
+                  Password must be 8-15 characters long, include uppercase, lowercase, digit, and special character.
+                </p>
               </div>
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">Email</label>
@@ -179,10 +176,10 @@ const Register = () => {
                   value={formdata.password}
                   onChange={handleChange}
                 />
-               <p style={{ fontSize: '12px' }}>
-    Password must be 8-15 characters long, include uppercase, lowercase, digit, and special character.
-</p>
-</div>
+                <p style={{ fontSize: '12px' }}>
+                  Password must be 8-15 characters long, include uppercase, lowercase, digit, and special character.
+                </p>
+              </div>
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">Confirm Password</label>
                 <input
@@ -196,7 +193,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Avatar Selection */}
             <div className="mt-4">
               <label className="text-gray-800 text-sm mb-2">Select your Avatar</label>
               <div className="grid grid-cols-5 gap-4 mt-4">
@@ -219,18 +215,18 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Profile Picture Upload */}
             <div className="mt-8">
-              <label className="text-gray-800 text-sm block mb-2">Choose your profile picture</label>
+              <label className="text-gray-800 text-sm mb-2 block">Upload File (Optional)</label>
               <input
                 type="file"
-                accept="image/*"
+                name="upload"
+                accept=".jpg, .jpeg, .png"
+                className="border-gray border bg-gray-100 focus:bg-transparent px-4 py-3 text-gray-800 rounded-md text-sm outline-blue-500 transition-all w-full"
                 onChange={handleFileChange}
-                className="w-full p-2 bg-gray-100 border border-gray rounded-md"
               />
             </div>
 
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 mt-4">{error}</p>}
 
             <div className="mt-6">
               <button
@@ -241,7 +237,6 @@ const Register = () => {
               </button>
             </div>
 
-            
             <div className="text-gray-500 mt-4 text-center">
               Already have an account?{" "}
               <Link to="/Sign-In" className="text-blue-500 hover:underline">
@@ -251,12 +246,11 @@ const Register = () => {
           </form>
         </div>
 
-        {/* Popup Notification */}
         {showPopup && (
-          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h2 className="text-lg font-bold mb-4">Sign-up Successful!</h2>
-              <p>You will be redirected to the sign-in page shortly.</p>
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-6 rounded shadow-lg text-center">
+              <h2 className="text-2xl font-bold text-green-600">Sign-Up Successful!</h2>
+              <p className="mt-2 text-gray-700">Redirecting to sign-in page...</p>
             </div>
           </div>
         )}

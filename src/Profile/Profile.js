@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Profile.css";
+import {Helmet} from "react-helmet";
 import Header from "../Header/Header";
 import doublecheck from "../assets/Images/Blogimg/double-check.gif";
 import { Link } from "react-router-dom";
@@ -15,8 +16,11 @@ import User_7 from "../assets/Images/Avatar/user_7.jpg";
 import User_8 from "../assets/Images/Avatar/user_8.jpg";
 import User_9 from "../assets/Images/Avatar/user_9.jpg";
 import User_10 from "../assets/Images/Avatar/user_10.jpg";
+
 import Footer from "../Footer/Footer";
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 
 const Profile = () => {
@@ -197,13 +201,27 @@ const Profile = () => {
 
   return (
     <>
+
+
+
+<Helmet>
+        <title> Your Profile - GeeksArray</title>
+        <meta name="description" content="Welcome to My Awesome Website. Discover our services and explore more through our latest notices and updates." />
+        <meta name="keywords" content="Awesome Website, React, SEO, Notices, Services" />
+        <meta property="og:title" content="Home - My Awesome Website" />
+ 
+     
+      </Helmet>
       <Header />
       
       <div className="profile-container">
         <div className="profile-content">
-        <aside className="profile-sidebar sticky top-4 bg-white shadow-lg rounded-lg p-6 mx-auto my-8 max-w-sm hidden lg:block">
+        {/* <aside
+  className="profile-sidebar sticky top-4 bg-white shadow-lg rounded-lg p-6 mx-auto my-8 max-w-sm block lg:hidden"
+  style={{ display: 'none !important' }}
+>
   <div className="profile-info text-center">
-    {/* Show the uploaded avatar image or fallback to the first letter of the first name */}
+    {
     {avatarUrl ? (
       <img
         src={avatarUrl}
@@ -230,7 +248,7 @@ const Profile = () => {
       Edit Profile
     </Link>
   </div>
-</aside>
+</aside> */}
 
           <div className="reading-list">
             <div className="reading-list-header"> 
@@ -268,67 +286,83 @@ const Profile = () => {
               ) : (
                 blogs.map((blog) => (
                   <article
-                  key={blog.blogId} // Assuming blogId is a unique key
-                  className="relative flex flex-col sm:flex-row bg-white transition hover:shadow-xl mb-6"
-                  style={{ padding: "10px" }}
-                >
-                  {/* Image */}
-                  <div className="w-full sm:w-auto sm:basis-56 mb-4 sm:mb-0">
-                    <img
-                      alt="Blog cover"
-                      src={`${blog.blogImage}`}
-                      className="aspect-square h-auto w-full object-cover"
-                    />
-                  </div>
-                
-                  {/* Content */}
-                  <div className="flex flex-1 flex-col justify-between">
-                    <div className="border-t sm:border-t-0 sm:border-l border-gray-300 p-4 sm:p-6">
-                      <a href="#">
-                        <h3 className="font-bold uppercase text-gray-900">
-                          {blog.blogTitle}
-                        </h3>
-                      </a>
-                
-                      <p className="mt-2 line-clamp-3 text-sm text-gray-700">
-                        {blog.blogContent}
-                      </p>
-                    </div>
-                
-                    <div className="p-4 sm:p-6">
-                      <p className="text-xs text-black-500">
-                        <span className="font-semibold">
-                          <b>Written by :</b>
-                        </span>{" "}
-                        <b className="text-indigo-600">{blog.writer}</b>
-                      </p>
-                      <p className="text-xs text-black-100">
-                        <span className="font-semibold">
-                          <b>Category :</b>
-                        </span>{" "}
-                        <b className="text-indigo-600">{blog.category}</b>
-                      </p>
-                    </div>
-                
-                    {/* Buttons */}
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2">
-                      <button
-                        className="block bg-red-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-red-600"
-                        onClick={() => handleDeleteBlog(blog.id)}
-                      >
-                        Delete Blog
-                      </button>
-                
-                      <Link
-                        to={`/blogs/${blog.id}`}
-                        className="block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400"
-                      >
-                        Read Blog
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-                
+  key={blog.blogId} // Assuming blogId is a unique key
+  className="relative flex flex-col sm:flex-row bg-white transition hover:shadow-xl mb-6"
+  style={{ padding: "10px" }}
+>
+  {/* Edit Button (Icon at the top-right corner) */}
+  <button
+  // onClick={() => handleEditBlog(blog.id)} 
+  className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition "
+  title="Edit Blog"
+>
+<FontAwesomeIcon icon={faPenToSquare} />
+  
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth="2"
+    d="M11 3h2v12h-2zM4 11h2v2H4zM4 14h2v2H4z"
+  />
+</button>
+
+
+
+  {/* Image */}
+  <div className="w-full sm:w-auto sm:basis-56 mb-4 sm:mb-0">
+    <img
+      alt="Blog cover"
+      src={`${blog.blogImage}`}
+      className="aspect-square h-auto w-full object-cover"
+    />
+  </div>
+
+  {/* Content */}
+  <div className="flex flex-1 flex-col justify-between">
+    <div className="border-t sm:border-t-0 sm:border-l border-gray-300 p-4 sm:p-6">
+      <a href="#">
+        <h3 className="font-bold uppercase text-gray-900">{blog.blogTitle}</h3>
+      </a>
+
+      <p className="mt-2 line-clamp-3 text-sm text-gray-700">
+        {blog.blogContent}
+      </p>
+    </div>
+
+    <div className="p-4 sm:p-6">
+      <p className="text-xs text-black-500">
+        <span className="font-semibold">
+          <b>Written by :</b>
+        </span>{" "}
+        <b className="text-indigo-600">{blog.writer}</b>
+      </p>
+      <p className="text-xs text-black-100">
+        <span className="font-semibold">
+          <b>Category :</b>
+        </span>{" "}
+        <b className="text-indigo-600">{blog.category}</b>
+      </p>
+    </div>
+
+    {/* Buttons */}
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2">
+      <button
+        className="block bg-red-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-red-600"
+        onClick={() => handleDeleteBlog(blog.id)}
+      >
+        Delete Blog
+      </button>
+
+      <Link
+        to={`/blogs/${blog.id}`}
+        className="block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400"
+      >
+        Read Blog
+      </Link>
+    </div>
+  </div>
+</article>
+
 
                 ))
               )}

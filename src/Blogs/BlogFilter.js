@@ -9,6 +9,8 @@ const BlogFilter = ({ onCategoryClick }) => {
   };
 
   return (
+    <>
+   
     <div className="p-6 bg-white rounded-lg shadow-md border border-gray-300">
       <h2 className="text-xl font-bold mb-4 text-teal-500">Recommended Blogs</h2>
       <div className="grid grid-cols-2 gap-4">
@@ -69,6 +71,7 @@ const BlogFilter = ({ onCategoryClick }) => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 

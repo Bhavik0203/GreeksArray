@@ -7,6 +7,7 @@ import Footer from "../Footer/Footer";
 import blogimg from "../assets/Images/banners/blogimg2.png";
 import BlogFilter from "./BlogFilter";
 import PacmanLoader from 'react-spinners/PacmanLoader';
+import { Helmet } from "react-helmet";
 
 const Allblogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -93,31 +94,39 @@ useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  if (loading) {
-    return (
-      // <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      //   <p className="text-xl font-semibold text-green-500 animate-pulse">
-      //     Loading...
-      //   </p>
-      // </div>
-      <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundColor: 'white', // Optional background color
-      }}
-    >
-      {loading && <PacmanLoader size={50} color="#000" />}
-    </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     // <div className="flex justify-center items-center min-h-screen bg-gray-100">
+  //     //   <p className="text-xl font-semibold text-green-500 animate-pulse">
+  //     //     Loading...
+  //     //   </p>
+  //     // </div>
+  //     <div
+  //     style={{
+  //       display: 'flex',
+  //       justifyContent: 'center',
+  //       alignItems: 'center',
+  //       height: '100vh',
+  //       backgroundColor: 'white', // Optional background color
+  //     }}
+  //   >
+  //     {loading && <PacmanLoader size={50} color="#000" />}
+  //   </div>
+  //   );
+  // }
 
   if (error) return <p>Error: {error}</p>;
 
   return (
     <>
+    <Helmet>
+        <title> Allblogs - GeeksArray</title>
+        <meta name="description" content="Welcome to My Awesome Website. Discover our services and explore more through our latest notices and updates." />
+        <meta name="keywords" content="Awesome Website, React, SEO, Notices, Services" />
+        <meta property="og:title" content="Home - My Awesome Website" />
+ 
+     
+      </Helmet>
       <section>
         <Header />
         <br></br>
