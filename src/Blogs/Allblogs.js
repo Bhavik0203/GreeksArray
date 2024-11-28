@@ -152,6 +152,27 @@ useEffect(() => {
 
   if (error) return <p>Error: {error}</p>;
 
+  const getTimeAgo = (date) => {
+    const now = new Date();
+    const postedDate = new Date(date);
+    
+    const diffInMillis = now - postedDate; // Difference in milliseconds
+    const diffInSeconds = Math.floor(diffInMillis / 1000); // Convert to seconds
+    const diffInMinutes = Math.floor(diffInSeconds / 60); // Convert to minutes
+    const diffInHours = Math.floor(diffInMinutes / 60); // Convert to hours
+    const diffInDays = Math.floor(diffInHours / 24); // Convert to days
+    
+    if (diffInDays > 0) {
+      return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
+    } else if (diffInHours > 0) {
+      return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
+    } else if (diffInMinutes > 0) {
+      return `${diffInMinutes} minute${diffInMinutes > 1 ? 's' : ''} ago`;
+    } else {
+      return `${diffInSeconds} second${diffInSeconds > 1 ? 's' : ''} ago`;
+    }
+  };
+
   return (
     <>
     <Helmet>
@@ -298,7 +319,7 @@ useEffect(() => {
         {/* Image on the left side */}
         <div className="mr-4">
           <img
-            src={`${blog.blogImage}`}
+            src={`${blog.blogImage !== null && blog.blogImage.length > 1 ? blog.blogImage[0] : blog.blogImage}`}
             alt="Blog thumbnail"
             className="w-40 h-28 object-cover rounded-md"style={{ justifyContent:'center' }}
           />
@@ -323,12 +344,12 @@ useEffect(() => {
           <span className="font-semibold">by</span>
           <span className="text-orange-500">{blog.writer}</span><br></br>
           <span className="font-semibold">in</span>
-            <span className="font-semibold" style={{color:"black"}}>{blog.tags}</span>
+          <span className="font-semibold" style={{color:"black"}}>{ blog.tags.join(', ') }</span>
             
           </div>
           <div className="flex items-center space-x-4 text-gray-500 text-sm mt-3" style={{ padding: '10px 0 0 10px' }}>
-            <span>{blog.datePosted} ago</span>
-            <button
+          <span> {getTimeAgo(blog.updatedAt)} </span>
+          <button
   onClick={handleLikeClick}
   className={`flex items-center space-x-1 transition ${
     isLiked ? 'text-blue-500' : 'text-gray-500'
@@ -336,7 +357,7 @@ useEffect(() => {
 >
   <FontAwesomeIcon icon={faThumbsUp} className="text-xl" />
   
-  <span className="likes-count">{likes.length}</span>
+  <span className="likes-count">{blog.likes.length}</span>
 </button>
 <button
   onClick={() => {}}
@@ -344,7 +365,7 @@ useEffect(() => {
 >
   <FontAwesomeIcon icon={faComment} className="text-xl" />
   
-  <span className="comment-count">{comments.length}</span>
+  <span className="comment-count">{blog.comments.length}</span>
 </button>
 
             <span className="flex items-center space-x-1">
@@ -410,7 +431,7 @@ useEffect(() => {
           className="flex items-center space-x-2"
         >
            <img
-            src={`${blog.blogImage}`}
+            src={`${blog.blogImage !== null && blog.blogImage.length > 1 ? blog.blogImage[0] : blog.blogImage}`}
             alt="Recent Post Icon"
             className="w-11 h-11 rounded-full"
           />

@@ -48,7 +48,7 @@ const Header = ({ show }) => {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
       axios
-        .get('http://geeksarray-001-site5.atempurl.com/api/User?isActive=true', {
+        .get('http://geeksarray-001-site5.atempurl.com/api/User', {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -77,7 +77,7 @@ const Header = ({ show }) => {
     if (token) {
       try {
         const response = await axios.get(
-          "http://geeksarray-001-site5.atempurl.com/api/User?isActive=true",
+          "http://geeksarray-001-site5.atempurl.com/api/User",
           {
             headers: {
               Authorization: `Bearer ${token}`,
