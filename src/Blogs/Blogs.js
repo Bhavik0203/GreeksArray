@@ -208,8 +208,6 @@ const Blog = ({ readOnly = false }) => {
       axios
         .post('http://geeksarray-001-site5.atempurl.com/api/Blog/comment', formData)
         .then(response => {
-          console.log('Comment successful:', response.data);
-    
           // Constructing a new comment object based on the response
           const newComment = {
             id: response.data.id, // Assuming the response contains the new comment's ID
@@ -234,9 +232,8 @@ const Blog = ({ readOnly = false }) => {
           setNewloading(false); // Set loading to false after the request is complete
         });
     };
-    const handleDeleteComment = async (blogId, id) => {
-      if (!blogId || !id) {
-        console.error("blogId or id is undefined");
+    const handleDeleteComment = async (blogId, commentId) => {
+      if (!blogId || !commentId) {
         return; // Exit the function early if any required param is not defined
       }
     
@@ -249,7 +246,7 @@ const Blog = ({ readOnly = false }) => {
         console.log(blogId)
         const formData = new FormData();
         formData.append("blogId", blogId); // Include blogId
-        formData.append("id", id); // Include comment ID
+        formData.append("id", commentId); // Include comment ID
     
         const response = await fetch(`http://geeksarray-001-site5.atempurl.com/api/Blog/Comment?isActive=false`, {
           method: "POST",
@@ -260,9 +257,6 @@ const Blog = ({ readOnly = false }) => {
         });
     
         if (response.ok) {
-          // Show a success notification or popup
-          alert('Comment deleted successfully!');
-    
           // Optionally, refresh the comments list without reloading the page
           window.location.reload(); // Reload the page to reflect the deletion
         } else {
@@ -463,7 +457,7 @@ const Blog = ({ readOnly = false }) => {
           <button
           className="mt-2 block bg-red-500 px-5 py-2 text-center text-xs font-bold uppercase text-white transition duration-150 ease-in-out focus:outline-none focus:ring focus:ring-red-300"
           onClick={() => {
-            handleDeleteComment(blogId, comment.id); // Pass the blogId, commentId
+            handleDeleteComment(blog.id, comment.id); // Pass the blogId, commentId
           }}
         >
           Delete
