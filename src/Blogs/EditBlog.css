@@ -1,68 +1,63 @@
-/* Container for the Edit Blog Form */
 .edit-blog-container {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    border: 1px solid #ddd;
     border-radius: 8px;
+    background-color: #f9f9f9;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
-  /* Form Fields Styling */
+  .edit-blog-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .edit-blog-form label {
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
   .edit-blog-form input,
   .edit-blog-form textarea {
     width: 100%;
-    margin-bottom: 15px;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .blog-title-input {
-    font-weight: bold;
-  }
-  
-  .blog-content-input {
-    height: 100px;
-    resize: none;
-  }
-  
-  /* Tags Section */
-  .tags-input {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  /* Upload Section */
-  .image-upload-section {
+    margin-top: 5px;
     margin-bottom: 15px;
-    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
   }
   
-  .camera-icon {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
+  .edit-blog-form textarea {
+    height: 100px;
+    resize: vertical;
   }
   
-  /* Publish Button */
-  .publish-button {
+  .save-button {
     display: block;
     width: 100%;
     padding: 10px;
     background-color: #007bff;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
+    color: #fff;
     border: none;
     border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
   }
   
-  .publish-button:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
+  .save-button:hover {
+    background-color: #0056b3;
   }
   
+  .edit-blog-form strong {
+    font-size: 14px;
+    color: #333;
+  }
+  .image-upload-section img {
+    cursor: pointer;
+    margin: 5px;
+  }
+    

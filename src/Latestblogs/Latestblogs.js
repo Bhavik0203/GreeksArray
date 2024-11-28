@@ -56,7 +56,7 @@ const Latestblogs = () => {
           .sort((a, b) => b.id - a.id) // Sort blogs by id in descending order
           .slice(0, 3) // Display only the first three blog posts
           .map((blog) => (
-            <div key={blog.slug} className="bg-white rounded overflow-hidden shadow-md flex flex-col">
+            <div key={blog.id} className="bg-white rounded overflow-hidden shadow-md flex flex-col">
               <img
                 src={`${blog.blogImage !== null && blog.blogImage.length > 1 ? blog.blogImage[0] : blog.blogImage}`} // Fallback image if `imageUrl` is missing
                 alt={blog.title || 'Blog Image'}
@@ -71,8 +71,8 @@ const Latestblogs = () => {
                   ...
                 </p>
               </div>
-              <Link 
-                to={`/blogs/${blog.slug}`}// Link to the detailed blog page
+              <Link
+          to={`/blogs/${blog.slug}`}// Link to the detailed blog page
                 className="mt-4 inline-block px-4 py-2 rounded bg-purple-600 hover:bg-purple-700 text-white text-center text-[13px] mb-4"
               >
                 Read More

@@ -354,13 +354,22 @@ useEffect(() => {
               ? `${blog.blogDescription.substring(0, 180)}...`
               : blog.blogDescription}
           </p>
-          <div className="flex items-center space-x-2 text-sm text-gray-500" style={{ padding: '10px 0 0 10px' }}>
-          <span className="font-semibold">by</span>
-          <span className="text-orange-500">{blog.writer}</span><br></br>
-          <span className="font-semibold">in</span>
-          <span className="font-semibold" style={{color:"black"}}>{ blog.tags.join(', ') }</span>
-            
-          </div>
+          <div
+              className="flex flex-col items-start space-x-2 text-sm text-gray-500"
+              style={{ padding: '10px 0 0 10px' }}
+            >
+              <div className="flex items-center space-x-2">
+                <span className="font-semibold">by</span>
+                <span className="text-orange-500">{blog.writer}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="font-semibold">in</span>
+                <span className="font-semibold" style={{ color: 'black' }}>
+                  {blog.tags.join(', ')}
+                </span>
+              </div>
+            </div>
+
           <div className="flex items-center space-x-4 text-gray-500 text-sm mt-3" style={{ padding: '10px 0 0 10px' }}>
           <span> {getTimeAgo(blog.updatedAt)} </span>
           <button
@@ -460,7 +469,10 @@ useEffect(() => {
             : blog.blogDescription}
         </span>
         <p className="text-sm text-gray-500">
-          By <span className="text-orange-500">{blog.writer}</span> in {blog.tags}
+          By <span className="text-orange-500">{blog.writer}</span>
+        </p>
+        <p className="text-sm text-gray-500">
+          in {blog.tags}
         </p>
         
         {/* Using writer and category from the API */}

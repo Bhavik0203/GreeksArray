@@ -359,25 +359,25 @@ const Blog = ({ readOnly = false }) => {
               </div>
             </div>
             {blog.blogImage && Array.isArray(blog.blogImage) && blog.blogImage.length > 0 ? (
-  <div className="mt-6 mb-6" style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-    {blog.blogImage.map((imageUrl, index) => (
-      <img
-        key={index}
-        src={imageUrl} // Render each image URL
-        alt={`Blog Image ${index + 1}`}
-        style={{
-          width: "300px", // Adjust the width of each image
-          height: "200px", // Adjust the height of each image
-          objectFit: "cover",
-          borderRadius: "8px",
-          boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-        }}
-      />
-    ))}
-  </div>
-) : (
-  <p>No images available</p> // Fallback if no images are found
-)}
+                  <div className="mt-6 mb-6" style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                    {blog.blogImage.map((imageUrl, index) => (
+                      <img
+                        key={index}
+                        src={imageUrl} // Render each image URL
+                        alt={`Blog Image ${index + 1}`}
+                        style={{
+                          width: "300px", // Adjust the width of each image
+                          height: "200px", // Adjust the height of each image
+                          objectFit: "cover",
+                          borderRadius: "8px",
+                          boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                        }}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <p>No images available</p> // Fallback if no images are found
+                )}
 
               {/* <div style={styles.contactDetails}>
                         <h4>Email</h4>
@@ -520,7 +520,7 @@ const Blog = ({ readOnly = false }) => {
                    Blog Written By <b className="text-indigo-600">{blog.writer}</b>!
                   </h1>
                   <p className="text-gray-600 text-lg">
-                    Category: <b className="text-indigo-600">{blog.category}</b>
+                    Tags: <b className="text-indigo-600">{blog.tags}</b>
                   </p>
                   <p className="text-gray-600 mt-4">
                     {blog.excerpt || " Click to read more to See more Blogs..."}
