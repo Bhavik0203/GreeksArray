@@ -150,52 +150,53 @@ const Profile = () => {
       setIsLoading(false); // Reset loading state
     }
   };
-  const handleDeleteBlog = async (blogId) => {
-    if (!blogId) {
-      console.error("blogId is undefined");
-      return; // Exit the function early if blogId is not defined
+  const handleDeleteBlog = async (slug) => { 
+    if (!slug) {
+        console.error("bhav is undefined");
+        return; // Exit the function early if blogId is not defined
     }
 
     // Add confirmation alert
     const confirmDeletion = window.confirm("Are you sure you want to delete this blog?");
     if (!confirmDeletion) {
-      return; // Exit if the user cancels the deletion
+        return; // Exit if the user cancels the deletion
     }
 
     try {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        alert('Authentication token not found. Please log in.');
-        return;
-      }
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+            alert('Authentication token not found. Please log in.');
+            return;
+        }
 
-      const formData = new FormData();
-      formData.append("id", blogId);
+        // Create FormData and append blog ID
+        const formData = new FormData();
+        formData.append("id", slug);
 
-      const response = await fetch("http://geeksarray-001-site5.atempurl.com/api/Blog?isActive=false", {
-        method: "POST",
-        body: formData,
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+        // Make the DELETE API call
+        const response = await fetch("http://geeksarray-001-site5.atempurl.com/api/Blog?isActive=false", {
+            method: "POST",
+            body: formData,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
 
-      if (response.ok) {
-        // Show a success notification or popup
-        alert('Blog deleted successfully!'); // You can replace this with a custom modal or notification component if needed
-
-        // Refresh the page after successful deletion
-        window.location.reload();
-      } else {
-        // If response is not okay, log the status and show an error message
-        console.error("Failed to delete the blog. Status code:", response.status);
-        alert('Failed to delete the blog. Please try again.');
-      }
+        if (response.ok) {
+            // Success action
+            alert('Blog deleted successfully!');
+            window.location.reload();
+        } else {
+            // Error action
+            console.error("Failed to delete the blog. Status code:", response.status);
+            alert('Failed to delete the blog. Please try again.');
+        }
     } catch (error) {
-      console.error("Error deleting blog:", error);
-      alert('An error occurred. Please try again.');
+        console.error("Error deleting blog:", error);
+        alert('An error occurred. Please try again.');
     }
 };
+
 
   
 
@@ -262,100 +263,158 @@ const Profile = () => {
             </div>
             <div className="divider"></div>
             <div className="blog-list">
-              {blogs.length === 0 ? (
-                <div className="flex flex-col items-center">
-                  <img
-                    src={blog}
-                    alt="No blogs found GIF"
-                    className="mt-4"
-                    style={{
-                      height: "300px",
-                      width: "300px",
-                    }}
-                  />
-                  <p>
-                    It looks like you haven't written any blogs yet. Create your
-                    first blog now!
-                  </p>
-                  <Link to="/Write"
-                  
-                  className="mt-4 inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-white font-semibold shadow-md hover:bg-blue-500 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50">
-                    Add Your Blog Right Now
-                  </Link>
-                </div>
-              ) : (
-                blogs.map((blog) => (
-                  <article
-  key={blog.blogId} // Assuming blogId is a unique key
+            {blogs.length === 0 ? (
+  <div className="flex flex-col items-center">
+    <img
+      src={blog}
+      alt="No blogs found GIF"
+      className="mt-4"
+      style={{
+        height: "300px",
+        width: "300px",
+      }}
+    />
+    <p>
+      It looks like you haven't written any blogs yet. Create your first blog now!
+    </p>
+    <Link
+      to="/Write"
+      className="mt-4 inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-white font-semibold shadow-md hover:bg-blue-500 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50"
+    >
+      Add Your Blog Right Now
+    </Link>
+  </div>
+) : (
+  [...blogs].reverse().map((blog) => (
+    <article
+  key={blog.slug}
   className="relative flex flex-col sm:flex-row bg-white transition hover:shadow-xl mb-6"
-  style={{ padding: "10px" }}
+  style={{
+    padding: "10px",
+    border: "1px solid #e5e7eb", // Light gray border
+    borderRadius: "8px", // Rounded corners
+  }}
 >
-  {/* Edit Button (Icon at the top-right corner) */}
+  {/* Edit Button */}
   <button
-  // onClick={() => handleEditBlog(blog.id)} 
-  className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition "
-  title="Edit Blog"
->
-<FontAwesomeIcon icon={faPenToSquare} />
-  
-  <path
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth="2"
-    d="M11 3h2v12h-2zM4 11h2v2H4zM4 14h2v2H4z"
-  />
-</button>
-
-
+    className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition"
+    title="Edit Blog"
+    style={{
+      background: "transparent",
+      border: "none",
+      cursor: "pointer",
+    }}
+  >
+    <FontAwesomeIcon icon={faPenToSquare} />
+  </button>
 
   {/* Image */}
-  <div className="w-full sm:w-auto sm:basis-56 mb-4 sm:mb-0">
+  <div
+    className="w-full sm:w-auto sm:basis-56 mb-4 sm:mb-0"
+    style={{
+      overflow: "hidden",
+      borderRadius: "8px",
+    }}
+  >
     <img
       alt="Blog cover"
       src={`${blog.blogImage}`}
-      className="aspect-square h-auto w-full object-cover"
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+      }}
     />
   </div>
 
   {/* Content */}
   <div className="flex flex-1 flex-col justify-between">
-    <div className="border-t sm:border-t-0 sm:border-l border-gray-300 p-4 sm:p-6">
+    <div
+      className="border-t sm:border-t-0 sm:border-l border-gray-300 p-4 sm:p-6"
+      style={{
+        borderTop: "1px solid #e5e7eb",
+        borderLeft: "1px solid #e5e7eb",
+      }}
+    >
       <a href="#">
-        <h3 className="font-bold uppercase text-gray-900">{blog.blogTitle}</h3>
+        <h3
+          className="font-bold uppercase text-gray-900"
+          style={{
+            fontSize: "1.125rem", // Slightly larger font size
+            marginBottom: "0.5rem",
+          }}
+        >
+          {blog.blogTitle}
+        </h3>
       </a>
 
-      <p className="mt-2 line-clamp-3 text-sm text-gray-700">
+      <p
+        className="mt-2 line-clamp-3 text-sm text-gray-700"
+        style={{
+          fontSize: "0.875rem",
+          lineHeight: "1.5",
+          color: "#374151",
+        }}
+      >
         {blog.blogContent}
       </p>
     </div>
 
-    <div className="p-4 sm:p-6">
+    <div
+      className="p-4 sm:p-6"
+      style={{
+        fontSize: "0.75rem",
+        lineHeight: "1.25",
+        color: "#6b7280",
+      }}
+    >
       <p className="text-xs text-black-500">
         <span className="font-semibold">
           <b>Written by :</b>
         </span>{" "}
-        <b className="text-indigo-600">{blog.writer}</b>
+        <b style={{ color: "#4f46e5" }}>{blog.writer}</b>
       </p>
       <p className="text-xs text-black-100">
-        <span className="font-semibold">
-          <b>Category :</b>
-        </span>{" "}
-        <b className="text-indigo-600">{blog.category}</b>
-      </p>
+  <span className="font-semibold">
+    <b>Tags :</b>
+  </span>
+  {Array.isArray(blog.tags) &&
+    blog.tags.map((tag, index) => (
+      <b key={index} style={{ color: "#4f46e5" }}>
+        {tag.trim()}
+        {index < blog.tags.length - 1 && ", "}
+      </b>
+    ))}
+</p>
+
     </div>
 
     {/* Buttons */}
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2">
+    <div
+      className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2"
+      style={{ padding: "0.5rem 0" }}
+    >
       <button
-        className="block bg-red-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-red-600"
-        onClick={() => handleDeleteBlog(blog.id)}
-      >
-        Delete Blog
-      </button>
+    className="block bg-red-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-red-600"
+    onClick={() => handleDeleteBlog(blog.Id)}
+    style={{
+        borderRadius: "4px",
+        padding: "10px 20px",
+        cursor: "pointer",
+    }}
+>
+    Delete Blog
+</button>
+
 
       <Link
-        to={`/blogs/${blog.id}`}
+        to={`/blogs/${blog.slug}`}
         className="block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400"
+        style={{
+          borderRadius: "4px",
+          padding: "10px 20px",
+          textDecoration: "none",
+        }}
       >
         Read Blog
       </Link>
@@ -363,9 +422,9 @@ const Profile = () => {
   </div>
 </article>
 
+  ))
+)}
 
-                ))
-              )}
             </div>
             
           </div>

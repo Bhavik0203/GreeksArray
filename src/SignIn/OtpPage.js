@@ -32,6 +32,7 @@ const OtpPage = () => {
     try {
       // Update password with OTP
       await axios.post(`http://geeksarray-001-site5.atempurl.com/api/Auth/forgetPassword?email=${email}&updatedPassword=${updatePassword}&otp=${otpCode}`);
+      
       setSuccess("Password updated successfully.");
       navigate("/Sign-in"); // Redirect to Sign In page
     } catch (err) {

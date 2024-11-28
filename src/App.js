@@ -21,6 +21,9 @@ import PrivateRoute from "./PrivateRoute";
 import CodeSnippetButton from "./DefaultEditor/CodeSnippetButton";
 import ForgotPassword from "./SignIn/ForgotPassword";
 import OtpPage from "./SignIn/OtpPage";
+import EmailVerification from "./Register/EmailVerification";
+import TagsPage from "./Register/TagsPage";
+import CongratulationsPage from "./Register/CongratulationsPage.js";
 
 
 
@@ -30,7 +33,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blogslider" element={<Blogslider />} />
-        <Route path="/blogs/:blogId" element={<Blogs />} />
+        <Route path="/blogs/:slug" element={<Blogs />} />
         <Route path="/blogs" element={<Allblogs />} />
         <Route path="/Sign-In" element={<SignIn />} />
         <Route path="/Register" element={<Register />} />
@@ -56,6 +59,9 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/terms&conditions" element={<Termsandcodition />} />
         <Route path="/blognew" element={<BlogNew />} />
+        <Route path="/Email-Verification" element={<EmailVerification/>} />
+        <Route path="/Tags" element={<TagsPage/>} />
+        <Route path="/Congo" element={<CongratulationsPage/>} />
         {/* <Route path="/new-story" element={<Newstory />} /> */}
       </Routes>
     </Router>

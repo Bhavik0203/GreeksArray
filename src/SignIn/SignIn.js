@@ -127,17 +127,19 @@ const SignIn = () => {
         </div>
 
         <div className="relative w-full sm:h-64 lg:w-2/6 lg:h-80 mx-auto">
-          <img
-            alt="Sign In"
-            src={visual}
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{
-              width: "300px",
-              height: "430px",
-              objectFit: "cover",
-              marginBottom: "0",
-            }} 
-          />
+        <img
+  alt="Sign In"
+  src={visual}
+  className="absolute inset-0 object-cover"
+  style={{
+    width: "300px",
+    height: "430px",
+    objectFit: "cover",
+    marginBottom: "0",
+    display: window.innerWidth <= 768 ? "none" : "block", // Hide on screens 768px or smaller
+  }}
+/>
+
         </div>
       </section>
       <Footer />

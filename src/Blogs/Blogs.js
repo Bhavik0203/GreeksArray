@@ -18,7 +18,6 @@ import { Helmet } from "react-helmet";
 
 const Blog = ({ readOnly = false }) => {
   const { blogId } = useParams(); // Extract blogId from the URL parameters
-  const { slug } = useParams(); // Extract blogId from the URL parameters
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [blog, setBlog] = useState(null); // Initialize 'blog' and 'setBlog'
@@ -31,15 +30,16 @@ const Blog = ({ readOnly = false }) => {
   const moreOptionsRef = useRef(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isLiked, setIsLiked] = useState(false); 
+  const { slug } = useParams(); 
   const commentInputRef = useRef(null);
   const [newloading, setNewloading] = useState(false);
   const [showAll, setShowAll] = useState(false);
   // const firstName = user?.firstName || 'Unknown'; // Use optional chaining
 
-  // Fetch blog details when blogId changes
+  // Fetch blog details when slug changes
   useEffect(() => {
     const fetchBlogDetails = async () => {
-      console.log(`Fetching details for blog ID: ${blogId}`); // Log blog ID
+      console.log(`Fetching details for blog ID: ${slug}`); // Log blog ID
       try {
         const response = await fetch(`http://geeksarray-001-site5.atempurl.com/api/Blog?slug=${slug}`);
         if (!response.ok) {
@@ -58,8 +58,8 @@ const Blog = ({ readOnly = false }) => {
       }
     };
 
-    if (blogId) fetchBlogDetails(); // Only fetch if blogId is defined
-  }, [blogId]);
+    if (slug) fetchBlogDetails(); // Only fetch if slug is defined
+  }, [slug]);
 
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
@@ -72,7 +72,7 @@ const Blog = ({ readOnly = false }) => {
   useEffect(() => {
     // Fetch the blog data from the API
     axios
-      .get(`http://geeksarray-001-site5.atempurl.com/api/Blog?blogId=${blogId}&myBlogs=false`)
+      .get(`http://geeksarray-001-site5.atempurl.com/api/Blog?slug=${slug}&myBlogs=false`)
       .then(response => {
         if (response.data && response.data.length > 0) {
           const blogData = response.data[0];
@@ -87,15 +87,15 @@ const Blog = ({ readOnly = false }) => {
         }
       })
       .catch(error => console.error('Error fetching the blog data:', error));
-  }, [blogId]);
+  }, [slug]);
 
   const handleLikeClick = () => {
-    if (!blog) return;
+    if (!slug) return;
 
     var formData = new FormData();
-    formData.append("blogId", blogId);
+    formData.append("id", 0);
     formData.append("isLiked", !isLiked); // Toggle the like status
-
+    formData.append("blogId",blogId)
     // Set the authorization header
     axios.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem("authToken")}`;
 
@@ -104,19 +104,19 @@ const Blog = ({ readOnly = false }) => {
       .post('http://geeksarray-001-site5.atempurl.com/api/Blog/likes', formData)
       .then(response => {
         console.log('Like successful:', response.data);
-        setIsLiked(!isLiked); // Toggle the liked status in the state
-        setLikes(prevLikes => isLiked ? prevLikes - 1 : prevLikes + 1); // Adjust the like count
+        setIsLiked(!isLiked); 
+        setLikes(prevLikes => isLiked ? prevLikes - 1 : prevLikes + 1); 
       })
       .catch(error => console.error('Error liking the blog:', error));
   };
 
-  // Toggle more options dropdown
+ 
   const handleMoreOptions = () => {
     setShowMoreOptions((prevState) => !prevState);
-    console.log("More options toggled."); // Log when more options are toggled
+    console.log("More options toggled."); 
   };
 
-  // Handle share functionality
+
   const handleShare = (platform) => {
     let shareUrl = "";
     const message = "Check out this content!";
@@ -362,17 +362,27 @@ const Blog = ({ readOnly = false }) => {
                 )}
               </div>
             </div>
-            {blog.blogImage && (
-              <div className="mt-6 mb-6">
-              <img
-                src={`${blog.blogImage}`}
-                alt="blog"
-                style={{ width: "100%" , height: "600px" }}
-                className="object-cover"
-              />
-              </div>
+            {blog.blogImage && Array.isArray(blog.blogImage) && blog.blogImage.length > 0 ? (
+  <div className="mt-6 mb-6" style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+    {blog.blogImage.map((imageUrl, index) => (
+      <img
+        key={index}
+        src={imageUrl} // Render each image URL
+        alt={`Blog Image ${index + 1}`}
+        style={{
+          width: "300px", // Adjust the width of each image
+          height: "200px", // Adjust the height of each image
+          objectFit: "cover",
+          borderRadius: "8px",
+          boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+        }}
+      />
+    ))}
+  </div>
+) : (
+  <p>No images available</p> // Fallback if no images are found
+)}
 
-              )}
               {/* <div style={styles.contactDetails}>
                         <h4>Email</h4>
                         <div style={styles.email}>

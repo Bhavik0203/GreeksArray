@@ -7,8 +7,6 @@ import axios from 'axios';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-
-
 const Newstory = () => {
   
   const { state } = useLocation();

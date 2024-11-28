@@ -1,10 +1,11 @@
 import "./Hero.css";
 import Header from "../Header/Header";
 import banner from "../assets/Images/banners/banner8.png";
-import Blogslider from "../Blogslider/Blogslider";
+// import Blogslider from "../Blogslider/Blogslider";
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import { Helmet } from "react-helmet";
+
 
 
 const Hero = () => {
@@ -87,6 +88,7 @@ const Hero = () => {
         className=" object-cover"
       />
     </div>
+    {/* <ImageSlider/> */}
   </div>
 
 </div>

@@ -38,72 +38,77 @@ const Register = () => {
     setFormdata({ ...formdata, [name]: value });
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file && file.size > 5 * 1024 * 1024) { // 5 MB limit
-      alert("File size exceeds 5 MB limit.");
-      event.target.value = null; // Clear the file input
-    }
-  };
+  // const handleFileChange = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file && file.size > 5 * 1024 * 1024) { // 5 MB limit
+  //     alert("File size exceeds 5 MB limit.");
+  //     event.target.value = null; // Clear the file input
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { password, confirmPassword, userName } = formdata;
+    const { password, confirmPassword, userName, email } = formdata;
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
+        setError("Passwords do not match.");
+        return;
     }
 
     // Validate userName
-    const usernameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$/;
+    const usernameRegex = /^.{8,15}$/; // Matches any characters between 8-15
     if (!usernameRegex.test(userName)) {
-      setError("Username must be 8-15 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character.");
-      return;
+        setError("Username must be 8-15 characters long.");
+        return;
     }
+    
 
     // Add avatarId to formdata
     const payload = {
-      firstName: formdata.firstName,
-      lastName: formdata.lastName,
-      userName: formdata.userName,
-      email: formdata.email,
-      password: formdata.password,
-      avatarId: selectedAvatar !== null ? selectedAvatar + 1 : null // Ensure it is between 1 and 10
+        firstName: formdata.firstName,
+        lastName: formdata.lastName,
+        userName: formdata.userName,
+        email: formdata.email,
+        password: formdata.password,
+        avatarId: selectedAvatar !== null ? selectedAvatar + 1 : null, // Ensure it is between 1 and 10
     };
 
     try {
-      const response = await axios.post(
-        "http://geeksarray-001-site5.atempurl.com/api/Auth/signup",
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+        const response = await axios.post(
+            "http://geeksarray-001-site5.atempurl.com/api/Auth/signup",
+            payload,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        console.log("Form submitted successfully:", response.data);
+        const token = response.data.token;
+        if (token) {
+            localStorage.setItem("authToken", token);
         }
-      );
 
-      console.log("Form submitted successfully:", response.data);
-      const token = response.data.token;
-      if (token) {
-        localStorage.setItem("authToken", token);
-      }
+        // Store email in localStorage
+        localStorage.setItem("userEmail", email);
 
-      setIsSubmitted(true);
-      setError("");
-      setShowPopup(true); // Show the popup on success
+        setIsSubmitted(true);
+        setError("");
+        setShowPopup(true); // Show the popup on success
 
-      setTimeout(() => {
-        setShowPopup(false);
-        navigate("/Sign-in"); // Redirect after 3 seconds
-      }, 3000); // 3-second delay for popup
+        setTimeout(() => {
+            setShowPopup(false);
+            navigate("/Email-Verification"); // Redirect after 3 seconds
+        }, 3000); // 3-second delay for popup
 
     } catch (err) {
-      console.error("Error submitting form:", err);
-      setError("Failed to submit form. Please try again.");
-      setIsSubmitted(false);
+        console.error("Error submitting form:", err);
+        setError("Failed to submit form. Please Check and Fill All Field.");
+        setIsSubmitted(false);
     }
-  };
+};
+
 
   return (
     <>
@@ -151,9 +156,9 @@ const Register = () => {
                   value={formdata.userName}
                   onChange={handleChange}
                 />
-                <p style={{ fontSize: '12px' }}>
+                {/* <p style={{ fontSize: '12px' }}>
                   Password must be 8-15 characters long, include uppercase, lowercase, digit, and special character.
-                </p>
+                </p> */}
               </div>
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">Email</label>
@@ -215,7 +220,7 @@ const Register = () => {
               </div>
             </div>
 
-            <div className="mt-8">
+            {/* <div className="mt-8">
               <label className="text-gray-800 text-sm mb-2 block">Upload File (Optional)</label>
               <input
                 type="file"
@@ -224,17 +229,19 @@ const Register = () => {
                 className="border-gray border bg-gray-100 focus:bg-transparent px-4 py-3 text-gray-800 rounded-md text-sm outline-blue-500 transition-all w-full"
                 onChange={handleFileChange}
               />
-            </div>
+            </div> */}
 
             {error && <p className="text-red-500 mt-4">{error}</p>}
 
             <div className="mt-6">
-              <button
-                type="submit"
-                className="bg-[#f3c035] hover:bg-[#f9d76b] text-black font-bold py-2 px-4 rounded"
-              >
-                Sign Up
-              </button>
+            {/* <Link to=""> */}
+  <button
+    type="submit"
+    className="bg-[#f3c035] hover:bg-[#f9d76b] text-black font-bold py-2 px-4 rounded"
+  >
+    Sign Up
+  </button>
+{/* </Link> */}
             </div>
 
             <div className="text-gray-500 mt-4 text-center">
@@ -246,14 +253,14 @@ const Register = () => {
           </form>
         </div>
 
-        {showPopup && (
+        {/* {showPopup && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-6 rounded shadow-lg text-center">
               <h2 className="text-2xl font-bold text-green-600">Sign-Up Successful!</h2>
               <p className="mt-2 text-gray-700">Redirecting to sign-in page...</p>
             </div>
           </div>
-        )}
+        )} */}
 
         <Footer />
       </div>
