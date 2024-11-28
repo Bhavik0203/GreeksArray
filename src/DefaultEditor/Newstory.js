@@ -31,7 +31,6 @@ const Newstory = () => {
   const [blogTitle, setBlogTitle] = useState("");
   const [blogDescription, setBlogDescription] = useState("");
   const [blogContent, setBlogContent] = useState("");
-  const [categoryId, setCategoryId] = useState("");
   // const [categoryName, setCategoryName] = useState("")
   const [showModal, setShowModal] = useState(false);
   const [categories, setCategories] = useState([]); 
@@ -160,7 +159,10 @@ const Newstory = () => {
     formData.append("blogTitle", blogTitle);
     formData.append("blogDescription", blogDescription);
     formData.append("blogContent", blogContent);
-    formData.append("blogImage", imageFiles);
+    
+    for (let i = 0; i < imageFiles.length; i++) {
+      formData.append("blogImage", imageFiles[i]);  // Append each file
+    }
   
     // Add tags as a JSON string
     if (tags.length > 0) {

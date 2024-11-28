@@ -39,7 +39,6 @@ const Blog = ({ readOnly = false }) => {
   // Fetch blog details when slug changes
   useEffect(() => {
     const fetchBlogDetails = async () => {
-      console.log(`Fetching details for blog ID: ${slug}`); // Log blog ID
       try {
         const response = await fetch(`http://geeksarray-001-site5.atempurl.com/api/Blog?slug=${slug}`);
         if (!response.ok) {
@@ -47,7 +46,6 @@ const Blog = ({ readOnly = false }) => {
         }
 
         const data = await response.json();
-        console.log("Fetched blog data:", data); // Log fetched blog data
         setBlog(data[0]); // Assuming `data` is an array, get the first element for display
         setComments(data[0].comments || []);
       } catch (error) {
@@ -72,7 +70,7 @@ const Blog = ({ readOnly = false }) => {
   useEffect(() => {
     // Fetch the blog data from the API
     axios
-      .get(`http://geeksarray-001-site5.atempurl.com/api/Blog?slug=${slug}&myBlogs=false`)
+      .get(`http://geeksarray-001-site5.atempurl.com/api/Blog?slug=${slug}`)
       .then(response => {
         if (response.data && response.data.length > 0) {
           const blogData = response.data[0];
@@ -90,12 +88,11 @@ const Blog = ({ readOnly = false }) => {
   }, [slug]);
 
   const handleLikeClick = () => {
-    if (!slug) return;
+    if (!blog) return;
 
     var formData = new FormData();
-    formData.append("id", 0);
     formData.append("isLiked", !isLiked); // Toggle the like status
-    formData.append("blogId",blogId)
+    formData.append("blogId", blog.id)
     // Set the authorization header
     axios.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem("authToken")}`;
 
@@ -103,7 +100,6 @@ const Blog = ({ readOnly = false }) => {
     axios
       .post('http://geeksarray-001-site5.atempurl.com/api/Blog/likes', formData)
       .then(response => {
-        console.log('Like successful:', response.data);
         setIsLiked(!isLiked); 
         setLikes(prevLikes => isLiked ? prevLikes - 1 : prevLikes + 1); 
       })
@@ -202,7 +198,7 @@ const Blog = ({ readOnly = false }) => {
       const newCommentDescription = commentInputRef.current.value; // Get the comment text
     
       const formData = new FormData();
-      formData.append("blogId", blogId);
+      formData.append("blogId", blog.id);
       formData.append("CommentDescription", newCommentDescription);
     
       axios.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem("authToken")}`;

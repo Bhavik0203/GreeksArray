@@ -150,9 +150,8 @@ const Profile = () => {
       setIsLoading(false); // Reset loading state
     }
   };
-  const handleDeleteBlog = async (slug) => { 
-    if (!slug) {
-        console.error("bhav is undefined");
+  const handleDeleteBlog = async (blogId) => { 
+    if (!blogId) {
         return; // Exit the function early if blogId is not defined
     }
 
@@ -171,7 +170,8 @@ const Profile = () => {
 
         // Create FormData and append blog ID
         const formData = new FormData();
-        formData.append("id", slug);
+        formData.append("id", blogId);
+        formData.append("tags", []);
 
         // Make the DELETE API call
         const response = await fetch("http://geeksarray-001-site5.atempurl.com/api/Blog?isActive=false", {
@@ -320,7 +320,7 @@ const Profile = () => {
   >
     <img
       alt="Blog cover"
-      src={`${blog.blogImage}`}
+      src={`${blog.blogImage !== null && blog.blogImage.length > 1 ? blog.blogImage[0] : blog.blogImage}`}
       style={{
         width: "100%",
         height: "100%",
@@ -398,7 +398,7 @@ const Profile = () => {
     >
       <button
     className="block bg-red-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-red-600"
-    onClick={() => handleDeleteBlog(blog.Id)}
+    onClick={() => handleDeleteBlog(blog.id)}
     style={{
         borderRadius: "4px",
         padding: "10px 20px",

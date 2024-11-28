@@ -58,7 +58,7 @@ const Latestblogs = () => {
           .map((blog) => (
             <div key={blog.slug} className="bg-white rounded overflow-hidden shadow-md flex flex-col">
               <img
-                src={`${blog.blogImage}`} // Fallback image if `imageUrl` is missing
+                src={`${blog.blogImage !== null && blog.blogImage.length > 1 ? blog.blogImage[0] : blog.blogImage}`} // Fallback image if `imageUrl` is missing
                 alt={blog.title || 'Blog Image'}
                 className="w-full h-52 object-cover"
               />
