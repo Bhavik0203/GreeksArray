@@ -27,6 +27,39 @@ const Allblogs = () => {
   const [likes, setLikes] = useState(0);
   const [comments, setComments] = useState([]);
   const [activeTab, setActiveTab] = useState("forYou");
+  
+
+  const handleSearchChange = (event) => {
+    const value = event.target.value.trim().toLowerCase();
+    setSearchValue(value);
+
+    const filtered = blogs.filter((blog) => {
+      const matchesDescription = blog.blogDescription.toLowerCase().includes(value);
+      const matchesTitle = blog.title?.toLowerCase().includes(value);
+      const matchesTags = blog.tags.some((tag) => tag.toLowerCase().includes(value));
+
+      return matchesDescription || matchesTitle || matchesTags;
+    });
+
+    setFilteredBlogs(filtered);
+  };
+
+  const handleCategoryClick = (selectedTag) => {
+    const value = selectedTag.trim().toLowerCase(); // Use the clicked tag as the value
+    setSearchValue(value); // Update the search bar value
+  
+    // Filter blogs based on title, description, or matching any tag
+    const filtered = blogs.filter((blog) => {
+      const matchesDescription = blog.blogDescription.toLowerCase().includes(value);
+      const matchesTitle = blog.title?.toLowerCase().includes(value);
+      const matchesTags = blog.tags.some((tag) => tag.toLowerCase().includes(value));
+  
+      return matchesDescription || matchesTitle || matchesTags;
+    });
+  
+    setFilteredBlogs(filtered); // Update the filtered blogs
+  };
+  
 useEffect(() => {
 
     const timer = setTimeout(() => setLoading(false), 3000); // 3000 milliseconds = 3 seconds
@@ -77,29 +110,10 @@ useEffect(() => {
   }, []);
  
   // Handle search input change
-  const handleSearchChange = (event) => {
-    const value = event.target.value.trim().toLowerCase();
-    setSearchValue(value);
   
-    // Filter blogs based on title, description, or matching any tag
-    const filtered = blogs.filter((blog) => {
-      const matchesDescription = blog.blogDescription.toLowerCase().includes(value);
-      const matchesTitle = blog.title?.toLowerCase().includes(value);
-      const matchesTags = blog.tags.some((tag) => tag.toLowerCase().includes(value));
-  
-      return matchesDescription || matchesTitle || matchesTags;
-    });
-  
-    setFilteredBlogs(filtered);
-  };
   
   // Function to filter blogs by matching exact tags from a selected array
-  const handleCategoryClick = (selectedTag) => {
-    const filteredBlogs = blogs.filter((blog) =>
-      blog.tags.some((tag) => tag.toLowerCase() === selectedTag)
-    );
-    setFilteredBlogs(filteredBlogs);
-  };
+  
   
   
 
@@ -390,6 +404,9 @@ useEffect(() => {
 
             {/* Recommended Blogs */}
             <BlogFilter onCategoryClick={handleCategoryClick} />
+
+{/* Filtered Blogs */}
+
             <div style={{ 
     padding: "25px",
     backgroundColor: "white",
@@ -423,7 +440,7 @@ useEffect(() => {
         </span>
         <p className="text-sm text-gray-500">
           By <span className="text-orange-500">{blog.writer}</span> in {blog.tags}
-        </p>{" "}
+        </p>
         
         {/* Using writer and category from the API */}
         <br></br>

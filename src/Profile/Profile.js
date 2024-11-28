@@ -3,7 +3,7 @@ import "./Profile.css";
 import {Helmet} from "react-helmet";
 import Header from "../Header/Header";
 import doublecheck from "../assets/Images/Blogimg/double-check.gif";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import axios from "axios";
 import blog from "../assets/noblog.gif";
 import User_1 from "../assets/Images/Avatar/user_1.jpg";
@@ -21,7 +21,7 @@ import Footer from "../Footer/Footer";
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -296,17 +296,19 @@ const Profile = () => {
   }}
 >
   {/* Edit Button */}
-  <button
-    className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition"
-    title="Edit Blog"
-    style={{
-      background: "transparent",
-      border: "none",
-      cursor: "pointer",
-    }}
-  >
-    <FontAwesomeIcon icon={faPenToSquare} />
-  </button>
+  <Link to="/EditBlog">
+      <button
+        className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition"
+        title="Edit Blog"
+        style={{
+          background: "transparent",
+          border: "none",
+          cursor: "pointer",
+        }}
+      >
+        <FontAwesomeIcon icon={faPenToSquare} />
+      </button>
+    </Link>
 
   {/* Image */}
   <div
