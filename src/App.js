@@ -24,6 +24,7 @@ import OtpPage from "./SignIn/OtpPage";
 import EmailVerification from "./Register/EmailVerification";
 import TagsPage from "./Register/TagsPage";
 import CongratulationsPage from "./Register/CongratulationsPage.js";
+import EditBlog from "./Blogs/EditBlog.js";
 
 
 
@@ -57,6 +58,7 @@ function App() {
         />
 
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/EditBlog" element={<EditBlog/>} />
         <Route path="/terms&conditions" element={<Termsandcodition />} />
         <Route path="/blognew" element={<BlogNew />} />
         <Route path="/Email-Verification" element={<EmailVerification/>} />

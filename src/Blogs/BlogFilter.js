@@ -65,13 +65,14 @@ const BlogFilter = ({ onCategoryClick }) => {
         <button
           onClick={() => handleButtonClick("reactjs")}
           className={`py-2 px-4 rounded transition duration-300 ${
-            filter === "reactJS"
+            filter === "reactjs" // Match consistently using lowercase
               ? "bg-purple-400 text-white"
               : "bg-purple-200 text-purple-600 hover:bg-purple-500 hover:text-white"
           }`}
         >
-          reactjs
+          ReactJS 
         </button>
+
 
         {/* .NET */}
         <button
