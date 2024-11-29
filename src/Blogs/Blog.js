@@ -6,9 +6,7 @@ import { useParams } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Latestblogs from "../Latestblogs/Latestblogs";
-import CTA from "../CTA/CTA";
 import blogimg from '../assets/Images/banners/blogimg.png';
-import PacmanLoader from 'react-spinners/PacmanLoader';
 import { Link } from "react-router-dom";
 
 const Blogs = ({ readOnly = false }) => {

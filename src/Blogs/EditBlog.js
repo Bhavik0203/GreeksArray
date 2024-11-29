@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./EditBlog.css";
 import camera from "../assets/Images/Blogimg/digital-camera.png";
+import { useLocation, useNavigate } from "react-router-dom";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 const predefinedTags = [
   '.NET','.net','reactjs', '.NET Core', '.NET MAUI', '.NET Standard', 'Active Directory', 'ADO.NET', 'Agile Development', 'AI','AJAX', 'AlbertAGPT', 'Alexa Skills', 'Algorand', 'Algorithms in C#', 'Android', 'Angular', 'ArcObject', 'ASP.NET', 'ASP.NET Core',"Augmented Reality", "Avalanche", "AWS", "Azure", "Backbonejs", "Big Data", "BizTalk Server", "Blazor", "Blockchain", "Bootstrap","Bot Framework", "Business", "Business Intelligence(BI)", "C#", "C# Corner", "C# Strings", "C, C++, MFC", "Career Advice", "Careers and Jobs", "Chapters","ChatGPT", "Cloud", "Coding Best Practices", "Cognitive Services", "COM Interop", "Compact Framework", "Copilot Studio", "Cortana Development", "Cosmos DB", "Cryptocurrency", 
     'Cryptography', 'Crystal Reports', 'CSS', 'Current Affairs', 'Custom Controls', 'Cyber Security', 'Data Mining', 'Data Science','Databases & DBA', 'Design Patterns & Practices', 'DevExpress', 'DevOps', 'DirectX', 'Dynamics CRM', 'Enterprise Development', 'Entity Framework', 'Error Zone', 'Exception Handling',"F#", "Files, Directory, IO", "Flutter", "Games Programming", "GDI+", "Generative AI", "GO", "Google Cloud", "Google Development", "Graphics Design","Graphite Studio", "Hardware", "Hiring and Recruitment", "HoloLens", "How do I", "HTML 5", "Internet & Web", "Internet of Things", "Ionic", "Java","Java and .NET", "JavaScript", "JQuery", "JSON", "JSP", "Knockout", "Kotlin","Kubernetes", "Langchain", "Leadership", "Learn .NET",
@@ -11,43 +14,20 @@ const predefinedTags = [
 ];
 
 const EditBlog = () => {
-  const [blogData, setBlogData] = useState(null);
-  const [blogTitle, setBlogTitle] = useState("");
-  const [blogDescription, setBlogDescription] = useState("");
-  const [blogContent, setBlogContent] = useState("");
-  const [tags, setTags] = useState([]);
+  const { state } = useLocation();  // Access the state passed from navigate()
+  const { blog } = state || {};  // Get the blog object
+  const [blogData, setBlogData] = useState(blog);
+  const [blogTitle, setBlogTitle] = useState(blog.blogTitle);
+  const [blogDescription, setBlogDescription] = useState(blog.blogDescription);
+  const [blogContent, setBlogContent] = useState(blog.blogContent);
+  const [tags, setTags] = useState(blog.tags);
   const [input, setInput] = useState(""); // For tag input
   const [suggestions, setSuggestions] = useState([]); // Suggestions for tags
-  const [imageFiles, setImageFiles] = useState([]);
-
-  // Fetch Blog Data
-  const fetchBlogData = async () => {
-    const token = localStorage.getItem("authToken");
-
-    if (token) {
-      try {
-        const response = await axios.post(
-          "http://geeksarray-001-site5.atempurl.com/api/Blog?isActive=true",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const fetchedData = response.data;
-
-        setBlogData(fetchedData);
-        setBlogTitle(fetchedData.BlogTitle || "");
-        setBlogDescription(fetchedData.BlogDescription || "");
-        setBlogContent(fetchedData.BlogContent || "");
-        setTags(fetchedData.Tags ? fetchedData.Tags.split(",") : []);
-      } catch (error) {
-        console.error("Error fetching blog data:", error);
-      }
-    }
-  };
-
+  const [imageFiles, setImageFiles] = useState(blog.blogImage);
+  const navigate = useNavigate();
+  
+  console.log(blogData);
+  
   // Save Blog Data
   const saveBlogData = async () => {
     const token = localStorage.getItem("authToken");
@@ -55,18 +35,14 @@ const EditBlog = () => {
     if (token) {
       try {
         const formData = new FormData();
-        formData.append("Id", blogData?.Id || 0);
-        formData.append("BlogTitle", blogTitle);
-        formData.append("BlogDescription", blogDescription);
-        formData.append("BlogContent", blogContent);
-        formData.append("Tags", tags.join(",")); // Join tags into a comma-separated string
-
-        imageFiles.forEach((file, index) => {
-          formData.append(`BlogImage${index}`, file);
-        });
+        formData.append("id", blogData?.id);
+        formData.append("blogTitle", blogTitle);
+        formData.append("blogDescription", blogDescription);
+        formData.append("blogContent", blogContent);
+        formData.append("tags", JSON.stringify(tags));
 
         const response = await axios.post(
-          "http://geeksarray-001-site5.atempurl.com/api/Blog?isActive=false",
+          "http://geeksarray-001-site5.atempurl.com/api/Blog",
           formData,
           {
             headers: {
@@ -75,8 +51,9 @@ const EditBlog = () => {
             },
           }
         );
-
-        alert("Blog saved successfully!");
+        
+        alert("Blog updated successfully!");
+        navigate('/blogs')
       } catch (error) {
         console.error("Error saving blog data:", error);
         alert("Failed to save blog.");
@@ -90,9 +67,8 @@ const EditBlog = () => {
     setInput(value);
 
     // Add logic to fetch or filter tag suggestions
-    const dummySuggestions = ["React", "JavaScript", "CSS", "HTML", "Node.js"];
     setSuggestions(
-      dummySuggestions.filter(
+      predefinedTags.filter(
         (suggestion) =>
           suggestion.toLowerCase().includes(value.toLowerCase()) &&
           !tags.includes(suggestion)
@@ -120,190 +96,190 @@ const EditBlog = () => {
     setImageFiles(files);
   };
 
-  useEffect(() => {
-    fetchBlogData();
-  }, []);
-
   return (
-    <div className="edit-blog-container">
-      <h2>Edit Blog</h2>
-      {blogData ? (
-        <form className="edit-blog-form">
-          <label>
-            <strong>Title:</strong>
-            <input
-              type="text"
-              value={blogTitle}
-              onChange={(e) => setBlogTitle(e.target.value)}
-              placeholder="Enter blog title"
-            />
-          </label>
-          <label>
-            <strong>Description:</strong>
-            <textarea
-              value={blogDescription}
-              onChange={(e) => setBlogDescription(e.target.value)}
-              placeholder="Enter blog description"
-            />
-          </label>
-          <label>
-            <strong>Content:</strong>
-            <textarea
-              value={blogContent}
-              onChange={(e) => setBlogContent(e.target.value)}
-              placeholder="Enter blog content"
-            />
-          </label>
-          <div className="image-upload-section">
-            <input
-              type="file"
-              id="imageUpload"
-              accept="image/*"
-              multiple
-              onChange={handleImageUpload} // Handle multiple images
-              style={{
-                display: "none", // Hide the default file input
-              }}
-            />
-            <label
-              htmlFor="imageUpload"
-              style={{
-                display: "inline-block",
-                cursor: "pointer",
-              }}
-            >
-              <img
-                src={camera}
-                alt="Upload"
-                style={{
-                  width: "32px",
-                  height: "32px",
-                  objectFit: "cover",
-                }}
+    <>
+      <Header/>
+      <div className="edit-blog-container">
+        <h2>Edit Blog</h2>
+        {blogData ? (
+          <form className="edit-blog-form">
+            <label>
+              <strong>Title:</strong>
+              <input
+                type="text"
+                value={blogTitle}
+                onChange={(e) => setBlogTitle(e.target.value)}
+                placeholder="Enter blog title"
               />
             </label>
-            {imageFiles.length > 0 && (
+            <label>
+              <strong>Description:</strong>
+              <textarea
+                value={blogDescription}
+                onChange={(e) => setBlogDescription(e.target.value)}
+                placeholder="Enter blog description"
+              />
+            </label>
+            <label>
+              <strong>Content:</strong>
+              <textarea
+                value={blogContent}
+                onChange={(e) => setBlogContent(e.target.value)}
+                placeholder="Enter blog content"
+              />
+            </label>
+            <div className="image-upload-section">
+              <input
+                type="file"
+                id="imageUpload"
+                accept="image/*"
+                multiple
+                onChange={handleImageUpload} // Handle multiple images
+                style={{
+                  display: "none", // Hide the default file input
+                }}
+              />
+              <label
+                htmlFor="imageUpload"
+                style={{
+                  display: "inline-block",
+                  cursor: "pointer",
+                }}
+              >
+                <img
+                  src={camera}
+                  alt="Upload"
+                  style={{
+                    width: "32px",
+                    height: "32px",
+                    objectFit: "cover",
+                  }}
+                />
+              </label>
+              {imageFiles.length > 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "10px",
+                    marginTop: "10px",
+                  }}
+                >
+                  {imageFiles.map((imageFile, index) => (
+                    <img
+                      key={index}
+                      src={imageFile}
+                      alt={`Uploaded ${index + 1}`}
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        objectFit: "cover",
+                        borderRadius: "8px",
+                        boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+            <div>
+              <label>Tags:</label>
               <div
                 style={{
                   display: "flex",
+                  alignItems: "center",
                   flexWrap: "wrap",
-                  gap: "10px",
-                  marginTop: "10px",
-                }}
-              >
-                {imageFiles.map((imageFile, index) => (
-                  <img
-                    key={index}
-                    src={URL.createObjectURL(imageFile)}
-                    alt={`Uploaded ${index + 1}`}
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      objectFit: "cover",
-                      borderRadius: "8px",
-                      boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-                    }}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-          <div>
-            <label>Tags:</label>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                flexWrap: "wrap",
-                border: "1px solid black",
-                padding: "5px",
-                borderRadius: "5px",
-                width: "600px",
-                margin: "10px 0",
-              }}
-            >
-              {tags.map((tag) => (
-                <div
-                  key={tag}
-                  style={{
-                    backgroundColor: "#e1ecf4",
-                    color: "black",
-                    padding: "5px 10px",
-                    borderRadius: "20px",
-                    display: "flex",
-                    alignItems: "center",
-                    margin: "5px",
-                  }}
-                >
-                  {tag}
-                  <span
-                    style={{
-                      marginLeft: "5px",
-                      cursor: "pointer",
-                      color: "#888",
-                    }}
-                    onClick={() => removeTag(tag)}
-                  >
-                    ×
-                  </span>
-                </div>
-              ))}
-              <input
-                type="text"
-                placeholder="Add up to 6 tags. Start typing to see suggestions."
-                value={input}
-                onChange={handleInputChange}
-                style={{
-                  border: "none",
-                  outline: "none",
-                  flex: 1,
-                  minWidth: "100px",
+                  border: "1px solid #dadada",
                   padding: "5px",
-                }}
-              />
-            </div>
-            {suggestions.length > 0 && (
-              <div
-                style={{
-                  border: "1px solid #ddd",
                   borderRadius: "5px",
-                  marginTop: "5px",
-                  maxHeight: "150px",
-                  overflowY: "auto",
-                  width: "600px",
-                  backgroundColor: "white",
-                  zIndex: 1,
-                  position: "relative",
+                  width: "100%",
+                  margin: "10px 0",
                 }}
               >
-                {suggestions.map((suggestion) => (
+                {tags.map((tag) => (
                   <div
-                    key={suggestion}
+                    key={tag}
                     style={{
-                      padding: "10px",
-                      cursor: "pointer",
-                      borderBottom: "1px solid #eee",
+                      backgroundColor: "#e1ecf4",
+                      color: "black",
+                      padding: "5px 10px",
+                      borderRadius: "20px",
+                      display: "flex",
+                      alignItems: "center",
+                      margin: "5px",
                     }}
-                    onClick={() => addTag(suggestion)}
                   >
-                    {suggestion}
+                    {tag}
+                    <span
+                      style={{
+                        marginLeft: "5px",
+                        cursor: "pointer",
+                        color: "#888",
+                      }}
+                      onClick={() => removeTag(tag)}
+                    >
+                      ×
+                    </span>
                   </div>
                 ))}
+                <input
+                  type="text"
+                  placeholder="Add up to 6 tags. Start typing to see suggestions."
+                  value={input}
+                  onChange={handleInputChange}
+                  style={{
+                    border: "none",
+                    outline: "none",
+                    flex: 1,
+                    minWidth: "100px",
+                    padding: "5px",
+                  }}
+                />
               </div>
-            )}
-          </div>
-          <button
-            type="button"
-            className="save-button"
-            onClick={saveBlogData}
-          >
-            Save Changes
-          </button>
-        </form>
-      ) : (
-        <p>Loading blog data...</p>
-      )}
-    </div>
+              {suggestions.length > 0 && (
+                <div
+                  style={{
+                    border: "1px solid #ddd",
+                    borderRadius: "5px",
+                    marginTop: "5px",
+                    maxHeight: "150px",
+                    overflowY: "auto",
+                    width: "600px",
+                    backgroundColor: "white",
+                    zIndex: 1,
+                    position: "relative",
+                  }}
+                >
+                  {suggestions.map((suggestion) => (
+                    <div
+                      key={suggestion}
+                      style={{
+                        padding: "10px",
+                        cursor: "pointer",
+                        borderBottom: "1px solid #eee",
+                      }}
+                      onClick={() => addTag(suggestion)}
+                    >
+                      {suggestion}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <button
+              type="button"
+              className="save-button"
+              onClick={saveBlogData}
+            >
+              Save Changes
+            </button>
+          </form>
+        ) : (
+          <p>Loading blog data...</p>
+        )}
+      </div>
+      <Footer/>
+    </>
   );
 };
 

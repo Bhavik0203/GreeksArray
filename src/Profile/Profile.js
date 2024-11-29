@@ -150,6 +150,11 @@ const Profile = () => {
       setIsLoading(false); // Reset loading state
     }
   };
+
+  const handleEditClick = (blog) => {
+    navigate("/EditBlog", { state: { blog } });  // Pass the entire blog object in the state
+  };
+
   const handleDeleteBlog = async (blogId) => { 
     if (!blogId) {
         return; // Exit the function early if blogId is not defined
@@ -296,19 +301,11 @@ const Profile = () => {
   }}
 >
   {/* Edit Button */}
-  <Link to="/EditBlog">
-      <button
-        className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition"
-        title="Edit Blog"
-        style={{
-          background: "transparent",
-          border: "none",
-          cursor: "pointer",
-        }}
-      >
-        <FontAwesomeIcon icon={faPenToSquare} />
-      </button>
-    </Link>
+  {/* <Link to="/EditBlog">
+  </Link> */}
+    <button className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition" title="Edit Blog" style={{ background: "transparent", border: "none", cursor: "pointer", }} onClick={() => handleEditClick(blog)}>
+      <FontAwesomeIcon icon={faPenToSquare} />
+    </button>
 
   {/* Image */}
   <div

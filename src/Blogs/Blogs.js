@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from 'axios'; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp, faComment, faBookmark, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp, faComment, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Latestblogs from "../Latestblogs/Latestblogs";
-import CTA from "../CTA/CTA";
-import blogimg from '../assets/Images/banners/blogimg.png';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import facebookLogo from "../assets/Images/Socialmediaimg/fb.jpeg";
 import GitLogo from "../assets/Images/Socialmediaimg/github.jpeg";
@@ -25,8 +23,6 @@ const Blog = ({ readOnly = false }) => {
   const [comments, setComments] = useState([]); // Initialize comments as an empty array
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
-  const [userComments, setUserComments] = useState([]);
-  const [newComment, setNewComment] = useState("");
   const moreOptionsRef = useRef(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isLiked, setIsLiked] = useState(false); 
