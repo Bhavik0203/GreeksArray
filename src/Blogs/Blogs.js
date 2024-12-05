@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from 'axios'; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp, faComment, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp, faComment, faShareAlt } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -45,9 +45,9 @@ const Blog = ({ readOnly = false }) => {
         setBlog(data[0]); // Assuming `data` is an array, get the first element for display
         setComments(data[0].comments || []);
       } catch (error) {
-        console.error("Error fetching blog details:", error.message); // Log error message
-        setError(error.message);
-      } finally {
+        alert(`Error fetching blog details: ${error.message}`); // Show error message in an alert popup
+        setError(error.message); // Set the error message in state
+    } finally {
         setLoading(false);
       }
     };
@@ -80,7 +80,8 @@ const Blog = ({ readOnly = false }) => {
           setIsLiked(userHasLiked); // Set the liked status based on response data
         }
       })
-      .catch(error => console.error('Error fetching the blog data:', error));
+      .catch(error => alert(`Error fetching the blog data: ${error.message || error}`));
+
   }, [slug]);
 
   const handleLikeClick = () => {
@@ -137,16 +138,7 @@ const Blog = ({ readOnly = false }) => {
     }
 };
 
-// Example usage
-// Call handleShare('x') for sharing on X
-// Call handleShare('facebook') for sharing on Facebook
-// Call handleShare('linkedin') for sharing on LinkedIn
-// Call handleShare('whatsapp') for sharing on WhatsApp
-// Call handleShare('gmail') for sharing via Gmail
 
-  
-
-  // Close more options dropdown when clicking outside of it
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (moreOptionsRef.current && !moreOptionsRef.current.contains(event.target)) {
@@ -180,13 +172,8 @@ const Blog = ({ readOnly = false }) => {
   if (!blog) return <p>No blog details found.</p>;
 
   // Split the blog content into paragraphs based on new lines or other separators
-  const paragraphs = blog.blogContent
-    .split("\n") // Split content using single newlines as the separator
-    .map((para, index) => (
-      <p key={index} className="paragraph-style">
-        {para}
-      </p>
-    ));
+  const blogContentHTML = blog.blogContent; // Assuming `blog.blogContent` is raw HTML
+
 
     const handleAddComment = () => {
       if (!commentInputRef.current.value.trim()) return; // Prevent empty comments
@@ -306,9 +293,10 @@ const Blog = ({ readOnly = false }) => {
                 {/* <button onClick={() => handleShare("save")} className="transition hover:text-blue-500">
                   <FontAwesomeIcon icon={faBookmark} className="text-xl" />
                 </button> */}
-                <button onClick={handleMoreOptions} className="transition hover:text-blue-500">
-                  <FontAwesomeIcon icon={faEllipsisH} className="text-xl" />
-                </button>
+               <button onClick={handleMoreOptions} className="transition hover:text-blue-500">
+  <FontAwesomeIcon icon={faShareAlt} className="text-xl" />
+</button>
+
                 {/* More Options Dropdown */}
                 {showMoreOptions && (
                   <div ref={moreOptionsRef} className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg">
@@ -391,7 +379,11 @@ const Blog = ({ readOnly = false }) => {
 
 
             {/* Render paragraphs from blog content */}
-            <div className="text-gray-500 text-xl leading-relaxed mb-6">{paragraphs}</div>
+            <div
+  className="text-gray-500 text-xl leading-relaxed mb-6"
+  dangerouslySetInnerHTML={{ __html: blog.blogContent }}
+></div>
+
             <p style={styles.paragraph}>
                   Follow <strong>GeeksArray</strong>
                 </p>
@@ -509,9 +501,19 @@ const Blog = ({ readOnly = false }) => {
                   <h1 className="text-3xl font-bold text-gray-800 mb-4">
                    Blog Written By <b className="text-indigo-600">{blog.writer}</b>!
                   </h1>
-                  <p className="text-gray-600 text-lg">
-                    Tags: <b className="text-indigo-600">{blog.tags}</b>
-                  </p>
+                  
+                    <span className="flex flex-wrap space-x-1">
+                      {blog.tags.map((tag, index) => (
+                        <span
+                          key={index}
+                          className="inline-block bg-blue-400 text-white text-xs py-1 px-2 rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </span>
+                  
+
                   <p className="text-gray-600 mt-4">
                     {blog.excerpt || " Click to read more to See more Blogs..."}
                   </p>

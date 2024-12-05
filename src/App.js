@@ -25,6 +25,8 @@ import EmailVerification from "./Register/EmailVerification";
 import TagsPage from "./Register/TagsPage";
 import CongratulationsPage from "./Register/CongratulationsPage.js";
 import EditBlog from "./Blogs/EditBlog.js";
+import FAQs from "./FAQs.js";
+import OurStory from "./Our-Story.js";
 
 
 
@@ -43,11 +45,13 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/Contact-us" element={<ContactForm />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/FAQs" element={<FAQs/>} />
+        <Route path="/Our-Story" element={<OurStory/>} />
         <Route path="/Notification" element={<Notification />} />
         <Route path="/Comment-section" element={<Commentsection />} />
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/otp" element={<OtpPage/>} />
-        {/* <Route path="/Code" element={<CodeSnippetButton/>}/> */}
+        
         <Route
           path="/Write"
           element={

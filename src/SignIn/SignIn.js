@@ -39,11 +39,12 @@ const SignIn = () => {
         setError("");
         navigate("/blogs"); // Redirect to the home page after login
       } else {
-        setError("Login failed, token not received.");
+        alert("Login failed, token not received.");
       }
-    } catch (err) {
-      setError(err.response?.data?.message || "Failed to submit form. Please try again.");
-    }
+      } catch (err) {
+        alert(err.response?.data?.message || "Failed to submit form. Please try again.");
+      }
+      
   };
 
   return (

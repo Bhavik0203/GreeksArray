@@ -3,7 +3,7 @@ import "./Profile.css";
 import {Helmet} from "react-helmet";
 import Header from "../Header/Header";
 import doublecheck from "../assets/Images/Blogimg/double-check.gif";
-// import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";-
 import axios from "axios";
 import blog from "../assets/noblog.gif";
 import User_1 from "../assets/Images/Avatar/user_1.jpg";
@@ -348,15 +348,15 @@ const Profile = () => {
       </a>
 
       <p
-        className="mt-2 line-clamp-3 text-sm text-gray-700"
-        style={{
-          fontSize: "0.875rem",
-          lineHeight: "1.5",
-          color: "#374151",
-        }}
-      >
-        {blog.blogContent}
-      </p>
+  className="mt-2 line-clamp-3 text-sm text-gray-700"
+  style={{
+    fontSize: "0.875rem",
+    lineHeight: "1.5",
+    color: "#374151",
+  }}
+  dangerouslySetInnerHTML={{ __html: blog.blogContent }}
+></p>
+
     </div>
 
     <div
@@ -373,17 +373,20 @@ const Profile = () => {
         </span>{" "}
         <b style={{ color: "#4f46e5" }}>{blog.writer}</b>
       </p>
-      <p className="text-xs text-black-100">
-  <span className="font-semibold">
-    <b>Tags :</b>
+      
+      <p className="text-xs text-black-100" style={{ margin: '10px' }}>
+  <span className="flex flex-wrap space-x-1">
+    {Array.isArray(blog.tags) &&
+      blog.tags.map((tag, index) => (
+        <span
+          key={index}
+          className="inline-block bg-blue-400 text-white px-2 rounded-full"
+          style={{ fontSize: '16px', margin: '7px' }}
+        >
+          {tag.trim()}
+        </span>
+      ))}
   </span>
-  {Array.isArray(blog.tags) &&
-    blog.tags.map((tag, index) => (
-      <b key={index} style={{ color: "#4f46e5" }}>
-        {tag.trim()}
-        {index < blog.tags.length - 1 && ", "}
-      </b>
-    ))}
 </p>
 
     </div>

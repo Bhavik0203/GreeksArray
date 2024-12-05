@@ -1,14 +1,26 @@
 import "./Hero.css";
 import Header from "../Header/Header";
-import banner from "../assets/Images/banners/banner8.png";
-// import Blogslider from "../Blogslider/Blogslider";
-import { Link } from "react-router-dom";
+import banner1 from "../assets/Images/banners/banner8.png";
+import banner2 from "../assets/Images/banners/banner9.png";
+import banner3 from "../assets/Images/banners/banner8.png";
 import Footer from "../Footer/Footer";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-
-
+import Slider from "react-slick";
 
 const Hero = () => {
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
+
+
+
   return (
     <>
     <Helmet>
@@ -24,7 +36,7 @@ const Hero = () => {
 
       <div className="welcome-section " >
   <div className="w-full h-full flex flex-col md:flex-row justify-between items-start  mb-8 ml-[30px] mr-[30px] " >
-  <div className="md:w-1/2 flex-shrink-0 flex-grow ml-[15px] mb-[60px] mt-[60px]  ">
+  <div className="md:w-1/2 flex-shrink-0 flex-grow ml-[15px] mb-[60px] mt-[60px] ">
   <h1
     id="welcome"
     className="text-4xl lg:text-2xl text-left font-bold text-gray-900 font-spaceGrotesk mb-3 "
@@ -81,13 +93,32 @@ const Hero = () => {
   </Link>
 </div>
 
-    <div className=" flex justify-center items-center" style={{width:'600px', height:'600px'}}>
+<div className="w-[400px] h-[500px] flex justify-center items-center mt-[50px]">
+  <Slider {...{...sliderSettings, arrows: false}} className="w-full h-full">
+    <div>
       <img
-        src={banner}
-        alt="Banner"
-        className=" object-cover"
+        src={banner1}
+        alt="Banner 1"
+        className="w-full h-full object-cover"
       />
     </div>
+    <div>
+      <img
+        src={banner2}
+        alt="Banner 2"
+        className="w-full h-full object-cover"
+      />
+    </div>
+    <div>
+      <img
+        src={banner3}
+        alt="Banner 3"
+        className="w-full h-full object-cover"
+      />
+    </div>
+  </Slider>
+</div>
+
     {/* <ImageSlider/> */}
   </div>
 

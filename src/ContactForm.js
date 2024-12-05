@@ -87,6 +87,7 @@ const ContactForm = () => {
                 </div>
                 <div style={styles.rightSection}>
                     <form style={styles.form} onSubmit={handleSubmit}>
+                        <br></br>
                         <input 
                             type="text" 
                             name="name" 
@@ -96,6 +97,7 @@ const ContactForm = () => {
                             onChange={handleInputChange} 
                             required 
                         />
+                        <br></br>
                         <input 
                             type="email" 
                             name="email" 
@@ -105,6 +107,7 @@ const ContactForm = () => {
                             onChange={handleInputChange} 
                             required 
                         />
+                        <br></br>
                         <input 
                             type="text" 
                             name="subject" 
@@ -113,6 +116,7 @@ const ContactForm = () => {
                             value={formData.subject} 
                             onChange={handleInputChange} 
                         />
+                        <br></br>
                         <textarea 
                             name="message" 
                             placeholder="Message" 
@@ -121,10 +125,14 @@ const ContactForm = () => {
                             onChange={handleInputChange} 
                             required 
                         />
+                        <br></br>
+                        <br></br>
+                        <br></br>
                         <button type="submit" style={styles.button}>Send</button>
                     </form>
                 </div>
             </div>
+            <br></br>
 
             {showPopup && (
                 <div style={styles.popupOverlay}>
@@ -155,6 +163,7 @@ const styles = {
     heading: {
         fontSize: '2rem',
         fontWeight: 'bold',
+        marginTop: '30px',
     },
     description: {
         margin: '20px 0',

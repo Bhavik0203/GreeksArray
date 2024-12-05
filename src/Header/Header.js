@@ -154,32 +154,39 @@ const Header = ({ show }) => {
                         </>
                       )}
                       <hr className="border-b-0 my-4" />
-                      <ul className="space-y-1.5">
-                        <li>
-                          <Link to="/Write" className="text-sm text-gray-500 hover:text-black" > Write </Link>
-                        </li>
-                        <li>
-                          <Link to="/blogs" className="text-sm text-gray-500 hover:text-black" > Blog </Link>
-                        </li>
-                        <li>
-                          <Link to="/Profile" className="text-sm text-gray-500 hover:text-black" > Our Publication </Link>
-                        </li>
-                        <li>
-                          <Link to="/latest-blogs" className="text-sm text-gray-500 hover:text-black" > About us </Link>
-                        </li>
-                        <li>
-                          <Link to="/Contact-us" className="text-sm text-gray-500 hover:text-black" > Contact </Link>
-                        </li>
-                      </ul>
-                      <hr className="border-b-0 my-4" />
-                      <ul className="space-y-1.5">
-                        <li>
-                          <Link to="/terms&conditions" className="text-sm text-gray-500 hover:text-black" > Terms & Conditions </Link>
-                        </li>
-                        <li>
-                          <Link to="/privacy-policy" className="text-sm text-gray-500 hover:text-black" > Privacy Policy </Link>
-                        </li>
-                      </ul>
+                      <ul className="space-y-1.5 ml-4">
+  <li>
+    <Link to="/Write" className="text-sm text-gray-500 hover:text-black"> Write </Link>
+  </li>
+  <li>
+    <Link to="/blogs" className="text-sm text-gray-500 hover:text-black"> Blog </Link>
+  </li>
+  <li>
+    <Link to="/Profile" className="text-sm text-gray-500 hover:text-black"> Our Publication </Link>
+  </li>
+  <li>
+    <Link to="/latest-blogs" className="text-sm text-gray-500 hover:text-black"> About us </Link>
+  </li>
+  <li>
+    <Link to="/Contact-us" className="text-sm text-gray-500 hover:text-black"> Contact </Link>
+  </li>
+</ul>
+<hr className="border-b-0 my-4" />
+<ul className="space-y-1.5 ml-4">
+  <li>
+    <Link to="/terms&conditions" className="text-sm text-gray-500 hover:text-black"> Terms & Conditions </Link>
+  </li>
+  <li>
+    <Link to="/privacy-policy" className="text-sm text-gray-500 hover:text-black"> Privacy Policy </Link>
+  </li>
+  <li>
+    <Link to="/Our-Story" className="text-sm text-gray-500 hover:text-black"> Our Story </Link>
+  </li>
+  <li>
+    <Link to="/FAQs" className="text-sm text-gray-500 hover:text-black"> FAQs </Link>
+  </li>
+</ul>
+
                     </div>
                   )}
                 </li>

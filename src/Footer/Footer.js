@@ -7,11 +7,22 @@ const Footer = () => {
       <div className="flex justify-between items-center max-lg:flex-col text-center flex-wrap gap-4">
         <p className="text-[15px] leading-loose">© Geeksarray. All rights reserved.</p>
         <ul className="flex space-x-6 gap-y-2 max-lg:justify-center flex-wrap">
+        <li>
+            <Link to="/Our-Story" className="text-[15px] hover:text-white">
+            Our Story
+            </Link>
+          </li>
+          <li>
+            <Link to="/FAQs" className="text-[15px] hover:text-white">
+              FAQs
+            </Link>
+          </li>
           <li>
             <Link to="/terms&conditions" className="text-[15px] hover:text-white">
               Terms of Service
             </Link>
           </li>
+          
           <li>
             <Link to="/privacy-policy" className="text-[15px] hover:text-white">
               Privacy Policy

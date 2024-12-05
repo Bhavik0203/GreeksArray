@@ -1,4 +1,8 @@
 /* Base styles (apply to all screens) */
+/* Hero.css */
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+
 .textgradient {
   background: linear-gradient(
     45deg,

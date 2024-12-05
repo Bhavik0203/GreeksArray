@@ -84,7 +84,8 @@ const Register = () => {
             }
         );
 
-        console.log("Form submitted successfully:", response.data);
+        alert("Form submitted successfully: " + response.data);
+
         const token = response.data.token;
         if (token) {
             localStorage.setItem("authToken", token);
@@ -103,10 +104,9 @@ const Register = () => {
         }, 3000); // 3-second delay for popup
 
     } catch (err) {
-        console.error("Error submitting form:", err);
-        setError("Failed to submit form. Please Check and Fill All Field.");
-        setIsSubmitted(false);
-    }
+      alert("Error submitting form: " + (err.message || err));
+      setIsSubmitted(false);
+    }    
 };
 
 
