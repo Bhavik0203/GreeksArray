@@ -8,8 +8,11 @@ import Footer from "../Footer/Footer";
 import "./Newstory.css";
 
 const predefinedTags = [
-  '.NET', 'reactjs', 'AI', 'AWS', 'Azure', 'Blockchain', 'Python', 'JavaScript', 'React', 'Node.js', 'SQL', 'Web Development', 'Cyber Security',
-  // Add more tags as needed...
+  '.NET','.net','reactjs', '.NET Core', '.NET MAUI', '.NET Standard', 'Active Directory', 'ADO.NET', 'Agile Development', 'AI','AJAX', 'AlbertAGPT', 'Alexa Skills', 'Algorand', 'Algorithms in C#', 'Android', 'Angular', 'ArcObject', 'ASP.NET', 'ASP.NET Core',"Augmented Reality", "Avalanche", "AWS", "Azure", "Backbonejs", "Big Data", "BizTalk Server", "Blazor", "Blockchain", "Bootstrap","Bot Framework", "Business", "Business Intelligence(BI)", "C#", "C# Corner", "C# Strings", "C, C++, MFC", "Career Advice", "Careers and Jobs", "Chapters","ChatGPT", "Cloud", "Coding Best Practices", "Cognitive Services", "COM Interop", "Compact Framework", "Copilot Studio", "Cortana Development", "Cosmos DB", "Cryptocurrency", 
+    'Cryptography', 'Crystal Reports', 'CSS', 'Current Affairs', 'Custom Controls', 'Cyber Security', 'Data Mining', 'Data Science','Databases & DBA', 'Design Patterns & Practices', 'DevExpress', 'DevOps', 'DirectX', 'Dynamics CRM', 'Enterprise Development', 'Entity Framework', 'Error Zone', 'Exception Handling',"F#", "Files, Directory, IO", "Flutter", "Games Programming", "GDI+", "Generative AI", "GO", "Google Cloud", "Google Development", "Graphics Design","Graphite Studio", "Hardware", "Hiring and Recruitment", "HoloLens", "How do I", "HTML 5", "Internet & Web", "Internet of Things", "Ionic", "Java","Java and .NET", "JavaScript", "JQuery", "JSON", "JSP", "Knockout", "Kotlin","Kubernetes", "Langchain", "Leadership", "Learn .NET",
+    'Learn iOS Programming', 'LINQ', 'Machine Learning', 'Metaverse', 'Microsoft 365', 'Microsoft Fabric', 'Microsoft Office', 'Microsoft Phone','Microsoft Teams', 'Mobile Development', 'MongoDB', 'MuleSoft', 'MySQL', 'NEAR', 'NetBeans', 'Networking', 'NFT', 'NoCode LowCode',"Node.js", "Office Development", "OOP/OOD", "Open Source", "Operating Systems", "Oracle", "Outsourcing", "Philosophy", "PHP", "Polygon","PostgreSQL", "Power Apps", "Power Automate", "Power BI", "Power Pages", "Printing in C#", "Products", "Progress", "Progressive Web Apps", "Project Management","Public Speaking", "Python", "Q#", "QlikView", "Quantum Computing", "R", "React","React.js","Reactjs", "React Native", "Reports using C#",
+    'Robotics & Hardware', 'RPA', 'Ruby on Rails', 'RUST', 'Salesforce', 'Security', 'Servers', 'ServiceNow','SharePoint', 'SignalR', 'Smart Devices', 'Software Architecture/Engineering', 'Software Testing', 'Solana', 'Solidity', 'SQL', 'SQL Server', 'Startups',"Stratis Blockchain", "Swift", "SyncFusion", "Threading", "Tools", "TypeScript", "Unity", "UWP", "Visual Basic .NET", "Visual Studio","Vue.js", "WCF", "Wearables", "Web API", "Web Design", "Web Development", "Web3", "Windows", "Windows Controls", "Windows Forms", "Windows PowerShell","Windows Services", "Workflow Foundation", "WPF", "Xamarin", "XAML", "XML", "XNA", "XSharp"
+ 
 ];
 
 const modules = {
@@ -23,9 +26,11 @@ const modules = {
 };
 
 const styles = {
-  editorBodyContainer: { display: "flex", flexDirection: "column", padding: "20px" },
-  editorBody: { marginTop: "20px", width: "80%" },
-  publishButton: { padding: "10px 20px", fontSize: "16px", cursor: "pointer" },
+  editorBodyContainer: { display: "flex", flexDirection: "column", padding: "20px",  },
+  editorBody: {  marginTop: "20px",
+    width: "90%",
+     },
+  publishButton: { padding: "10px 20px", fontSize: "16px", color:"#fff", cursor: "pointer", borderRadius:"7px" },
 };
 
 const Newstory = () => {
@@ -39,12 +44,31 @@ const Newstory = () => {
   const [tags, setTags] = useState([]);
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-
+  const [isTyping, setIsTyping] = useState(false);
+  
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInput(value);
     setSuggestions(value ? predefinedTags.filter(tag => tag.toLowerCase().includes(value.toLowerCase())) : []);
   };
+
+  const handleTitleChange = (e) => {
+    const value = e.target.value.trim();
+    setBlogTitle(value);
+    setIsTyping(value !== "Title" || blogDescription.trim() !== "Add Description");
+  };
+
+  const handleDescriptionChange = (e) => {
+    const value = e.target.value.trim();
+    setBlogDescription(value);
+    setIsTyping(blogTitle.trim() !== "Title" || value !== "Add Description");
+  };
+
+  // const handleInputChange = (e) => {
+  //   const value = e.target.value;
+  //   setInput(value);
+  //   setSuggestions(value ? predefinedTags.filter(tag => tag.toLowerCase().includes(value.toLowerCase())) : []);
+  // };
 
   const addTag = (tag) => {
     if (!tags.includes(tag) && tags.length < 6) {
@@ -118,28 +142,76 @@ const Newstory = () => {
     <>
       <Header />
       <div style={styles.editorBodyContainer}>
+      
+
+
         <div style={styles.editorBody}>
-          <h1
-            contentEditable
-            style={{ fontSize: "24px", fontWeight: "bold" }}
-            onInput={(e) => setBlogTitle(e.target.innerText)}
-          >
-            Title
-          </h1>
-          <textarea
-            placeholder="Write a brief description..."
-            value={blogDescription}
-            onChange={(e) => setBlogDescription(e.target.value)}
-            style={{ width: "100%", height: "80px", margin: "10px 0", padding: "10px" }}
-          />
-          <ReactQuill
-            value={blogContent}
-            onChange={handleContentChange}
-            modules={modules}
-            placeholder="Write your content here..."
-          />
-          <br />
-          <div>
+        <div
+          style={{
+            width: "3px",
+            height: "100%", // Adjust height as needed
+            backgroundColor: "#ccc",
+            margin: "0 10px",
+          }}
+        ></div>
+        <div style={{ display: "flex", flexDirection: "column", padding: "20px" }}>
+  <input
+    type="text"
+    placeholder="Title"
+    value={blogTitle}
+    onChange={handleTitleChange}
+    style={{
+      marginTop: "10px",
+      width: "100%",
+      height: "25px",
+    }}
+  />
+  <hr
+    style={{
+      borderBottom: "0",
+      margin: "20px 0",
+    }}
+  />
+  <input
+    type="text"
+    placeholder="Add Description"
+    value={blogDescription}
+    onChange={handleDescriptionChange}
+    style={{
+      marginTop: "10px",
+      width: "100%",
+      height: "25px",
+    }}
+  />
+  <hr
+    style={{
+      borderBottom: "0",
+      margin: "20px 0",
+    }}
+  />
+  <ReactQuill
+    value={blogContent}
+    onChange={handleContentChange}
+    modules={modules}
+    placeholder="Write your content here..."
+    style={{
+      marginTop: "10px",
+      width: "100%",
+      height: "150px",
+    }}
+  />
+</div>
+
+<hr
+    style={{
+      borderBottom: "0",
+      margin: "20px 0",
+    }}
+  />
+          <div style={{
+                padding: "0px 20px",
+                margin: "10px 0px",
+              }}>
             <label>Tags:</label>
             <div
               style={{
@@ -147,10 +219,10 @@ const Newstory = () => {
                 alignItems: "center",
                 flexWrap: "wrap",
                 border: "1px solid black",
-                padding: "5px",
+                padding: " 5px 20px",
                 borderRadius: "5px",
-                width: "600px",
-                margin: "10px 0",
+                width: "100%",
+                margin: "10px 0px",
               }}
             >
               {tags.map((tag) => (
@@ -223,24 +295,32 @@ const Newstory = () => {
               </div>
             )}
           </div>
-          <label>Upload Blog Image:</label>
+          <label  style={{ margin: "10px 20px", }}>Upload Blog Cover Image :</label>
           <input
             type="file"
             accept="image/*"
             onChange={handleImageUpload}
-            style={{ margin: "10px 0" }}
+            style={{ margin: "10px 20px", }}
           />
-          <button
-            style={{ ...styles.publishButton, backgroundColor: "#04870f", color: "white" }}
+       <button
+            style={{
+              ...styles.publishButton,
+              backgroundColor: isTyping ? "#04870f" : "#d3d3d3",
+              disabled: !isTyping,
+              position: 'absolute',  
+              top: '100px',           
+              right: '40px',         
+              margin: '10px',       
+            }}
             onClick={handleSubmitBlog}
           >
             Publish
           </button>
-        </div>
-      </div>
-      {showModal && <SuccessModal isOpen={showModal} onClose={() => setShowModal(false)} />}
-    </>
-  );
-};
+                  </div>
+                </div>
+                {showModal && <SuccessModal isOpen={showModal} onClose={() => setShowModal(false)} />}
+              </>
+            );
+          };
 
 export default Newstory;

@@ -336,7 +336,7 @@ const Blog = ({ readOnly = false }) => {
                 )}
               </div>
             </div>
-            {blog.blogImage && Array.isArray(blog.blogImage) && blog.blogImage.length > 0 ? (
+            {/* {blog.blogImage && Array.isArray(blog.blogImage) && blog.blogImage.length > 0 ? (
                   <div className="mt-6 mb-6" style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
                     {blog.blogImage.map((imageUrl, index) => (
                       <img
@@ -354,31 +354,10 @@ const Blog = ({ readOnly = false }) => {
                     ))}
                   </div>
                 ) : (
-                  <p>No images available</p> // Fallback if no images are found
-                )}
+                  <p>No images available</p> 
+                )} */}
 
-              {/* <div style={styles.contactDetails}>
-                        <h4>Email</h4>
-                        <div style={styles.email}>
-                            <p>info@example.com</p>
-                        </div>
-                        <br />
-                        <h4>Connect Us</h4>
-                        <div style={styles.socialIcons}>
-                            <a href="https://www.facebook.com/geeksarray" target="_blank" rel="noopener noreferrer">
-                                <img src={facebookLogo} alt="Facebook" style={{ width: '30px', height: '30px' }} />
-                            </a>
-                            <a href="https://github.com/geeksarray" target="_blank" rel="noopener noreferrer">
-                                <img src={GitLogo} alt="GitHub" style={{ width: '30px', height: '30px' }} />
-                            </a>
-                            <a href="https://x.com/geeksarray" target="_blank" rel="noopener noreferrer">
-                                <img src={twitterLogo} alt="Twitter" style={{ width: '30px', height: '30px' }} />
-                            </a>
-                        </div>
-                    </div> */}
-
-
-            {/* Render paragraphs from blog content */}
+              
             <div
   className="text-gray-500 text-xl leading-relaxed mb-6"
   dangerouslySetInnerHTML={{ __html: blog.blogContent }}
