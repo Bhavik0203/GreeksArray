@@ -2,7 +2,7 @@ import "./Hero.css";
 import Header from "../Header/Header";
 import banner1 from "../assets/Images/banners/banner8.png";
 import banner2 from "../assets/Images/banners/banner9.png";
-import banner3 from "../assets/Images/banners/banner8.png";
+import banner3 from "../assets/Images/banners/banner12.png";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";

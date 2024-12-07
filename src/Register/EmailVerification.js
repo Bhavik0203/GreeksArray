@@ -49,7 +49,7 @@ const EmailVerification = () => {
         );
 
         if (response.ok) {
-          setIsModalOpen(true); // Show modal on success
+          alert(true); // Show modal on success
         } else {
           const data = await response.json();
           alert(`Verification failed: ${data.message || "Invalid OTP or email."}`);

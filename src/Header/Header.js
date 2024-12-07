@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import geekarray from "../assets/geeksarray.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = ({ show }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -136,7 +137,9 @@ const Header = ({ show }) => {
               <ul>
                 <li className="relative px-1">
                   <div className="cursor-pointer" onClick={toggleModal}>
-                    {avatarUrl ? ( <img src={avatarUrl} alt="Avatar" className="profile-avatar-image rounded-full h-10 w-10 object-cover border-2 border-blue-500" /> ) : ( <div className="profile-avatar bg-blue-500 text-white h-10 w-10 flex items-center justify-center rounded-full text-xl font-bold"> {firstName?.charAt(0) || "B"} </div> )}
+                    {avatarUrl ? ( <img src={avatarUrl} alt="Avatar" className="profile-avatar-image rounded-full h-10 w-10 object-cover border-2 border-blue-500" /> ) : ( <div className="profile-avatar bg-blue-500 text-white h-10 w-10 flex items-center justify-center rounded-full">
+    <FaUserCircle className="h-8 w-8" />
+  </div> )}
                   </div>
                   {isModalOpen && (
                     <div className="bg-white z-20 shadow-md py-6 px-6 sm:min-w-[320px] max-sm:min-w-[250px] absolute right-0 top-10">

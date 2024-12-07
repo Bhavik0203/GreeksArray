@@ -309,11 +309,13 @@ const Profile = () => {
 
   {/* Image */}
   <div
-    className="w-full sm:w-auto sm:basis-56 mb-4 sm:mb-0"
-    style={{
-      overflow: "hidden",
-      borderRadius: "8px",
-    }}
+   className="w-full sm:w-auto sm:basis-56 mb-4 sm:mb-0"
+   style={{
+     overflow: "hidden",
+     borderRadius: "8px",
+     width: "150px",
+     height: "250px",
+   }}
   >
     <img
       alt="Blog cover"

@@ -27,7 +27,20 @@ const Allblogs = () => {
   const [likes, setLikes] = useState(0);
   const [comments, setComments] = useState([]);
   const [activeTab, setActiveTab] = useState("forYou");
-  
+  const itemsPerPage = 10; // Number of blogs per page
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Calculate pagination variables
+  const totalPages = Math.ceil(filteredBlogs.length / itemsPerPage);
+  const startIdx = (currentPage - 1) * itemsPerPage;
+  const currentBlogs = filteredBlogs.slice(startIdx, startIdx + itemsPerPage);
+
+  // Handler for changing pages
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   const handleSearchChange = (event) => {
     const value = event.target.value.trim().toLowerCase();
@@ -238,176 +251,141 @@ useEffect(() => {
     margin: '0px 0px 10px 20px', // Margin: top 10px, right 0, bottom 10px, left 20px
   }}
 >
-{/* <TabNavigation/> */}
-{/* <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-start",
-        borderBottom: "1px solid #ccc",
-        padding: "10px 15px 0px 15px",
-        position: "relative",
-      }}
-    >
-      
-      <div style={{ fontSize: "24px", marginRight: "15px" }}>
-        <Link to="/Write" style={{ textDecoration: "none", color: "inherit" }}>
-          +
-        </Link>
-      </div>
 
-      
-      <div style={{ display: "flex", gap: "20px" }}>
-      
-        <div
-          onClick={() => setActiveTab("forYou")}
-          style={{
-            cursor: "pointer",
-            fontWeight: activeTab === "forYou" ? "bold" : "normal",
-            position: "relative",
-            paddingBottom: "5px",
-          }}
-        >
-          For You
-          {activeTab === "forYou" && (
-            <div
-              style={{
-                position: "absolute",
-                bottom: "-1px", 
-                left: "0",
-                width: "100%",
-                height: "1px",
-                backgroundColor: "black",
-              }}
-            >
-             
-
-            </div>
-          )}
-        </div>
-
-       
-        <div
-          onClick={() => setActiveTab("allBlogs")}
-          style={{
-            cursor: "pointer",
-            fontWeight: activeTab === "allBlogs" ? "bold" : "normal",
-            position: "relative",
-            paddingBottom: "5px",
-          }}
-        >
-          All Blogs
-          {activeTab === "allBlogs" && (
-            <div
-              style={{
-                position: "absolute",
-                bottom: "-1px", 
-                left: "0",
-                width: "100%",
-                height: "1px",
-                backgroundColor: "black",
-              }}
-            ></div>
-          )}
-        </div>
-      </div>
-    </div> */}
 <br></br>
           
           <h2 style={{ fontSize: '30px', fontWeight: 'bold' }}>Recent Posts</h2>
-          <div><ul className="space-y-8" style={{ margin: '0px' }}>
-  {filteredBlogs
-    .sort((a, b) => b.id - a.id) // Sort blogs by id in descending order
-    .map((blog) => (
-      <li
-        key={blog.id}
-        className="flex items-start border-b pb-4"
-        style={{
-          padding: '20px 20px 10px 20px',
-          borderRadius: '7px',
-          fontSize: '14px',
-          boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.2)",
-          alignItems:'center'
-        }}
-      >
-        {/* Image on the left side */}
-        <div className="mr-4">
-          <img
-            src={`${blog.blogImage !== null && blog.blogImage.length > 1 ? blog.blogImage[0] : blog.blogImage}`}
-            alt="Blog thumbnail"
-            className="w-40 h-28 object-cover rounded-md"style={{ justifyContent:'center' }}
-          />
-        </div>
+          <div>
+          <ul className="space-y-8" style={{ margin: "0px" }}>
+        {currentBlogs
+          .sort((a, b) => b.id - a.id) // Sort blogs by id in descending order
+          .map((blog) => (
+            <li
+              key={blog.id}
+              className="flex items-start border-b pb-4"
+              style={{
+                padding: "20px 20px 10px 20px",
+                borderRadius: "7px",
+                fontSize: "14px",
+                boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.2)",
+                // marginTop: "20px",
+              }}
+            >
+              <div className="mr-4">
+               <img
+  src={`${
+    blog.blogImage !== null && blog.blogImage.length > 1
+      ? blog.blogImage[0]
+      : blog.blogImage
+  }`}
+  alt="Blog thumbnail"
+  className="w-40 h-32 object-cover rounded-md"
+  style={{ margin: "10px", padding: "0 10px" }}
+/>
 
-        {/* Content on the right side */}
-        <div className="flex-1">
-          
-          <Link
-            to={`/blogs/${blog.slug}`}
-            className="block mt-1 text-2xl font-bold text-black hover:underline"
-            style={{ padding: '0 0 0 10px' }}
-          >
-            {blog.blogTitle}
-          </Link>
-          <p className="mt-1 text-gray-700" style={{ padding: '0 0 0 10px' }}>
-            {blog.blogDescription.length > 180
-              ? `${blog.blogDescription.substring(0, 180)}...`
-              : blog.blogDescription}
-          </p>
-          <div className="flex flex-col space-y-1 text-sm text-gray-500" style={{ padding: '10px 0 0 10px' }}>
-  {/* Writer Section */}
-  <div className="flex items-center space-x-1">
-    <span className="font-semibold">by</span>
-    <span className="text-orange-500">{blog.writer}</span>
-  </div>
-  
-  {/* Tags Section */}
-  <div className="flex items-center space-x-1">
-    <span className="font-semibold">in</span>
-    <span className="flex flex-wrap space-x-1">
-      {blog.tags.map((tag, index) => (
-        <span
-          key={index}
-          className="inline-block bg-red-400 text-white text-xs py-1 px-2 rounded-full"
+              </div>
+
+              <div className="flex-1">
+                <Link
+                  to={`/blogs/${blog.slug}`}
+                  className="block mt-1 text-2xl font-bold text-black hover:underline"
+                  style={{ padding: "0 0 0 10px" }}
+                >
+                  {blog.blogTitle}
+                </Link>
+                <p className="mt-1 text-gray-700" style={{ padding: "0 0 0 10px" }}>
+                  {blog.blogDescription.length > 180
+                    ? `${blog.blogDescription.substring(0, 180)}...`
+                    : blog.blogDescription}
+                </p>
+                <div
+                  className="flex flex-col space-y-1 text-sm text-gray-500"
+                  style={{ padding: "10px 0 0 10px" }}
+                >
+                  <div className="flex items-center space-x-1">
+                    <span className="font-semibold">by</span>
+                    <span className="text-orange-500">{blog.writer}</span>
+                  </div>
+
+                  <div className="flex items-center space-x-1">
+                    <span className="font-semibold">in</span>
+                    <span className="flex flex-wrap space-x-1">
+                      {blog.tags.map((tag, index) => (
+                        <span
+                          key={index}
+                          className="inline-block bg-red-400 text-white text-xs py-1 px-2 rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </span>
+                  </div>
+                </div>
+
+                <div
+                  className="flex items-center space-x-4 text-gray-500 text-sm mt-3"
+                  style={{ padding: "10px 0 0 10px" }}
+                >
+                  <span>{getTimeAgo(blog.updatedAt)}</span>
+                  <button
+                    onClick={handleLikeClick}
+                    className={`flex items-center space-x-1 transition ${
+                      isLiked ? "text-blue-500" : "text-gray-500"
+                    } hover:text-blue-500`}
+                  >
+                    <FontAwesomeIcon icon={faThumbsUp} className="text-xl" />
+                    <span className="likes-count">{blog.likes.length}</span>
+                  </button>
+                  <button
+                    onClick={() => {}}
+                    className="flex items-center space-x-1 transition hover:text-blue-500"
+                  >
+                    <FontAwesomeIcon icon={faComment} className="text-xl" />
+                    <span className="comment-count">{blog.comments.length}</span>
+                  </button>
+                </div>
+              </div>
+            </li>
+          ))}
+      </ul>
+
+      {/* Pagination */}
+      <div className="flex justify-center mt-6 space-x-2">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          className={`px-3 py-2 rounded-md ${
+            currentPage === 1 ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 text-white hover:bg-blue-600"
+          }`}
+          disabled={currentPage === 1}
         >
-          {tag}
-        </span>
-      ))}
-    </span>
-  </div>
-</div>
-
-          <div className="flex items-center space-x-4 text-gray-500 text-sm mt-3" style={{ padding: '10px 0 0 10px' }}>
-          <span> {getTimeAgo(blog.updatedAt)} </span>
+          Previous
+        </button>
+        {Array.from({ length: totalPages }, (_, index) => (
           <button
-  onClick={handleLikeClick}
-  className={`flex items-center space-x-1 transition ${
-    isLiked ? 'text-blue-500' : 'text-gray-500'
-  } hover:text-blue-500`}
->
-  <FontAwesomeIcon icon={faThumbsUp} className="text-xl" />
-  
-  <span className="likes-count">{blog.likes.length}</span>
-</button>
-<button
-  onClick={() => {}}
-  className="flex items-center space-x-1 transition hover:text-blue-500"
->
-  <FontAwesomeIcon icon={faComment} className="text-xl" />
-  
-  <span className="comment-count">{blog.comments.length}</span>
-</button>
-
-            <span className="flex items-center space-x-1">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M..." /> 
-              </svg>
-            </span>
+            key={index}
+            onClick={() => handlePageChange(index + 1)}
+            className={`px-3 py-2 rounded-md ${
+              currentPage === index + 1
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 hover:bg-blue-100"
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          className={`px-3 py-2 rounded-md ${
+            currentPage === totalPages
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-blue-500 text-white hover:bg-blue-600"
+          }`}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
           </div>
-        </div>
-      </li>
-    ))}
-</ul></div>
 
 
           </div>
@@ -452,60 +430,66 @@ useEffect(() => {
 }}>
           <h2 style={{ fontSize: '25px', fontWeight: 'bold', marginBottom: '16px' }}>Popular Blogs</h2>
 
-            <ul className="space-y-8">
+          <ul className="space-y-8">
   {filteredBlogs
     .sort((a, b) => b.likes.length - a.likes.length) // Sort blogs by likes in descending order
+    .slice(0, 5) // Limit to 5 blogs
     .map((blog) => (
       <li key={blog.id}>
-        {" "}
         {/* Assuming each blog has a unique 'id' */}
         <Link
           to={`/blogs/${blog.slug}`}
           className="flex items-center space-x-2"
         >
-           <img
-            src={`${blog.blogImage !== null && blog.blogImage.length > 1 ? blog.blogImage[0] : blog.blogImage}`}
+          <img
+            src={`${
+              blog.blogImage !== null && blog.blogImage.length > 1
+                ? blog.blogImage[0]
+                : blog.blogImage
+            }`}
             alt="Recent Post Icon"
             className="w-11 h-11 rounded-full"
           />
-          <span><b>{blog.blogTitle}</b></span>
+          <span>
+            <b>{blog.blogTitle}</b>
+          </span>
         </Link>
         <span>
           {blog.blogDescription.length > 90
             ? `${blog.blogDescription.substring(0, 90)}...`
             : blog.blogDescription}
         </span>
-        <div className="text-sm text-gray-500" style={{ padding: '10px 0 0 10px' }}>
-  {/* Writer Section */}
-  <div className="flex items-center space-x-1">
-    <span>By</span>
-    <span className="text-orange-500">{blog.writer}</span>
-  </div>
-  
-  {/* Tags Section */}
-  <div className="flex items-center space-x-1">
-    <span>in</span>
-    <span className="flex flex-wrap space-x-1">
-      {blog.tags.map((tag, index) => (
-        <span
-          key={index}
-          className="inline-block bg-blue-400 text-white text-xs py-1 px-1 rounded-full"
+        <div
+          className="text-sm text-gray-500"
+          style={{ padding: "10px 0 0 10px" }}
         >
-          {tag}
-        </span>
-      ))}
-    </span>
-  </div>
-</div>
+          {/* Writer Section */}
+          <div className="flex items-center space-x-1">
+            <span>By</span>
+            <span className="text-orange-500">{blog.writer}</span>
+          </div>
 
-        
-        {/* Using writer and category from the API */}
-        <br></br>
-        <hr></hr>
+          {/* Tags Section */}
+          <div className="flex items-center space-x-1">
+            <span>in</span>
+            <span className="flex flex-wrap space-x-1">
+              {blog.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="inline-block bg-blue-400 text-white text-xs py-1 px-1 rounded-full"
+                >
+                  {tag}
+                </span>
+              ))}
+            </span>
+          </div>
+        </div>
+        <br />
+        <hr />
       </li>
-      
     ))}
 </ul>
+
 
           </div>
           </div>
