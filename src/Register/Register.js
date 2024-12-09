@@ -25,6 +25,7 @@ const Register = () => {
   const navigate = useNavigate();
   const avatars = [User_1, User_10, User_2, User_3, User_4, User_5, User_6, User_7, User_8, User_9];
   const [selectedAvatar, setSelectedAvatar] = useState(null);
+  const [profileImage, serProfileImage] = useState(null);
   const [formdata, setFormdata] = useState({
     firstName: "",
     lastName: "",
@@ -32,6 +33,8 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    profileImage: "",
+
   });
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [showOtpModal, setShowOtpModal] = useState(false);
@@ -101,6 +104,7 @@ const Register = () => {
       email: formdata.email,
       password: formdata.password,
       avatarId: selectedAvatar !== null ? selectedAvatar + 1 : null,
+      profileImage: formdata.profileImage,
     };
   
     try {

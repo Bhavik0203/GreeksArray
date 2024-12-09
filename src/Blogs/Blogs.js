@@ -363,6 +363,29 @@ const Blog = ({ readOnly = false }) => {
   dangerouslySetInnerHTML={{ __html: blog.blogContent }}
 ></div>
 
+
+{blog.links && (
+  <div>
+    <a 
+      href={blog.links}
+      target="_blank" 
+      rel="noopener noreferrer" 
+      style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
+    >
+      <img 
+        src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" 
+        alt="GitHub Logo" 
+        style={{ width: '24px', height: '24px', marginRight: '8px' }} 
+      />
+      <span style={{ color: '#0366d6', fontSize: '16px' }}>
+        Source Code on GitHub
+      </span>
+    </a>
+  </div>
+)}
+
+
+
             <p style={styles.paragraph}>
                   Follow <strong>GeeksArray</strong>
                 </p>

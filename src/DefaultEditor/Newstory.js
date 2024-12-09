@@ -45,7 +45,21 @@ const Newstory = () => {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
-  const [links, SetLinks] = useState("");
+  const [links, setLinks] = useState("");
+  const [error, setError] = useState("");
+
+  const handleInputChange1 = (e) => {
+    const value = e.target.value;
+    setLinks(value);
+
+    // Validate GitHub URL
+    const githubRegex = /^https:\/\/github\.com\/.+/;
+    if (!githubRegex.test(value) && value !== "") {
+      setError("Please enter a valid GitHub URL (https://github.com/...)");
+    } else {
+      setError("");
+    }
+  };
 
   
   const handleInputChange = (e) => {
@@ -71,7 +85,7 @@ const Newstory = () => {
   //   setInput(value);
   //   setSuggestions(value ? predefinedTags.filter(tag => tag.toLowerCase().includes(value.toLowerCase())) : []);
   // };
-
+  
   const addTag = (tag) => {
     if (!tags.includes(tag) && tags.length < 6) {
       setTags([...tags, tag]);
@@ -308,19 +322,22 @@ const Newstory = () => {
           />
 
 {/* <label style={{ margin: "10px 20px" }}>Source Code (GitHub Link or URL):</label> */}
-<input
-  type="url"
-  placeholder="Enter Source Code GitHub URL"
-  value={links}
-  onChange={(e) => SetLinks(e.target.value)}
-  style={{
-    margin: "10px 20px",
-    padding: "5px",
-    width: "97%",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-  }}
-/>
+<div>
+      <input
+        type="url"
+        placeholder="Enter Source Code GitHub URL"
+        value={links}
+        onChange={handleInputChange1}
+        style={{
+          margin: "10px 20px",
+          padding: "5px",
+          width: "97%",
+          border: "1px solid #ccc",
+          borderRadius: "5px",
+        }}
+      />
+      {error && <p style={{ color: "red", marginLeft: "20px" }}>{error}</p>}
+    </div>
 
        <button
             style={{
