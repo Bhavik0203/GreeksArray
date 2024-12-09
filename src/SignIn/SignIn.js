@@ -6,7 +6,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
 import visual from "../assets/Images/banners/visual_identity.png";
-
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 const SignIn = () => {
   const [formdata, setFormdata] = useState({
     userNameOrEmail: "",
@@ -39,13 +39,21 @@ const SignIn = () => {
         setError("");
         navigate("/blogs"); // Redirect to the home page after login
       } else {
-        alert("Login failed, token not received.");
+        showToast("Login failed, token not received.", "danger");
       }
-      } catch (err) {
-        alert(err.response?.data?.message || "Failed to submit form. Please try again.");
-      }
+    } catch (err) {
+      showToast(err.response?.data?.Message || "Failed to submit form. Please try again.", "danger");
+    }
       
   };
+  function showToast(message, type) {
+    const toastEl = document.getElementById("errorToast");
+    const toast = new bootstrap.Toast(toastEl);
+    document.getElementById("errorToastBody").innerText = message;
+    toastEl.classList.remove("bg-success", "bg-danger");
+    toastEl.classList.add(`bg-${type}`);
+    toast.show();
+  }
 
   return (
     <>

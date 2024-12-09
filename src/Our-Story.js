@@ -1,9 +1,13 @@
 import React from "react";
 import "./FAQs.css";
+import Header from "./Header/Header";
+import Footer from "./Footer/Footer";
 
 const OurStory = () => {
   return (
-    <div className="our-story-section">
+    <>
+      <Header/>
+      <div className="our-story-section">
       <h2>Our Story</h2>
       <p>
         At Medium, we believe that everyone has a story to share. Founded with a vision to create
@@ -19,6 +23,8 @@ const OurStory = () => {
         Join us in celebrating the art of storytelling and the exchange of ideas that shape our world.
       </p>
     </div>
+    <Footer/>
+    </>
   );
 };
 

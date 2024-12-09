@@ -45,6 +45,8 @@ const Newstory = () => {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [links, SetLinks] = useState("");
+
   
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -108,7 +110,9 @@ const Newstory = () => {
     formData.append("id", 0);
     formData.append("blogTitle", blogTitle);
     formData.append("blogDescription", blogDescription);
+    formData.append("links", links);
     formData.append("blogContent", blogContent);
+
     formData.append("blogImage", blogImage);
     if (tags.length > 0) {
       formData.append("tags", JSON.stringify(tags));
@@ -197,17 +201,17 @@ const Newstory = () => {
     style={{
       marginTop: "10px",
       width: "100%",
-      height: "150px",
+      height: "250px",
     }}
   />
 </div>
-
-<hr
+<br></br><br></br>
+{/* <hr
     style={{
       borderBottom: "0",
       margin: "20px 0",
     }}
-  />
+  /> */}
           <div style={{
                 padding: "0px 20px",
                 margin: "10px 0px",
@@ -302,6 +306,22 @@ const Newstory = () => {
             onChange={handleImageUpload}
             style={{ margin: "10px 20px", }}
           />
+
+{/* <label style={{ margin: "10px 20px" }}>Source Code (GitHub Link or URL):</label> */}
+<input
+  type="url"
+  placeholder="Enter Source Code GitHub URL"
+  value={links}
+  onChange={(e) => SetLinks(e.target.value)}
+  style={{
+    margin: "10px 20px",
+    padding: "5px",
+    width: "97%",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+  }}
+/>
+
        <button
             style={{
               ...styles.publishButton,
@@ -316,7 +336,23 @@ const Newstory = () => {
           >
             Publish
           </button>
+      
                   </div>
+                  <button
+            style={{
+              ...styles.publishButton,
+              backgroundColor: isTyping ? "#04870f" : "#d3d3d3",
+              disabled: !isTyping,
+              // position: 'absolute',  
+              // top: '100px',           
+              // right: '40px', 
+              width: '100px',         
+              margin: '10px 20px',       
+            }}
+            onClick={handleSubmitBlog}
+          >
+            Publish
+          </button>
                 </div>
                 {showModal && <SuccessModal isOpen={showModal} onClose={() => setShowModal(false)} />}
               </>

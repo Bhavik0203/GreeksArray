@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./FAQs.css";
+import Header from "./Header/Header";
+import Footer from "./Footer/Footer";
 
 const FAQs = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -28,7 +30,10 @@ const FAQs = () => {
   };
 
   return (
-    <div className="faq-section">
+    <>
+      <Header/>
+      <div className="faq-section">
+      
       <h2>Frequently Asked Questions</h2>
       <div className="faq-list">
         {faqs.map((faq, index) => (
@@ -43,6 +48,8 @@ const FAQs = () => {
         ))}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

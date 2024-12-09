@@ -35,7 +35,7 @@ const Hero = () => {
      
 
       <div className="welcome-section " >
-  <div className="w-full h-full flex flex-col md:flex-row justify-between items-start  mb-8 ml-[30px] mr-[30px] " >
+      <div className="w-full h-full flex flex-col md:flex-row justify-between items-start mb-8 ml-[10px] mr-[10px] sm:ml-[30px] sm:mr-[30px]">
   <div className="md:w-1/2 flex-shrink-0 flex-grow ml-[15px] mb-[60px] mt-[60px] ">
   <h1
     id="welcome"
@@ -93,7 +93,7 @@ const Hero = () => {
   </Link>
 </div>
 
-<div className="w-[400px] h-[500px] flex justify-center items-center mt-[50px]">
+<div className="hidden md:flex w-[400px] h-[500px] justify-center items-center mt-[50px]">
   <Slider {...{...sliderSettings, arrows: false}} className="w-full h-full">
     <div>
       <img
@@ -118,6 +118,7 @@ const Hero = () => {
     </div>
   </Slider>
 </div>
+
 
     {/* <ImageSlider/> */}
   </div>

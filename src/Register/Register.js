@@ -174,32 +174,65 @@ const Register = () => {
       const newOtp = [...otp];
       newOtp[index] = element.value;
       setOtp(newOtp);
+  
       if (element.nextSibling && element.value) {
         element.nextSibling.focus();
       }
     }
   };
-
+  
   const handleOtpVerify = async () => {
     const otpCode = otp.join("");
+    if (otpCode.length !== 6) {
+      showToast("Please enter all OTP digits.", "danger");
+      return;
+    }
+  
     try {
       const response = await fetch(
         `http://geeksarray-001-site5.atempurl.com/api/Auth/verifyEmail?email=${email}&otp=${otpCode}`,
-        { method: "POST", headers: { "Content-Type": "application/json" } }
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        }
       );
-
+  
       if (response.ok) {
-        toast.success("Email verified successfully!");
+        showToast("Email verified successfully!", "success");
         setShowOtpModal(false);
         navigate("/Sign-In");
       } else {
         const data = await response.json();
-        toast.error(`Verification failed: ${data.Message}`);
+        showToast(`Verification failed: ${data.Message}`, "danger");
       }
     } catch (error) {
-      toast.error("Error verifying OTP. Please try again.");
+      showToast("Error verifying OTP. Please try again.", "danger");
     }
   };
+  
+  
+  const handleResendOtp = async () => {
+    try {
+      const response = await fetch(
+        `http://geeksarray-001-site5.atempurl.com/api/Auth/verifyEmail?email=${email}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+  
+      if (response.ok) {
+        showToast("OTP resent successfully!", "success");
+      } else {
+        const data = await response.json();
+        showToast(`Failed to resend OTP: ${data.Message}`, "danger");
+      }
+    } catch (error) {
+      showToast("Error resending OTP. Please try again.", "danger");
+    }
+  };
+  
+  
 
   return (
     <>
@@ -298,7 +331,7 @@ const Register = () => {
                     <img
                       src={avatar}
                       alt={`Avatar ${index + 1}`}
-                      className={`w-20 h-20 rounded-full border-2 transition-all ${selectedAvatar === index ? "border-blue-900" : "border-transparent"}`}
+                      className={`w-16 h-16 rounded-full border-2 transition-all ${selectedAvatar === index ? "border-blue-900" : "border-transparent"}`}
                     />
                   </label>
                 ))}
@@ -340,30 +373,40 @@ const Register = () => {
 
       {/* OTP Modal */}
       {showOtpModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded shadow-lg text-center">
-            <h2 className="text-2xl font-bold text-gray-800">Enter OTP</h2>
-            <p className="text-gray-600">We have sent an OTP to your email: {email}</p>
-            <div className="flex justify-center space-x-2 mt-4">
-              {otp.map((digit, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  maxLength="1"
-                  value={digit}
-                  onChange={(e) => handleOtpChange(e.target, index)}
-                  className="border rounded text-center w-10 h-10"
-                />
-              ))}
-            </div>
-            <button
-              onClick={handleOtpVerify}
-              className="bg-blue-600 text-white py-2 px-4 mt-4 rounded"
-            >
-              Verify OTP
-            </button>
-          </div>
-        </div>
+       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+  <div className="bg-white p-6 rounded shadow-lg text-center w-96">
+    <h2 className="text-2xl font-bold text-gray-800">Enter OTP</h2>
+    <p className="text-gray-600">We have sent an OTP to your email: {email}</p>
+    <div className="flex justify-center space-x-2 mt-4">
+      {otp.map((digit, index) => (
+        <input
+          key={index}
+          type="text"
+          maxLength="1"
+          value={digit}
+          onChange={(e) => handleOtpChange(e.target, index)}
+          className="border rounded text-center w-10 h-10"
+        />
+      ))}
+    </div>
+    <div className="flex justify-between mt-6">
+      <button
+        onClick={handleResendOtp}
+        className="text-blue-600 underline"
+      >
+        Resend OTP
+      </button>
+      <button
+        onClick={handleOtpVerify}
+        className="bg-blue-600 text-white py-2 px-4 rounded"
+      >
+        Verify OTP
+      </button>
+    </div>
+  </div>
+</div>
+
+     
       )}
       <Footer />
     </>
