@@ -199,16 +199,19 @@ const handleFileChange = (e) => {
     }
   
     // Prepare payload based on selection
-    const payload = {
-      firstName: formdata.firstName,
-      lastName: formdata.lastName,
-      userName: formdata.userName,
-      email: formdata.email,
-      password: formdata.password,
-      avatarId: selectedAvatar !== null ? selectedAvatar + 1 : null,
-      profileImage: selectedFile || null, // Use selected file if present
-    };
-  
+    const payload = new FormData();
+    payload.append("FirstName", formdata.firstName);
+    payload.append("LastName", formdata.lastName);
+    payload.append("UserName", formdata.userName);
+    payload.append("Email", formdata.email);
+    payload.append("Password", formdata.password);
+    if(selectedAvatar){
+      payload.append("AvatarId", selectedAvatar + 1);
+    }
+    if(selectedFile){
+      payload.append("ProfileImage", selectedFile || null);
+    }
+
     try {
       const response = await axios.post(
         "http://geeksarray-001-site5.atempurl.com/api/Auth/signup",

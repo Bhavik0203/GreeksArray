@@ -197,30 +197,6 @@ useEffect(() => {
 
   if (error) return <p>Error: {error}</p>;
 
-  const getTimeAgo = (date) => {
-    const now = new Date();
-    const postedDate = new Date(date);
-  
-    const diffInMillis = now - postedDate; 
-    const diffInSeconds = Math.floor(diffInMillis / 1000); 
-    const diffInMinutes = Math.floor(diffInSeconds / 60); 
-    const diffInHours = Math.floor(diffInMinutes / 60); 
-    const diffInDays = Math.floor(diffInHours / 24); 
-  
-    if (diffInDays > 0) {
-      // Format date as "DD MMM YYYY"
-      const options = { day: '2-digit', month: 'short', year: 'numeric' };
-      return postedDate.toLocaleDateString('en-GB', options);
-    } else if (diffInHours > 0) {
-      return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
-    } else if (diffInMinutes > 0) {
-      return `${diffInMinutes} minute${diffInMinutes > 1 ? 's' : ''} ago`;
-    } else {
-      return `${diffInSeconds} second${diffInSeconds > 1 ? 's' : ''} ago`;
-    }
-  };
-  
-
   return (
     <>
     <Helmet>
@@ -335,7 +311,7 @@ useEffect(() => {
             </div>
 
             <div className="flex items-center space-x-6 text-gray-500 text-sm mt-4">
-              <span>{getTimeAgo(blog.updatedAt)}</span>
+              <span>{new Date(blog.updatedAt).toDateString()}</span>
 
               <button
                 onClick={handleLikeClick}
