@@ -6,9 +6,8 @@ import Footer from "../Footer/Footer";
 import visual from "../assets/Images/banners/visual_identity.png";
 
 // Import Bootstrap CSS and JS
-import { bootstrap } from "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Toast } from "bootstrap";  // Correct Toast import
-import { Margin } from "@mui/icons-material";
 
 const SignIn = () => {
   const [formdata, setFormdata] = useState({
@@ -65,9 +64,7 @@ const SignIn = () => {
       <section className="relative flex flex-wrap lg:h-screen lg:items-center" style={{ backgroundColor: "#D2E0FB" }}>
         <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
           <div className="mx-auto max-w-lg text-center">
-          <h1 className="text-2xl font-bold sm:text-3xl" style={{ margin: "20px 0px" }}>
-  Sign In
-</h1>
+            <h1 className="text-2xl font-bold sm:text-3xl">Sign In</h1>
             <p className="mt-4 text-gray-500">
               Join us at GeeksArray and become part of a thriving community where geeks unite, learn, and grow.
             </p>
