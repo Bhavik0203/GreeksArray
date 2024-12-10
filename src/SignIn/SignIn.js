@@ -6,7 +6,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
 import visual from "../assets/Images/banners/visual_identity.png";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { bootstrap } from "bootstrap/dist/js/bootstrap.bundle.min.js";
 const SignIn = () => {
   const [formdata, setFormdata] = useState({
     userNameOrEmail: "",
