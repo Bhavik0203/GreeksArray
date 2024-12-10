@@ -468,18 +468,56 @@ const handleFileChange = (e) => {
             <div className="flex justify-between items-center mt-4">
   <button
     type="submit"
-    className="bg-[#f3c035] hover:bg-[#f9d76b] text-black font-bold py-2 px-4 rounded"
+    className="bg-[#f3c035] hover:bg-[#f9d76b] text-black font-bold py-2 px-4 rounded mb-3"
   >
     Sign Up
   </button>
-
-  <button
-        type="button"
-        className="bg-black hover:bg-white text-white hover:text-black font-bold py-2 px-4 rounded"
-        onClick={() => setShowOtpModal(true)}
+  {/* OTP Modal */}
+      {showOtpModal && (
+       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+  <div className="bg-white p-6 rounded shadow-lg text-center w-96">
+    <h2 className="text-2xl font-bold text-gray-800">Enter OTP</h2>
+    <p className="text-gray-600">We have sent an OTP to your email: {email}</p>
+    <div className="flex justify-center space-x-2 mt-4">
+      {otp.map((digit, index) => (
+        <input
+          key={index}
+          type="text"
+          maxLength="1"
+          value={digit}
+          onChange={(e) => handleOtpChange(e.target, index)}
+          className="border rounded text-center w-10 h-10"
+        />
+      ))}
+    </div>
+    <div className="flex justify-between mt-6">
+      <button
+        onClick={handleResendOtp}
+        className="text-blue-600 underline"
       >
-        Verify Email
+        Resend OTP
       </button>
+      <button
+        onClick={handleOtpVerify}
+        className="bg-blue-600 text-white py-2 px-4 rounded"
+      >
+        Verify OTP
+      </button>
+    </div>
+  </div>
+</div>
+
+     
+      )}
+</div>
+
+<button
+    type="button"
+    className="bg-black hover:bg-white text-white hover:text-black font-bold py-2 px-4 rounded"
+    onClick={() => setShowOtpModal(true)}
+  >
+    Verify Email
+  </button>
 
       {showOtpModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -549,7 +587,7 @@ const handleFileChange = (e) => {
         </div>
       )}
 
-</div>
+{/* </div> */}
 
             <div className="text-gray-500 mt-4 text-center">
               Already have an account?{" "}
@@ -560,43 +598,7 @@ const handleFileChange = (e) => {
           </form>
       </div>
 
-      {/* OTP Modal */}
-      {showOtpModal && (
-       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-  <div className="bg-white p-6 rounded shadow-lg text-center w-96">
-    <h2 className="text-2xl font-bold text-gray-800">Enter OTP</h2>
-    <p className="text-gray-600">We have sent an OTP to your email: {email}</p>
-    <div className="flex justify-center space-x-2 mt-4">
-      {otp.map((digit, index) => (
-        <input
-          key={index}
-          type="text"
-          maxLength="1"
-          value={digit}
-          onChange={(e) => handleOtpChange(e.target, index)}
-          className="border rounded text-center w-10 h-10"
-        />
-      ))}
-    </div>
-    <div className="flex justify-between mt-6">
-      <button
-        onClick={handleResendOtp}
-        className="text-blue-600 underline"
-      >
-        Resend OTP
-      </button>
-      <button
-        onClick={handleOtpVerify}
-        className="bg-blue-600 text-white py-2 px-4 rounded"
-      >
-        Verify OTP
-      </button>
-    </div>
-  </div>
-</div>
-
-     
-      )}
+      
       <Footer />
     </>
   );
