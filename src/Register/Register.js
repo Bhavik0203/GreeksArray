@@ -346,6 +346,7 @@ const handleFileChange = (e) => {
       <Header />
       <div>
         {/* Registration form */}
+        <br></br>
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md">
             <div className="grid md:grid-cols-2 gap-8">
               <div>
