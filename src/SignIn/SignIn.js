@@ -6,7 +6,7 @@ import Footer from "../Footer/Footer";
 import visual from "../assets/Images/banners/visual_identity.png";
 
 // Import Bootstrap CSS and JS
-import "bootstrap/dist/css/bootstrap.min.css";
+import { bootstrap } from "bootstrap/dist/css/bootstrap.min.css";
 import { Toast } from "bootstrap";  // Correct Toast import
 import { Margin } from "@mui/icons-material";
 
