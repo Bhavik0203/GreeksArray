@@ -513,12 +513,26 @@ const handleFileChange = (e) => {
 </div>
 
 <button
-    type="button"
-    className="bg-black hover:bg-white text-white hover:text-black font-bold py-2 px-4 rounded"
-    onClick={() => setShowOtpModal(true)}
-  >
-    Verify Email
-  </button>
+  type="button"
+  className="font-bold py-2 px-4 rounded transition-all duration-300"
+  style={{
+    backgroundColor: "#000",
+    color: "#fff",
+    border: "2px solid #000",
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.backgroundColor = "#fff";
+    e.currentTarget.style.color = "#000";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.backgroundColor = "#000";
+    e.currentTarget.style.color = "#fff";
+  }}
+  onClick={() => setShowOtpModal(true)}
+>
+  Verify Email
+</button>
+
 
       {showOtpModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

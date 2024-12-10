@@ -107,12 +107,20 @@ const SignIn = () => {
               </p>
 
               <button
-                type="submit"
-                className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
-                style={{ backgroundColor: "#000", color: "#fff", borderRadius: "12px" }}
-              >
-                Sign in
-              </button>
+  type="submit"
+  className="inline-block rounded-lg px-5 py-3 text-sm font-medium text-white"
+  style={{
+    backgroundColor: "#000", 
+    color: "#fff", 
+    borderRadius: "12px", 
+    transition: "background-color 0.3s ease, transform 0.2s ease",
+  }}
+  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#555"}
+  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#000"}
+>
+  Sign in
+</button>
+
             </div>
 
             <p className="text-sm text-gray-500">
