@@ -36,82 +36,9 @@ const Register = () => {
     profileImage: "",
 
   });
-  const [email, setEmail] = useState("");
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [showOtpModal, setShowOtpModal] = useState(false);
-
-  // Handle email input change
-  const handleEmailChange = (e) => setEmail(e.target.value);
-
-  // Handle OTP input
-  const handleOtpInputChange = (element, index) => {
-    if (!isNaN(element.value)) {
-      const newOtp = [...otp];
-      newOtp[index] = element.value;
-      setOtp(newOtp);
-
-      if (element.nextSibling && element.value) {
-        element.nextSibling.focus();
-      }
-    }
-  };
-
-  // Handle OTP send action
-  const handleOtpSend = async () => {
-    if (!email) {
-      showToast("Please enter a valid email.", "danger");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `http://geeksarray-001-site5.atempurl.com/api/Auth/verifyEmail?email=${email}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-
-      if (response.ok) {
-        showToast("OTP sent successfully!", "success");
-      } else {
-        const data = await response.json();
-        showToast(`Failed to send OTP: ${data.Message}`, "danger");
-      }
-    } catch (error) {
-      showToast("Error sending OTP. Please try again.", "danger");
-    }
-  };
-
-  // Handle OTP submission
-  const handleOtpVerify1 = async () => {
-    const otpCode = otp.join("");
-    if (otpCode.length !== 6) {
-      showToast("Please enter all OTP digits.", "danger");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `http://geeksarray-001-site5.atempurl.com/api/Auth/verifyEmail?email=${email}&otp=${otpCode}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-
-      if (response.ok) {
-        showToast("Email verified successfully!", "success");
-        setShowOtpModal(false);
-        navigate("/Sign-In");
-      } else {
-        const data = await response.json();
-        showToast(`Verification failed: ${data.Message}`, "danger");
-      }
-    } catch (error) {
-      showToast("Error verifying OTP. Please try again.", "danger");
-    }
-  };
+  const [email, setEmail] = useState("");
   // const [selectedAvatar, setSelectedAvatar] = useState(null);
 const [selectedFile, setSelectedFile] = useState(null);
 
@@ -139,7 +66,6 @@ const handleFileChange = (e) => {
   //   }
   // };
   const showToast = (message, type = "danger") => {
-    // Ensure a toast container exists
     let toastContainer = document.getElementById("toast-container");
     if (!toastContainer) {
       toastContainer = document.createElement("div");
@@ -152,43 +78,30 @@ const handleFileChange = (e) => {
       document.body.appendChild(toastContainer);
     }
   
-    // Create the toast element
     const toast = document.createElement("div");
-    toast.className = `toast show`;
+    toast.className = "toast show";
     toast.setAttribute("role", "alert");
     toast.setAttribute("aria-live", "assertive");
     toast.setAttribute("aria-atomic", "true");
     toast.style.minWidth = "300px";
     toast.style.padding = "30px";
     toast.style.margin = "10px";
-    toast.style.backgroundColor = type === "success" ? "#28a745" : "#dc3545"; // Success or danger color
+    toast.style.backgroundColor = type === "danger" ? "#dc3545" : "#198754"; // Danger or Success colors
     toast.style.color = "#fff";
   
-    // Toast content
     toast.innerHTML = `
-      <div class="toast-header" style="background-color: ${type === "success" ? "#28a745" : "#dc3545"}; color: #fff;">
-        <strong class="me-auto">${type === "success" ? "Success" : "Error"}</strong>
-        <button type="button" class="btn-close" aria-label="Close" style="color: #fff;"></button>
+      <div class="toast-header" style="background-color: ${type === "danger" ? "#dc3545" : "#198754"}; color: #fff;">
+        <strong class="me-auto">${type === "danger" ? "Error" : "Success"}</strong>
+        <button type="button" class="btn-close" aria-label="Close" style="color: #fff;" onclick="this.closest('.toast').remove()"></button>
       </div>
       <div class="toast-body">
         ${message}
       </div>
     `;
   
-    // Append and auto-remove the toast
     toastContainer.appendChild(toast);
-  
-    // Close button functionality
-    toast.querySelector(".btn-close").addEventListener("click", () => {
-      toast.remove();
-    });
-  
-    // Remove the toast after a delay
-    setTimeout(() => {
-      toast.remove();
-    }, 10000); // Remove after 10 seconds
+    setTimeout(() => toast.remove(), 10000); // Auto-remove after 10 seconds
   };
-  
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -462,91 +375,16 @@ const handleFileChange = (e) => {
 
             {/* {error && <p className="text-red-500 mt-4">{error}</p>} */}
 
-            <div className="flex justify-between items-center mt-4">
+            <div className="mt-6">
+            {/* <Link to=""> */}
   <button
     type="submit"
     className="bg-[#f3c035] hover:bg-[#f9d76b] text-black font-bold py-2 px-4 rounded"
   >
     Sign Up
   </button>
-
-  <button
-        type="button"
-        className="bg-black hover:bg-white text-white hover:text-black font-bold py-2 px-4 rounded"
-        onClick={() => setShowOtpModal(true)}
-      >
-        Verify Email
-      </button>
-
-      {showOtpModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded shadow-md w-96">
-            <h2 className="text-xl font-bold mb-4">Email Verification</h2>
-
-            {/* Email Input */}
-            <label className="block mb-2 text-sm">Email Address</label>
-            <input
-              type="email"
-              value={email}
-              onChange={handleEmailChange}
-              className="w-full p-2 mb-4 border rounded"
-              placeholder="Enter your email"
-            />
-
-            {/* Send OTP Button */}
-            <button
-              type="button"
-              onClick={handleOtpSend}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
-            >
-              Send OTP
-            </button>
-
-            {/* OTP Input */}
-            <div className="flex justify-between mb-4">
-              {otp.map((digit, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  maxLength="1"
-                  className="w-12 h-12 border rounded text-center text-xl"
-                  value={digit}
-                  onChange={(e) => handleOtpInputChange(e.target, index)}
-                />
-              ))}
+{/* </Link> */}
             </div>
-
-            {/* Verify OTP Button */}
-            <button
-              type="button"
-              onClick={handleOtpVerify}
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
-            >
-              Verify OTP
-            </button>
-
-            {/* Resend OTP Button */}
-            <button
-              type="button"
-              onClick={handleResendOtp}
-              className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
-            >
-              Resend OTP
-            </button>
-
-            {/* Cancel Button */}
-            <button
-              type="button"
-              onClick={() => setShowOtpModal(false)}
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
-
-</div>
 
             <div className="text-gray-500 mt-4 text-center">
               Already have an account?{" "}

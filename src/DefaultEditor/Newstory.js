@@ -109,7 +109,7 @@ const Newstory = () => {
   };
 
   const handleSubmitBlog = async () => {
-    if (!blogTitle || !blogContent || !blogDescription || !blogImage) {
+    if (!blogTitle || !blogContent || !blogDescription ) {
       alert("Please complete all fields.");
       return;
     }

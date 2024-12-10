@@ -222,39 +222,7 @@ const Profile = () => {
       
       <div className="profile-container">
         <div className="profile-content">
-        {/* <aside
-  className="profile-sidebar sticky top-4 bg-white shadow-lg rounded-lg p-6 mx-auto my-8 max-w-sm block lg:hidden"
-  style={{ display: 'none !important' }}
->
-  <div className="profile-info text-center">
-    {
-    {avatarUrl ? (
-      <img
-        src={avatarUrl}
-        alt="Avatar"
-        className="profile-avatar-image rounded-full mx-auto mb-4 h-24 w-24 object-cover border-4 border-blue-500"
-      />
-    ) : (
-      <div className="profile-avatar bg-blue-500 text-white h-24 w-24 flex items-center justify-center rounded-full mx-auto mb-4 text-2xl font-bold">
-        {firstName?.charAt(0) || "User"}
-      </div>
-    )}
-
-    <h3 className="text-lg font-semibold text-gray-800 mb-2">
-      {firstName || "User"} {lastName}
-    </h3>
-    <p className="text-gray-500 mb-4">{userName}</p>
-    <p className="text-gray-400 mb-4 text-sm">{email}</p>
-
-    <Link
-      to="#edit"
-      onClick={handleEditProfileClick}
-      className="inline-block bg-teal-600 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out"
-    >
-      Edit Profile
-    </Link>
-  </div>
-</aside> */}
+       
 
           <div className="reading-list">
             <div className="reading-list-header"> 
