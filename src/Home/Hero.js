@@ -36,7 +36,7 @@ const Hero = () => {
 
       <div className="welcome-section " >
       <div className="w-full h-full flex flex-col md:flex-row justify-between items-start mb-8 ml-[10px] mr-[10px] sm:ml-[30px] sm:mr-[30px]">
-  <div className="md:w-1/2 flex-shrink-0 flex-grow ml-[15px] mb-[60px] mt-[60px] ">
+  <div className="md:w-1/2 flex-shrink-0 flex-grow ml-[15px] mb-[60px] mt-[60px] mr-[30px]">
   <h1
     id="welcome"
     className="text-4xl lg:text-2xl text-left font-bold text-gray-900 font-spaceGrotesk mb-3 "

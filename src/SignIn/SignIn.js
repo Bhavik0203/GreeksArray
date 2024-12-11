@@ -61,7 +61,7 @@ const SignIn = () => {
   return (
     <>
       <Header />
-      <section className="relative flex flex-wrap lg:h-screen lg:items-center" style={{ backgroundColor: "#D2E0FB" }}>
+      <section className="relative flex flex-wrap lg:h-screen lg:items-center" style={{ backgroundColor: "#D2E0FB"  }}>
         <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
           <div className="mx-auto max-w-lg text-center">
             <h1 className="text-2xl font-bold sm:text-3xl">Sign In</h1>
@@ -142,10 +142,11 @@ const SignIn = () => {
             }}
           />
         </div>
+        <br></br><br></br>
       </section>
 
       {/* Toast Container */}
-      <div className="toast-container position-fixed top-0 end-0 p-3">
+      <div className="toast-container position-fixed top-2 end-0 p-3">
         <div
           id="errorToast"
           className="toast align-items-center text-white border-0"

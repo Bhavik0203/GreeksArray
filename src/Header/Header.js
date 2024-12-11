@@ -145,7 +145,7 @@ const Header = ({ show }) => {
                     <div className="bg-white z-20 shadow-md py-6 px-6 sm:min-w-[320px] max-sm:min-w-[250px] absolute right-0 top-10">
                       {isLoggedIn ? (
                         <>
-                          <h6 className="font-semibold text-[15px]"> Welcome {userData?.firstName} </h6>
+                          <h6 className="font-semibold text-[15px]"> Welcome {userData?.firstName}</h6>
                           <p className="text-sm text-gray-500 mt-1"> Access your account and explore blogs. </p>
                           <Link to="/Profile"> <button type="button" className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold" > Go To Profile </button> </Link>
                           <Link to="/sign-in"> <button type="button" className="bg-transparent border-2 border-gray-300 hover:border-black rounded px-4 py-2.5 mt-4 text-sm text-black font-semibold ml-1" onClick={handleLogout} > Log Out </button> </Link>

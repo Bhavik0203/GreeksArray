@@ -163,7 +163,7 @@ const styles = {
     heading: {
         fontSize: '2rem',
         fontWeight: 'bold',
-        marginTop: '30px',
+        marginTop: '100px',
     },
     description: {
         margin: '20px 0',
@@ -187,6 +187,8 @@ const styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: '60px',
+        marginBottom: '60px',
     },
     form: {
         width: '100%',
@@ -194,7 +196,7 @@ const styles = {
     },
     input: {
         width: '100%',
-        padding: '10px',
+        padding: '15px',
         margin: '10px 0',
         borderRadius: '5px',
         border: '1px solid #ddd',
@@ -205,7 +207,7 @@ const styles = {
         margin: '10px 0',
         borderRadius: '5px',
         border: '1px solid #ddd',
-        height: '100px',
+        height: '150px',
     },
     button: {
         width: '25%',

@@ -239,7 +239,7 @@ useEffect(() => {
   <b>Latest Blogs by Geeks</b>
 </h1> */}
     
-        <div className="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6 p-4">
+    <div className="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6 p-4">
           {/* Left Section: Latest Blogs */}
           <div
   className="w-full lg:w-1/3 mb-8 lg:mb-0 lg:min-w-[800px] lg:px-5 lg:ml-5 lg:mr-0 lg:mb-10"
@@ -253,88 +253,78 @@ useEffect(() => {
           
           <h2 style={{ fontSize: '30px', fontWeight: 'bold' }}>Recent Posts</h2>
           <div className="max-w-6xl mx-auto p-4">
-  <ul className="space-y-8">
-    {currentBlogs
-      .sort((a, b) => b.id - a.id)
-      .map((blog) => (
-        <li
-          key={blog.id}
-          className="flex flex-col md:flex-row items-start border rounded-lg shadow-md p-4"
-          style={{ backgroundColor: '#fff' }}
-        >
-          {/* Blog Image */}
-          <img
-            src={
-              blog.blogImage && blog.blogImage.length > 1
-                ? blog.blogImage[0]
-                : blog.blogImage
-            }
-            alt="Blog thumbnail"
-            className="w-full md:w-40 h-32 object-cover rounded-md"
-            style={{ margin: '10px' }}
-          />
+          <ul className="space-y-8">
+  {currentBlogs
+    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)) // Sort by updatedAt descending
+    .map((blog) => (
+      <li
+        key={blog.id}
+        className="flex flex-col md:flex-row items-start border rounded-lg shadow-md p-4 bg-white"
+      >
+        {/* Blog Image */}
+        <img
+          src={
+            blog.blogImage && blog.blogImage.length > 1
+              ? blog.blogImage[0]
+              : blog.blogImage
+          }
+          alt="Blog thumbnail"
+          className="w-full md:w-40 h-32 object-cover rounded-md m-2"
+        />
 
-          {/* Blog Content */}
-          <div className="flex-1 md:ml-6 mt-4 md:mt-0">
-            <Link
-              to={`/blogs/${blog.slug}`}
-              className="block text-xl font-bold text-black hover:underline"
-            >
-              {blog.blogTitle}
-            </Link>
+        {/* Blog Content */}
+        <div className="flex-1 md:ml-6 mt-4 md:mt-0">
+          <Link
+            to={`/blogs/${blog.slug}`}
+            className="block text-xl font-bold text-black hover:underline"
+          >
+            {blog.blogTitle}
+          </Link>
 
-            <p className="mt-2 text-gray-700">
-              {blog.blogDescription.length > 180
-                ? `${blog.blogDescription.substring(0, 180)}...`
-                : blog.blogDescription}
-            </p>
+          <p className="mt-2 text-gray-700">
+            {blog.blogDescription.length > 180
+              ? `${blog.blogDescription.substring(0, 180)}...`
+              : blog.blogDescription}
+          </p>
 
-            <div className="mt-4 space-y-2 text-sm text-gray-500">
-              <div className="flex items-center space-x-2">
-                <span className="font-semibold">by</span>
-                <span className="text-orange-500">{blog.writer}</span>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <span className="font-semibold">in</span>
-                <div className="flex flex-wrap gap-2">
-                  {blog.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="bg-red-400 text-white text-xs py-1 px-2 rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
+          <div className="mt-4 space-y-2 text-sm text-gray-500">
+            <div className="flex items-center space-x-2">
+              <span className="font-semibold">by</span>
+              <span className="text-orange-500">{blog.writer}</span>
             </div>
 
-            <div className="flex items-center space-x-6 text-gray-500 text-sm mt-4">
-              <span>{new Date(blog.updatedAt).toDateString()}</span>
-
-              <button
-                onClick={handleLikeClick}
-                className={`flex items-center space-x-1 transition ${
-                  isLiked ? 'text-blue-500' : 'text-gray-500'
-                } hover:text-blue-500`}
-              >
-                <FontAwesomeIcon icon={faThumbsUp} className="text-xl" />
-                <span className="likes-count">{blog.likes.length}</span>
-              </button>
-
-              <button
-                onClick={() => {}}
-                className="flex items-center space-x-1 transition hover:text-blue-500"
-              >
-                <FontAwesomeIcon icon={faComment} className="text-xl" />
-                <span className="comment-count">{blog.comments.length}</span>
-              </button>
+            <div className="flex items-center space-x-2">
+              <span className="font-semibold">in</span>
+              <div className="flex flex-wrap gap-2">
+                {blog.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="bg-red-400 text-white text-xs py-1 px-2 rounded-full"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
-        </li>
-      ))}
-  </ul>
+
+          <div className="flex items-center space-x-6 text-gray-500 text-sm mt-4">
+            <span>{new Date(blog.updatedAt).toDateString()}</span>
+            <button className="flex items-center space-x-1 hover:text-blue-500">
+              <FontAwesomeIcon icon={faThumbsUp} className="text-xl" />
+              <span className="likes-count">{blog.likes.length}</span>
+            </button>
+            <button className="flex items-center space-x-1 hover:text-blue-500">
+              <FontAwesomeIcon icon={faComment} className="text-xl" />
+              <span className="comment-count">{blog.comments.length}</span>
+            </button>
+          </div>
+        </div>
+      </li>
+    ))}
+</ul>
+
+
 
   {/* Pagination */}
   <div className="flex justify-center mt-6 space-x-2">
