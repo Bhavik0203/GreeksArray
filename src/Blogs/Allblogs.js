@@ -257,6 +257,10 @@ useEffect(() => {
   {currentBlogs
     .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)) // Sort by updatedAt descending
     .map((blog) => (
+      <Link
+            to={`/blogs/${blog.slug}`}
+            className="block text-xl font-bold text-black"
+          >
       <li
         key={blog.id}
         className="flex flex-col md:flex-row items-start border rounded-lg shadow-md p-4 bg-white"
@@ -274,12 +278,7 @@ useEffect(() => {
 
         {/* Blog Content */}
         <div className="flex-1 md:ml-6 mt-4 md:mt-0">
-          <Link
-            to={`/blogs/${blog.slug}`}
-            className="block text-xl font-bold text-black hover:underline"
-          >
             {blog.blogTitle}
-          </Link>
 
           <p className="mt-2 text-gray-700">
             {blog.blogDescription.length > 180
@@ -321,6 +320,7 @@ useEffect(() => {
           </div>
         </div>
       </li>
+      </Link>
     ))}
 </ul>
 

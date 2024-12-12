@@ -176,7 +176,6 @@ const Newstory = () => {
   <input
     type="text"
     placeholder="Title"
-    value={blogTitle}
     onChange={handleTitleChange}
     style={{
       marginTop: "10px",
@@ -193,7 +192,6 @@ const Newstory = () => {
   <input
     type="text"
     placeholder="Add Description"
-    value={blogDescription}
     onChange={handleDescriptionChange}
     style={{
       marginTop: "10px",

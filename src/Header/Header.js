@@ -31,7 +31,7 @@ const Header = ({ show }) => {
   };
   // Handle log out functionality
   const handleLogout = () => {
-    localStorage.removeItem("authToken"); // Remove auth token from local storage
+    localStorage.clear(); // Remove auth token from local storage
     setIsLoggedIn(false); // Update state
     navigate("/Sign-In");
   };
@@ -86,6 +86,7 @@ const Header = ({ show }) => {
         setFirstName(response.data.firstName); // Set fetched firstName
         setLastName(response.data.lastName); // Set fetched firstName
         setAvatarUrl(response.data.profileImage);
+        localStorage.setItem("UserId", response.data.id);
 
         // Set fetched avatar URL
       } catch (error) {

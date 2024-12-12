@@ -51,6 +51,8 @@ const Profile = () => {
   };
 
   const handleCloseModal = () => {
+    setProfileImage(null)
+    setSelectedAvatar(null)
     setIsModalOpen(false);
   };
 
@@ -113,6 +115,7 @@ const Profile = () => {
     formData.append("FirstName", firstName);
     formData.append("LastName", lastName);
     formData.append("ProfileImage", profileImage); // File input
+    formData.append("AvatarId", selectedAvatar + 1);
   
     // Your authorization token
     const token = localStorage.getItem("authToken");
@@ -468,7 +471,7 @@ const Profile = () => {
               />
 
               <label>Avatar OR Profile Image</label>
-              <div className="grid grid-cols-5 gap-4 mt-4">
+              <div className={`grid grid-cols-5 gap-4 mt-4 ${profileImage ? "opacity-50 pointer-events-none" : ""}`}>
                 {avatars.map((avatar, index) => (
                   <label key={index} className="cursor-pointer">
                     <input
@@ -491,7 +494,7 @@ const Profile = () => {
               <input
                 type="file"
                 onChange={handleProfileImageChange}
-                className="mb-4"
+                className={`b-4 ${selectedAvatar !== null ? "opacity-50 pointer-events-none" : ""}`}
               />
             </div>
 

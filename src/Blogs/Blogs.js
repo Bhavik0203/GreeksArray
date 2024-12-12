@@ -74,10 +74,9 @@ const Blog = ({ readOnly = false }) => {
           setLikes(blogData.likes.length); // Set initial likes count
           setComments(blogData.comments || []); // Ensure it's an array
 
-          // Check if the user has already liked the blog (you can customize this logic)
-          const userId = localStorage.getItem('userId'); // Assume you're storing the userId
-          const userHasLiked = blogData.likes.some(like => like.userId === userId);
-          setIsLiked(userHasLiked); // Set the liked status based on response data
+          const userId = localStorage.getItem('UserId'); 
+          const userHasLiked = blogData.likes.some(like => like.user.id == userId);
+          setIsLiked(userHasLiked); 
         }
       })
       .catch(error => alert(`Error fetching the blog data: ${error.message || error}`));
@@ -281,10 +280,10 @@ const Blog = ({ readOnly = false }) => {
                   isLiked ? 'text-blue-500' : 'text-gray-500'
                 } hover:text-blue-500`} // Conditionally set the button color
               >
-                <FontAwesomeIcon icon={faThumbsUp} className="text-xl" />
+                <FontAwesomeIcon icon={faThumbsUp} className={`text-xl ${isLiked === true ? "text-blue-500" : ""}`} />
                 <span className="likes-count">{likes}</span> {/* Like count */}
               </button>
-                <button onClick={() => {}} className="flex items-center space-x-1 transition hover:text-blue-500">
+                <button onClick={() => {}} className="flex items-center space-x-1">
                   <FontAwesomeIcon icon={faComment} className="text-xl" />
                   <span className="comment-count">{comments.length}</span> {/* Updated to show correct comments length */}
                 </button>
@@ -444,14 +443,18 @@ const Blog = ({ readOnly = false }) => {
       : "Anonymous"}:
   </p>
   <p className="text-gray-600 mt-1">{comment.commentDescription}</p>
-          <button
-          className="mt-2 block bg-red-500 px-5 py-2 text-center text-xs font-bold uppercase text-white transition duration-150 ease-in-out focus:outline-none focus:ring focus:ring-red-300"
-          onClick={() => {
-            handleDeleteComment(blog.id, comment.id); // Pass the blogId, commentId
-          }}
-        >
-          Delete
-        </button>
+  <button
+  style={{
+    color: "red",
+    cursor: "pointer",
+  }}
+  className={`${localStorage.getItem("UserId") === null || localStorage.getItem("UserId") != comment.user.id ? "hidden" : "opacity-100"}`}
+  onMouseOver={(e) => (e.target.style.color = "#ff6347")}
+  onMouseOut={(e) => (e.target.style.color = "red")}
+  onClick={() => handleDeleteComment(blog.id, comment.id)}
+>
+  Delete
+</button>
 </div>
 
         
