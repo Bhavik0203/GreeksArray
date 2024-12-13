@@ -67,7 +67,7 @@ const Profile = () => {
     if (token) {
       try {
         const response = await axios.get(
-          "http://geeksarray-001-site5.atempurl.com/api/User?isActive=true",
+          "http://geeksarray-001-site5.atempurl.com/api/User",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -114,8 +114,12 @@ const Profile = () => {
     const formData = new FormData();
     formData.append("FirstName", firstName);
     formData.append("LastName", lastName);
-    formData.append("ProfileImage", profileImage); // File input
-    formData.append("AvatarId", selectedAvatar + 1);
+    if (profileImage){
+      formData.append("ProfileImage", profileImage); // File input
+    }
+    if (selectedAvatar != null){
+      formData.append("AvatarId", selectedAvatar + 1);
+    }
   
     // Your authorization token
     const token = localStorage.getItem("authToken");
@@ -125,11 +129,11 @@ const Profile = () => {
       setIsLoading(true); // Set loading state
   
       const response = await fetch(
-        "http://geeksarray-001-site5.atempurl.com/api/User?isActive=true",
+        "http://geeksarray-001-site5.atempurl.com/api/User",
         {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${token}`, // Add the token here
+            "Authorization": `Bearer ${token}`, 
           },
           body: formData,
         }
@@ -499,9 +503,9 @@ const Profile = () => {
             </div>
 
             {/* Save and Cancel Buttons */}
-            <div className="modal-buttons">
+            <div className="flex modal-buttons mt-2 justify-content-between">
               <button
-                className="save-button bg-blue-500 text-white"
+                className="save-button text-white"
                 disabled={!isFormValid || isLoading} // Disable button if form is invalid or loading
                 onClick={handleSaveProfile}
               >

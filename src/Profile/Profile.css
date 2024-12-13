@@ -273,8 +273,6 @@
 /* CSS for Save and Cancel Buttons */
 .modal-buttons button {
   border-radius: 12px; /* Rounded corners */
-  padding: 10px 20px;
-  margin-right: 10px;
   border: none;
   cursor: pointer;
   font-size: 16px;
@@ -282,22 +280,25 @@
 
 /* Green Button Style */
 .save-button {
-  background-color: #28a745; /* Green background color */
+  background-color: #28a745 !important; /* Green background color */
   color: white;
   border-radius: 12px; /* Border radius for rounded corners */
   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  width: fit-content !important;
 }
 
 .save-button:hover {
-  background-color: #218838; /* Slightly darker green on hover */
+  background-color: #218838 !important; /* Slightly darker green on hover */
 }
 
 /* Red Button Style */
 .cancel-button {
   background-color: #f44336; /* Red background color */
   color: white;
+  padding: 0px 10px;
   border-radius: 12px; /* Border radius for rounded corners */
   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  width: max-content !important;
 }
 
 .cancel-button:hover {
