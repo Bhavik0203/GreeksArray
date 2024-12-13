@@ -252,8 +252,8 @@ useEffect(() => {
 
 <br></br>
           
-          <h2 style={{ fontSize: '50px', fontWeight: 'bold' }}>Recent Posts</h2>
-          <div className="w-full max-w-[100%] mx-auto p-4">
+          <h2  style={{ fontSize: '30px', fontWeight: 'bold' }}>Recent Posts</h2>
+          <div className="w-full max-w-[100%] mx-auto p-2">
 
           <ul className="space-y-8">
   {currentBlogs
@@ -266,7 +266,7 @@ useEffect(() => {
           >
       <li
         key={blog.id}
-        className="flex flex-col md:flex-row items-start border rounded-lg shadow-md pl-4 pr-3 pt-2 pb-2 bg-white"
+        className="flex flex-col md:flex-row items-start border rounded-lg shadow-lg pl-4 pr-3 pt-2 pb-2 bg-white"
       >
         {/* Blog Image */}
         <img

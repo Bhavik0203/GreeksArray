@@ -296,9 +296,10 @@ const Profile = () => {
       alt="Blog cover"
       src={`${blog.blogImage !== null && blog.blogImage.length > 1 ? blog.blogImage[0] : blog.blogImage}`}
       style={{
-        width: "100%",
-        height: "100%",
+        width: "150px",
+        height: "150px",
         objectFit: "cover",
+        margin: "30px",
       }}
     />
   </div>
@@ -325,19 +326,19 @@ const Profile = () => {
       </a>
 
       <p
-  className="mt-2 line-clamp-3 text-sm text-gray-700"
+  className=" line-clamp-3 text-sm text-gray-700"
   style={{
     fontSize: "0.875rem",
     lineHeight: "1.5",
     color: "#374151",
   }}
-  dangerouslySetInnerHTML={{ __html: blog.blogContent }}
+  dangerouslySetInnerHTML={{ __html: blog.blogDescription }}
 ></p>
 
     </div>
 
     <div
-      className="p-4 sm:p-6"
+      className="pl-4 pr-4 pb-4 pt-0 sm:p-3"
       style={{
         fontSize: "0.75rem",
         lineHeight: "1.25",
