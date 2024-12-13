@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import Header from "../Header/Header";
@@ -17,6 +18,9 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   // Handle form input changes
+  // const [formdata, setFormdata] = useState({ password: '' });
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormdata({ ...formdata, [name]: value });
@@ -87,10 +91,12 @@ const SignIn = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="sr-only">Password</label>
+              <label htmlFor="password" className="sr-only">
+                Password
+              </label>
               <div className="relative">
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
                   name="password"
                   value={formdata.password}
@@ -98,6 +104,12 @@ const SignIn = () => {
                   className="w-full rounded-lg border border-black p-4 text-sm shadow-sm"
                   placeholder="Enter password"
                 />
+                <span
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
               </div>
             </div>
 

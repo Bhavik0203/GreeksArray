@@ -389,7 +389,7 @@ useEffect(() => {
                   <input
                     type="text"
                     name="q"
-                    value={searchValue} // Bind input value to state
+                    // value={searchValue} // Bind input value to state
                     onChange={handleSearchChange} // Handle input changes
                     className="w-full border h-10 shadow p-4 rounded-full dark:text-gray-900 dark:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-400"
                     placeholder="Search"
