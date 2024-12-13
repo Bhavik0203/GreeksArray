@@ -1,17 +1,19 @@
 import React, { useState, useRef } from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { Toast } from "bootstrap"; // Import Toast from Bootstrap
 import SuccessModal from './SuccessModal';
 import { useLocation } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./Newstory.css";
 
 const predefinedTags = [
-  '.NET','.net','reactjs', '.NET Core', '.NET MAUI', '.NET Standard', 'Active Directory', 'ADO.NET', 'Agile Development', 'AI','AJAX', 'AlbertAGPT', 'Alexa Skills', 'Algorand', 'Algorithms in C#', 'Android', 'Angular', 'ArcObject', 'ASP.NET', 'ASP.NET Core',"Augmented Reality", "Avalanche", "AWS", "Azure", "Backbonejs", "Big Data", "BizTalk Server", "Blazor", "Blockchain", "Bootstrap","Bot Framework", "Business", "Business Intelligence(BI)", "C#", "C# Corner", "C# Strings", "C, C++, MFC", "Career Advice", "Careers and Jobs", "Chapters","ChatGPT", "Cloud", "Coding Best Practices", "Cognitive Services", "COM Interop", "Compact Framework", "Copilot Studio", "Cortana Development", "Cosmos DB", "Cryptocurrency", 
-    'Cryptography', 'Crystal Reports', 'CSS', 'Current Affairs', 'Custom Controls', 'Cyber Security', 'Data Mining', 'Data Science','Databases & DBA', 'Design Patterns & Practices', 'DevExpress', 'DevOps', 'DirectX', 'Dynamics CRM', 'Enterprise Development', 'Entity Framework', 'Error Zone', 'Exception Handling',"F#", "Files, Directory, IO", "Flutter", "Games Programming", "GDI+", "Generative AI", "GO", "Google Cloud", "Google Development", "Graphics Design","Graphite Studio", "Hardware", "Hiring and Recruitment", "HoloLens", "How do I", "HTML 5", "Internet & Web", "Internet of Things", "Ionic", "Java","Java and .NET", "JavaScript", "JQuery", "JSON", "JSP", "Knockout", "Kotlin","Kubernetes", "Langchain", "Leadership", "Learn .NET",
-    'Learn iOS Programming', 'LINQ', 'Machine Learning', 'Metaverse', 'Microsoft 365', 'Microsoft Fabric', 'Microsoft Office', 'Microsoft Phone','Microsoft Teams', 'Mobile Development', 'MongoDB', 'MuleSoft', 'MySQL', 'NEAR', 'NetBeans', 'Networking', 'NFT', 'NoCode LowCode',"Node.js", "Office Development", "OOP/OOD", "Open Source", "Operating Systems", "Oracle", "Outsourcing", "Philosophy", "PHP", "Polygon","PostgreSQL", "Power Apps", "Power Automate", "Power BI", "Power Pages", "Printing in C#", "Products", "Progress", "Progressive Web Apps", "Project Management","Public Speaking", "Python", "Q#", "QlikView", "Quantum Computing", "R", "React","React.js","Reactjs", "React Native", "Reports using C#",
-    'Robotics & Hardware', 'RPA', 'Ruby on Rails', 'RUST', 'Salesforce', 'Security', 'Servers', 'ServiceNow','SharePoint', 'SignalR', 'Smart Devices', 'Software Architecture/Engineering', 'Software Testing', 'Solana', 'Solidity', 'SQL', 'SQL Server', 'Startups',"Stratis Blockchain", "Swift", "SyncFusion", "Threading", "Tools", "TypeScript", "Unity", "UWP", "Visual Basic .NET", "Visual Studio","Vue.js", "WCF", "Wearables", "Web API", "Web Design", "Web Development", "Web3", "Windows", "Windows Controls", "Windows Forms", "Windows PowerShell","Windows Services", "Workflow Foundation", "WPF", "Xamarin", "XAML", "XML", "XNA", "XSharp"
+  '.NET','.net','reactjs', '.NET Core', '.NET MAUI', '.NET Standard', 'Active Directory', 'ADO.NET', 'Agile Development', 'AI','AJAX', 'AlbertAGPT', 'Alexa Skills', 'Algorand', 'Algorithms in C#', 'Android', 'Angular', 'ArcObject', 'ASP.NET', 'ASP.NET Core','Augmented Reality', "Avalanche", "AWS", "Azure", "Backbonejs", "Big Data", "BizTalk Server", "Blazor", "Blockchain", "Bootstrap","Bot Framework", "Business", "Business Intelligence(BI)", "C#", "C# Corner", "C# Strings", "C, C++, MFC", "Career Advice", "Careers and Jobs", "Chapters","ChatGPT", "Cloud", "Coding Best Practices", "Cognitive Services", "COM Interop", "Compact Framework", "Copilot Studio", "Cortana Development", "Cosmos DB", "Cryptocurrency", 
+    'Cryptography', 'Crystal Reports', 'CSS', 'Current Affairs', 'Custom Controls', 'Cyber Security', 'Data Mining', 'Data Science','Databases & DBA', 'Design Patterns & Practices', 'DevExpress', 'DevOps', 'DirectX', 'Dynamics CRM', 'Enterprise Development', 'Entity Framework', 'Error Zone', 'Exception Handling','F#', "Files, Directory, IO", "Flutter", "Games Programming", "GDI+", "Generative AI", "GO", "Google Cloud", "Google Development", "Graphics Design","Graphite Studio", "Hardware", "Hiring and Recruitment", "HoloLens", "How do I", "HTML 5", "Internet & Web", "Internet of Things", "Ionic", "Java","Java and .NET", "JavaScript", "JQuery", "JSON", "JSP", "Knockout", "Kotlin","Kubernetes", "Langchain", "Leadership", "Learn .NET",
+    'Learn iOS Programming', 'LINQ', 'Machine Learning', 'Metaverse', 'Microsoft 365', 'Microsoft Fabric', 'Microsoft Office', 'Microsoft Phone','Microsoft Teams', 'Mobile Development', 'MongoDB', 'MuleSoft', 'MySQL', 'NEAR', 'NetBeans', 'Networking', 'NFT', 'NoCode LowCode','Node.js', "Office Development", "OOP/OOD", "Open Source", "Operating Systems", "Oracle", "Outsourcing", "Philosophy", "PHP", "Polygon","PostgreSQL", "Power Apps", "Power Automate", "Power BI", "Power Pages", "Printing in C#", "Products", "Progress", "Progressive Web Apps", "Project Management","Public Speaking", "Python", "Q#", "QlikView", "Quantum Computing", "R", "React","React.js","Reactjs", "React Native", "Reports using C#",
+    'Robotics & Hardware', 'RPA', 'Ruby on Rails', 'RUST', 'Salesforce', 'Security', 'Servers', 'ServiceNow','SharePoint', 'SignalR', 'Smart Devices', 'Software Architecture/Engineering', 'Software Testing', 'Solana', 'Solidity', 'SQL', 'SQL Server', 'Startups','Stratis Blockchain', "Swift", "SyncFusion", "Threading", "Tools", "TypeScript", "Unity", "UWP", "Visual Basic .NET", "Visual Studio","Vue.js", "WCF", "Wearables", "Web API", "Web Design", "Web Development", "Web3", "Windows", "Windows Controls", "Windows Forms", "Windows PowerShell","Windows Services", "Workflow Foundation", "WPF", "Xamarin", "XAML", "XML", "XNA", "XSharp"
  
 ];
 
@@ -26,11 +28,9 @@ const modules = {
 };
 
 const styles = {
-  editorBodyContainer: { display: "flex", flexDirection: "column", padding: "20px",  },
-  editorBody: {  marginTop: "20px",
-    width: "90%",
-     },
-  publishButton: { padding: "10px 20px", fontSize: "16px", color:"#fff", cursor: "pointer", borderRadius:"7px" },
+  editorBodyContainer: { display: "flex", flexDirection: "column", padding: "20px" },
+  editorBody: { marginTop: "20px", width: "90%" },
+  publishButton: { padding: "10px 20px", fontSize: "16px", color: "#fff", cursor: "pointer", borderRadius: "7px" },
 };
 
 const Newstory = () => {
@@ -51,8 +51,6 @@ const Newstory = () => {
   const handleInputChange1 = (e) => {
     const value = e.target.value;
     setLinks(value);
-
-    // Validate GitHub URL
     const githubRegex = /^https:\/\/github\.com\/.+/;
     if (!githubRegex.test(value) && value !== "") {
       setError("Please enter a valid GitHub URL (https://github.com/...)");
@@ -61,7 +59,6 @@ const Newstory = () => {
     }
   };
 
-  
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInput(value);
@@ -80,12 +77,6 @@ const Newstory = () => {
     setIsTyping(blogTitle.trim() !== "Title" || value !== "Add Description");
   };
 
-  // const handleInputChange = (e) => {
-  //   const value = e.target.value;
-  //   setInput(value);
-  //   setSuggestions(value ? predefinedTags.filter(tag => tag.toLowerCase().includes(value.toLowerCase())) : []);
-  // };
-  
   const addTag = (tag) => {
     if (!tags.includes(tag) && tags.length < 6) {
       setTags([...tags, tag]);
@@ -109,14 +100,14 @@ const Newstory = () => {
   };
 
   const handleSubmitBlog = async () => {
-    if (!blogTitle || !blogContent || !blogDescription ) {
-      alert("Please complete all fields.");
+    if (!blogTitle || !blogContent || !blogDescription) {
+      showToast("Please complete all fields.", "danger");
       return;
     }
 
     const token = localStorage.getItem("authToken");
     if (!token) {
-      alert("Authentication token not found. Please log in.");
+      showToast("Authentication token not found. Please log in.", "danger");
       return;
     }
 
@@ -126,7 +117,6 @@ const Newstory = () => {
     formData.append("blogDescription", blogDescription);
     formData.append("links", links);
     formData.append("blogContent", blogContent);
-
     formData.append("blogImage", blogImage);
     if (tags.length > 0) {
       formData.append("tags", JSON.stringify(tags));
@@ -146,19 +136,43 @@ const Newstory = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        alert(`Failed to post blog: ${errorData.message || "Server error"}`);
+        showToast(`Failed to post blog: ${errorData.Message || "Server error"}`, "danger");
       } else {
         setShowModal(true);
       }
     } catch (error) {
-      alert("An error occurred while posting the blog.");
+      showToast("An error occurred while posting the blog.", "danger");
       console.error(error);
     }
   };
 
+  const showToast = (message, type) => {
+    const toastEl = document.getElementById("errorToast");
+    const toast = new Toast(toastEl);
+    document.getElementById("errorToastBody").innerText = message;
+    toastEl.classList.remove("bg-success", "bg-danger");
+    toastEl.classList.add(`bg-${type}`);
+    toast.show();
+  };
+
+  
+     
+    
+  
+ 
   return (
     <>
       <Header />
+       {/* Bootstrap Toast Element */}
+       <div className="toast-container position-fixed top-6 end-16 p-3">
+        <div id="errorToast" className="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div className="d-flex">
+            <div id="errorToastBody" className="toast-body"></div>
+            <button type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+
       <div style={styles.editorBodyContainer}>
       
 
