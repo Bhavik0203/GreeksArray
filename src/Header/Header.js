@@ -97,7 +97,7 @@ const Header = ({ show }) => {
   return (
     <div className="relative mb-20">
       <header
-        className={`flex shadow-sm py-3 px-4 sm:px-10 bg-black font-[sans-serif] min-h-[70px] tracking-wide z-50 fixed top-0 left-0 right-0 w-full`}
+        className={`flex shadow-sm px-4 sm:px-10 bg-black font-[sans-serif] min-h-[70px] tracking-wide z-50 fixed top-0 left-0 right-0 w-full`}
       >
         {" "}
         <div className="flex flex-wrap items-center justify-between lg:gap-y-4 gap-y-6 gap-x-4 w-full">
