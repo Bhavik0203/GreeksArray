@@ -119,7 +119,8 @@ const Header = ({ show }) => {
                   <a href="#"> <img src="https://readymadeui.com/readymadeui.svg" alt="logo" className="w-36" /> </a>
                 </li>
                 <li className={`max-lg:border-b max-lg:py-3 max-lg:px-3 relative ${activeItem === "about" ? "lg:after:w-full" : "lg:after:w-0" } lg:after:absolute lg:after:bg-black lg:after:h-[2px] lg:after:block lg:after:top-6 lg:after:transition-all lg:after:duration-300`} >
-                  <Link to="/about" className="text-white block text-[15px]" onClick={() => handleMenuClick("about")} > About </Link>
+                
+                <Link to="/about" className="text-white block text-[15px]" onClick={() => handleMenuClick("about")} > About </Link>
                 </li>
                 <li className={`max-lg:border-b max-lg:py-3 max-lg:px-3 relative ${activeItem === "blog" ? "lg:after:w-full" : "lg:after:w-0" } lg:after:absolute lg:after:bg-black lg:after:h-[2px] lg:after:block lg:after:top-6 lg:after:transition-all lg:after:duration-300`} >
                   <Link to="/blogs" className="text-white block text-[15px]" onClick={() => handleMenuClick("blog")} > Blogs </Link>

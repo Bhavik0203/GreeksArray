@@ -10,7 +10,7 @@ import PacmanLoader from 'react-spinners/PacmanLoader';
 import { Helmet } from "react-helmet";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios'; 
-import { faThumbsUp, faComment, faBookmark, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp, faComment, faBookmark, faShareAlt } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import TabNavigation from "./TabNavigation";
 
@@ -242,7 +242,8 @@ useEffect(() => {
     <div className="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6 p-4">
           {/* Left Section: Latest Blogs */}
           <div
-  className="w-full lg:w-1/3 mb-8 lg:mb-0 lg:min-w-[800px] lg:px-5 lg:ml-5 lg:mr-0 lg:mb-10"
+  className="w-full h-full lg:w-1/3 mb-8 lg:mb-0 lg:min-w-[60%] lg:px-5 lg:ml-5 lg:mr-[40px] lg:mb-10"
+
   style={{
     // These styles will be applied only on desktop (lg) and larger screens
     display: 'block', // Ensures it's visible on desktop
@@ -251,19 +252,21 @@ useEffect(() => {
 
 <br></br>
           
-          <h2 style={{ fontSize: '30px', fontWeight: 'bold' }}>Recent Posts</h2>
-          <div className="max-w-6xl mx-auto p-4">
+          <h2 style={{ fontSize: '50px', fontWeight: 'bold' }}>Recent Posts</h2>
+          <div className="w-full max-w-[100%] mx-auto p-4">
+
           <ul className="space-y-8">
   {currentBlogs
     .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)) // Sort by updatedAt descending
     .map((blog) => (
       <Link
             to={`/blogs/${blog.slug}`}
-            className="block text-xl font-bold text-black"
+            className="block text-xl font-bold text-black no-underline"
+
           >
       <li
         key={blog.id}
-        className="flex flex-col md:flex-row items-start border rounded-lg shadow-md p-4 bg-white"
+        className="flex flex-col md:flex-row items-start border rounded-lg shadow-md pl-4 pr-3 pt-2 pb-2 bg-white"
       >
         {/* Blog Image */}
         <img
@@ -273,20 +276,20 @@ useEffect(() => {
               : blog.blogImage
           }
           alt="Blog thumbnail"
-          className="w-full md:w-40 h-32 object-cover rounded-md m-2"
+          className="w-full md:w-40 h-32 object-cover rounded-md " style={{ marginTop: '20px' }}
         />
 
         {/* Blog Content */}
-        <div className="flex-1 md:ml-6 mt-4 md:mt-0">
-            {blog.blogTitle}
+        <div className="flex-1 md:ml-6 mt-1 ml-[30px] md:mt-0">
+        <p className="hover:underline">{blog.blogTitle}</p>
 
-          <p className="mt-2 text-gray-700">
+        <p className="text-gray-700 text-[14px]">
             {blog.blogDescription.length > 180
               ? `${blog.blogDescription.substring(0, 180)}...`
               : blog.blogDescription}
           </p>
 
-          <div className="mt-4 space-y-2 text-sm text-gray-500">
+          <div className="mt-1 space-y-2 text-sm text-gray-500">
             <div className="flex items-center space-x-2">
               <span className="font-semibold">by</span>
               <span className="text-orange-500">{blog.writer}</span>
@@ -307,17 +310,22 @@ useEffect(() => {
             </div>
           </div>
 
-          <div className="flex items-center space-x-6 text-gray-500 text-sm mt-4">
-            <span>{new Date(blog.updatedAt).toDateString()}</span>
-            <button className="flex items-center space-x-1 hover:text-blue-500">
-              <FontAwesomeIcon icon={faThumbsUp} className="text-xl" />
-              <span className="likes-count">{blog.likes.length}</span>
-            </button>
-            <button className="flex items-center space-x-1 hover:text-blue-500">
-              <FontAwesomeIcon icon={faComment} className="text-xl" />
-              <span className="comment-count">{blog.comments.length}</span>
-            </button>
-          </div>
+          <div className="flex justify-between items-center text-gray-500 text-sm mt-1">
+  <span>{new Date(blog.updatedAt).toDateString()}</span>
+  <div className="flex items-center space-x-6 mr-2">
+    <button className="flex items-center space-x-1 hover:text-blue-500">
+      <FontAwesomeIcon icon={faThumbsUp} className="text-xl" />
+      <span className="likes-count">{blog.likes.length}</span>
+    </button>
+    <button className="flex items-center space-x-1 hover:text-blue-500">
+      <FontAwesomeIcon icon={faComment} className="text-xl" />
+      <span className="comment-count">{blog.comments.length}</span>
+    </button>
+    <button  className="transition hover:text-blue-500">
+      <FontAwesomeIcon icon={faShareAlt} className="text-xl" />
+    </button>
+  </div>
+</div>
         </div>
       </li>
       </Link>
@@ -421,7 +429,7 @@ useEffect(() => {
         {/* Assuming each blog has a unique 'id' */}
         <Link
           to={`/blogs/${blog.slug}`}
-          className="flex items-center space-x-2"
+          className="flex items-center space-x-2 no-underline"
         >
           <img
             src={`${
@@ -432,15 +440,16 @@ useEffect(() => {
             alt="Recent Post Icon"
             className="w-11 h-11 rounded-full"
           />
-          <span  className="block mt-1 text-1xl font-bold text-black hover:underline"> 
+          <span  className="block mt-1 text-1xl font-bold text-black  hover:underline"> 
             <b>{blog.blogTitle}</b>
           </span>
-        </Link>
+          </Link>
         <span>
           {blog.blogDescription.length > 90
             ? `${blog.blogDescription.substring(0, 90)}...`
             : blog.blogDescription}
         </span>
+       
         <div
           className="text-sm text-gray-500"
           style={{ padding: "10px 0 0 10px" }}
@@ -450,7 +459,7 @@ useEffect(() => {
             <span>By</span>
             <span className="text-orange-500">{blog.writer}</span>
           </div>
-
+            
           {/* Tags Section */}
           <div className="flex items-center space-x-1">
             <span>in</span>

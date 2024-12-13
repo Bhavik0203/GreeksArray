@@ -296,7 +296,10 @@ const styles = {
             fontSize: '0.8rem', // Further reduce description font size
         },
     }
+
+    
 };
+
 
 
 
