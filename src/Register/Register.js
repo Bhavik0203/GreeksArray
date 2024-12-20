@@ -347,7 +347,7 @@ const handleFileChange = (e) => {
       <div>
         {/* Registration form */}
         <br></br>
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md">
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md min-h-[1100px] h-screen">
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">First Name</label>
@@ -457,11 +457,23 @@ const handleFileChange = (e) => {
     accept=".jpg, .jpeg, .png"
     className={`border-gray border bg-gray-100 focus:bg-transparent px-4 py-3 text-gray-800 rounded-md text-sm outline-blue-500 transition-all w-full ${selectedAvatar !== null ? "opacity-50 pointer-events-none" : ""}`}
     onChange={(e) => {
-      handleFileChange(e); 
-      setSelectedAvatar(null); // Reset avatar if file is uploaded
+      const file = e.target.files[0];
+      const validFormats = ['image/jpeg', 'image/png'];
+
+      if (file && !validFormats.includes(file.type)) {
+        alert('Please upload a JPG, JPEG, or PNG image.');
+        e.target.value = ''; // Reset the file input
+      } else {
+        handleFileChange(e); 
+        setSelectedAvatar(null); // Reset avatar if file is uploaded
+      }
     }}
   />
+  <p style={{ fontSize: '12px' }}>
+    Please use JPG, PNG, or JPEG format
+  </p>
 </div>
+
 
 
             {/* {error && <p className="text-red-500 mt-4">{error}</p>} */}

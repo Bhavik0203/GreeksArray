@@ -164,14 +164,15 @@ const Newstory = () => {
     <>
       <Header />
        {/* Bootstrap Toast Element */}
-       <div className="toast-container position-fixed top-6 end-16 p-3">
-        <div id="errorToast" className="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
-          <div className="d-flex">
-            <div id="errorToastBody" className="toast-body"></div>
-            <button type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-          </div>
-        </div>
-      </div>
+       <div className="toast-container position-fixed top-50 start-50 translate-middle p-3" style={{ zIndex: 1055 }}>
+  <div id="errorToast" className="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div className="d-flex">
+      <div id="errorToastBody" className="toast-body"></div>
+      <button type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
 
       <div style={styles.editorBodyContainer}>
       

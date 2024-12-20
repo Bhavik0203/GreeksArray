@@ -40,7 +40,7 @@ const Hero = () => {
   <div className="md:w-1/2 flex-shrink-0 flex-grow mb-16 md:mb-0 mt-8 md:mt-[120px]">
     <h1
       id="welcome"
-      className="text-4xl sm:text-5xl lg:text-6xl text-left font-bold text-gray-900 font-spaceGrotesk mb-6"
+      className="text-4xl text-left font-bold text-gray-900 font-spaceGrotesk mb-6"
     >
       Welcome to GeeksArray – The Ultimate Hub for Geeks!
     </h1>

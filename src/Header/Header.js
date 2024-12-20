@@ -159,7 +159,7 @@ const Header = ({ show }) => {
                         </>
                       )}
                       <hr className="border-b-0 my-4" />
-                      <ul className="space-y-1.5 ml-4">
+                      <ul className="space-y-1.5">
   <li>
     <Link to="/Write" className="text-sm text-gray-500 hover:text-black"> Write </Link>
   </li>
@@ -177,7 +177,7 @@ const Header = ({ show }) => {
   </li>
 </ul>
 <hr className="border-b-0 my-4" />
-<ul className="space-y-1.5 ml-4">
+<ul className="space-y-1.5 ">
   <li>
     <Link to="/terms&conditions" className="text-sm text-gray-500 hover:text-black"> Terms & Conditions </Link>
   </li>

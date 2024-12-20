@@ -11,7 +11,7 @@ const About = () => {
   return (
     <>
       <Header />
-      <div className="bg-gradient-to-r from-white via-blue-100 to-pink-100 py-12 px-4">
+      <div className=" py-12 px-4">
         <div className="max-w-7xl mx-auto text-center md:text-left">
           <h2 className="text-gray-800 lg:text-6xl md:text-5xl text-3xl font-extrabold leading-tight">
             About GeeksArray

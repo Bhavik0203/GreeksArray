@@ -271,7 +271,7 @@ const Blog = ({ readOnly = false }) => {
         <div className="flex items-center justify-between">
   <h1 className="text-4xl font-bold text-left mb-6 mt-10 w-full md:w-1/2">{blog.blogTitle}</h1>
   
-  {blog.blogImage && Array.isArray(blog.blogImage) && blog.blogImage.length > 0 ? (
+  {/* {blog.blogImage && Array.isArray(blog.blogImage) && blog.blogImage.length > 0 ? (
     <div className="mt-6 mb-6 w-full md:w-1/2" style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
       {blog.blogImage.map((imageUrl, index) => (
         <img
@@ -288,7 +288,7 @@ const Blog = ({ readOnly = false }) => {
         />
       ))}
     </div>
-  ) : null}
+  ) : null} */}
 </div>
 
           <p className="text-gray-600 mb-6 text-center">Introduction:</p>
