@@ -158,25 +158,42 @@ const SignIn = () => {
       </section>
 
       {/* Toast Container */}
-      <div className="toast-container position-fixed top-2 end-0 p-3">
-        <div
-          id="errorToast"
-          className="toast align-items-center text-white border-0"
-          role="alert"
-          aria-live="assertive"
-          aria-atomic="true"
-        >
-          <div className="d-flex">
-            <div id="errorToastBody" className="toast-body"></div>
-            <button
-              type="button"
-              className="btn-close btn-close-white me-2 m-auto"
-              data-bs-dismiss="toast"
-              aria-label="Close"
-            ></button>
-          </div>
-        </div>
-      </div>
+      <div
+  className="toast-container position-fixed top-2 end-0 p-3"
+  style={{
+    maxWidth: "90%",
+    width: "auto",
+  }}
+>
+  <div
+    id="errorToast"
+    className="toast align-items-center text-white border-0"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    style={{
+      maxWidth: "100%",
+      wordWrap: "break-word",
+    }}
+  >
+    <div className="d-flex">
+      <div
+        id="errorToastBody"
+        className="toast-body"
+        style={{
+          fontSize: "1rem",
+        }}
+      ></div>
+      <button
+        type="button"
+        className="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div>
+</div>
+
 
       <Footer />
     </>

@@ -52,14 +52,16 @@
 }
 
 .welcome-section {
-  background: linear-gradient(135deg, #8dfcfc, #f5d395); /* Teal and orange gradient */
+  background: linear-gradient(135deg, #8dfcfc, #f5d395);
   width: 100%;
+  min-height: 1000px;
+  height: 100vh; /* Full viewport height */
   display: flex;
-  align-items: center; /* Center content vertically */
-  justify-content: center; /* Center content horizontally */
-  padding: 20px; /* Optional padding */
+  align-items: center; 
+  justify-content: center; 
   box-sizing: border-box;
 }
+
 
 .body-content {
   margin-top: auto;

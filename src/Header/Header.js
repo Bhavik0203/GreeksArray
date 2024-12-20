@@ -170,7 +170,7 @@ const Header = ({ show }) => {
     <Link to="/Profile" className="text-sm text-gray-500 hover:text-black"> Our Publication </Link>
   </li>
   <li>
-    <Link to="/latest-blogs" className="text-sm text-gray-500 hover:text-black"> About us </Link>
+    <Link to="/About" className="text-sm text-gray-500 hover:text-black"> About us </Link>
   </li>
   <li>
     <Link to="/Contact-us" className="text-sm text-gray-500 hover:text-black"> Contact </Link>

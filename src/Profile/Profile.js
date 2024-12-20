@@ -240,7 +240,40 @@ const Profile = () => {
                 Welcome To The Profile {firstName} {lastName}.
               </h2>
               </div>
+             
+
             </div>
+            <aside className="profile-sidebar bg-white shadow-lg rounded-lg p-6 mx-auto my-8 max-w-sm md:max-w-md lg:max-w-lg md:block md:sticky md:top-4 lg:hidden">
+
+  <div className="profile-info text-center">
+    {/* Show the uploaded avatar image or fallback to the first letter of the first name */}
+    {avatarUrl ? (
+      <img
+        src={avatarUrl}
+        alt="Avatar"
+        className="profile-avatar-image rounded-full mx-auto mb-4 h-20 w-20 sm:h-24 sm:w-24 object-cover border-4 border-blue-500"
+      />
+    ) : (
+      <div className="profile-avatar bg-blue-500 text-white h-20 w-20 sm:h-24 sm:w-24 flex items-center justify-center rounded-full mx-auto mb-4 text-xl sm:text-2xl font-bold">
+        {firstName?.charAt(0) || "User"}
+      </div>
+    )}
+
+    <h3 className="text-md sm:text-lg font-semibold text-gray-800 mb-2">
+      {firstName || "User"} {lastName}
+    </h3>
+    <p className="text-gray-500 mb-2 sm:mb-4 text-sm sm:text-base">{userName}</p>
+    <p className="text-gray-400 mb-4 text-xs sm:text-sm">{email}</p>
+
+    <Link
+      to="#edit"
+      onClick={handleEditProfileClick}
+      className="inline-block bg-teal-600 hover:bg-teal-700 text-white font-medium py-1 sm:py-2 px-3 sm:px-4 rounded-lg transition duration-300 ease-in-out"
+    >
+      Edit Profile
+    </Link>
+  </div>
+</aside>
             <div className="divider"></div>
             <div className="blog-list">
             {blogs.length === 0 ? (
@@ -284,25 +317,28 @@ const Profile = () => {
 
   {/* Image */}
   <div
-   className="w-full sm:w-auto sm:basis-56 mb-4 sm:mb-0"
-   style={{
-     overflow: "hidden",
-     borderRadius: "8px",
-     width: "150px",
-     height: "250px",
-   }}
-  >
-    <img
-      alt="Blog cover"
-      src={`${blog.blogImage !== null && blog.blogImage.length > 1 ? blog.blogImage[0] : blog.blogImage}`}
-      style={{
-        width: "150px",
-        height: "150px",
-        objectFit: "cover",
-        margin: "30px",
-      }}
-    />
-  </div>
+  className="w-full sm:w-auto sm:basis-56 mb-4 sm:mb-0"
+  style={{
+    overflow: "hidden",
+    borderRadius: "8px",
+    maxWidth: "150px",
+    maxHeight: "250px",
+  }}
+>
+  <img
+    alt="Blog cover"
+    src={
+      blog.blogImage !== null && blog.blogImage.length > 1
+        ? blog.blogImage[0]
+        : blog.blogImage
+    }
+    className="w-full h-auto sm:h-[150px] object-cover mx-auto sm:my-4"
+    style={{
+      aspectRatio: "1 / 1",
+      borderRadius: "8px",
+    }}
+  />
+</div>
 
   {/* Content */}
   <div className="flex flex-1 flex-col justify-between">
@@ -410,36 +446,38 @@ const Profile = () => {
           </div>
 
           {/* Profile Sidebar */}
-          <aside className="profile-sidebar sticky top-4 bg-white shadow-lg rounded-lg p-6 mx-auto my-8 max-w-sm hidden md:block">
+          <aside className="profile-sidebar bg-white shadow-lg rounded-lg p-6 mx-auto my-8 max-w-sm md:max-w-md lg:max-w-lg hidden md:block md:sticky md:top-4">
   <div className="profile-info text-center">
     {/* Show the uploaded avatar image or fallback to the first letter of the first name */}
     {avatarUrl ? (
       <img
         src={avatarUrl}
         alt="Avatar"
-        className="profile-avatar-image rounded-full mx-auto mb-4 h-24 w-24 object-cover border-4 border-blue-500"
+        className="profile-avatar-image rounded-full mx-auto mb-4 h-20 w-20 sm:h-24 sm:w-24 object-cover border-4 border-blue-500"
       />
     ) : (
-      <div className="profile-avatar bg-blue-500 text-white h-24 w-24 flex items-center justify-center rounded-full mx-auto mb-4 text-2xl font-bold">
+      <div className="profile-avatar bg-blue-500 text-white h-20 w-20 sm:h-24 sm:w-24 flex items-center justify-center rounded-full mx-auto mb-4 text-xl sm:text-2xl font-bold">
         {firstName?.charAt(0) || "User"}
       </div>
     )}
 
-    <h3 className="text-lg font-semibold text-gray-800 mb-2">
+    <h3 className="text-md sm:text-lg font-semibold text-gray-800 mb-2">
       {firstName || "User"} {lastName}
     </h3>
-    <p className="text-gray-500 mb-4">{userName}</p>
-    <p className="text-gray-400 mb-4 text-sm">{email}</p>
+    <p className="text-gray-500 mb-2 sm:mb-4 text-sm sm:text-base">{userName}</p>
+    <p className="text-gray-400 mb-4 text-xs sm:text-sm">{email}</p>
 
     <Link
       to="#edit"
       onClick={handleEditProfileClick}
-      className="inline-block bg-teal-600 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out"
+      className="inline-block bg-teal-600 hover:bg-teal-700 text-white font-medium py-1 sm:py-2 px-3 sm:px-4 rounded-lg transition duration-300 ease-in-out"
     >
       Edit Profile
     </Link>
   </div>
 </aside>
+
+
 
         </div>
       </div>

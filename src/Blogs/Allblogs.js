@@ -49,10 +49,13 @@ const Allblogs = () => {
     };
   }, []);
   
+  // Sort blogs by updatedAt descending (most recent first)
+  const sortedBlogs = filteredBlogs.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+  
   // Calculate pagination variables
-  const totalPages = Math.ceil(filteredBlogs.length / itemsPerPage);
+  const totalPages = Math.ceil(sortedBlogs.length / itemsPerPage);
   const startIdx = (currentPage - 1) * itemsPerPage;
-  const currentBlogs = filteredBlogs.slice(startIdx, startIdx + itemsPerPage);
+  const currentBlogs = sortedBlogs.slice(startIdx, startIdx + itemsPerPage);
   
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -207,7 +210,7 @@ useEffect(() => {
  
      
       </Helmet>
-      <section>
+      <section >
         <Header />
         {/* <br></br> */}
         <div className="flex justify-center lg:hidden mt-12"> {/* Hide on large screens and above */}
@@ -242,7 +245,7 @@ useEffect(() => {
     <div className="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6 p-4">
           {/* Left Section: Latest Blogs */}
           <div
-  className="w-full h-full lg:w-1/3 mb-8 lg:mb-0 lg:min-w-[60%] lg:px-5 lg:ml-5 lg:mr-[40px] lg:mb-10"
+  className="w-full h-full lg:w-1/3 mb-8  lg:min-w-[60%] lg:px-5 lg:ml-5 lg:mr-[40px] lg:mb-10"
 
   style={{
     // These styles will be applied only on desktop (lg) and larger screens
@@ -254,128 +257,101 @@ useEffect(() => {
           
           <h2  style={{ fontSize: '30px', fontWeight: 'bold' }}>Recent Posts</h2>
           <div className="w-full max-w-[100%] mx-auto p-2">
-
-          <ul className="space-y-8">
-  {currentBlogs
-    .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)) // Sort by updatedAt descending
-    .map((blog) => (
-      <Link
-            to={`/blogs/${blog.slug}`}
-            className="block text-xl font-bold text-black no-underline"
-
+    <ul className="pl-0 ">
+      {currentBlogs.map((blog) => (
+        <Link to={`/blogs/${blog.slug}`} className="block text-xl font-bold text-black no-underline" key={blog.id}>
+          <li className="flex flex-col md:flex-row items-start border rounded-lg shadow-lg pl-3 pr-3 pt-2 pb-2 bg-white m-[20px]">
+            {/* Blog Image */}
+            <img
+              src={blog.blogImage && blog.blogImage.length > 1 ? blog.blogImage[0] : blog.blogImage}
+              alt="Blog thumbnail"
+              className="w-full md:w-40 h-32 object-cover rounded-md"
+              style={{ marginTop: '20px' }}
+            />
+            {/* Blog Content */}
+            <div className="flex-1 ml-2 mt-2 md:ml-4 md:mt-0">
+  <p className="hover:underline text-sm sm:text-base md:text-lg">
+    {blog.blogTitle}
+  </p>
+  <p className="text-gray-700 text-xs sm:text-sm md:text-base mt-1">
+    {blog.blogDescription.length > 180
+      ? `${blog.blogDescription.substring(0, 180)}...`
+      : blog.blogDescription}
+  </p>
+  <div className="mt-2 space-y-2 text-xs sm:text-sm md:text-base text-gray-500">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
+      <span className="font-semibold">by</span>
+      <span className="text-orange-500">{blog.writer}</span>
+    </div>
+    <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
+      <span className="font-semibold">in</span>
+      <div className="flex flex-wrap gap-2">
+        {blog.tags.map((tag, index) => (
+          <span
+            key={index}
+            className="bg-red-400 text-white text-[10px] sm:text-xs md:text-sm py-1 px-2 rounded-full"
           >
-      <li
-        key={blog.id}
-        className="flex flex-col md:flex-row items-start border rounded-lg shadow-lg pl-4 pr-3 pt-2 pb-2 bg-white"
-      >
-        {/* Blog Image */}
-        <img
-          src={
-            blog.blogImage && blog.blogImage.length > 1
-              ? blog.blogImage[0]
-              : blog.blogImage
-          }
-          alt="Blog thumbnail"
-          className="w-full md:w-40 h-32 object-cover rounded-md " style={{ marginTop: '20px' }}
-        />
-
-        {/* Blog Content */}
-        <div className="flex-1 md:ml-6 mt-1 ml-[30px] md:mt-0">
-        <p className="hover:underline">{blog.blogTitle}</p>
-
-        <p className="text-gray-700 text-[14px]">
-            {blog.blogDescription.length > 180
-              ? `${blog.blogDescription.substring(0, 180)}...`
-              : blog.blogDescription}
-          </p>
-
-          <div className="mt-1 space-y-2 text-sm text-gray-500">
-            <div className="flex items-center space-x-2">
-              <span className="font-semibold">by</span>
-              <span className="text-orange-500">{blog.writer}</span>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <span className="font-semibold">in</span>
-              <div className="flex flex-wrap gap-2">
-                {blog.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="bg-red-400 text-white text-xs py-1 px-2 rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center text-gray-500 text-sm mt-1">
-  <span>{new Date(blog.updatedAt).toDateString()}</span>
-  <div className="flex items-center space-x-6 mr-2">
-    <button className="flex items-center space-x-1 hover:text-blue-500">
-      <FontAwesomeIcon icon={faThumbsUp} className="text-xl" />
-      <span className="likes-count">{blog.likes.length}</span>
-    </button>
-    <button className="flex items-center space-x-1 hover:text-blue-500">
-      <FontAwesomeIcon icon={faComment} className="text-xl" />
-      <span className="comment-count">{blog.comments.length}</span>
-    </button>
-    <button  className="transition hover:text-blue-500">
-      <FontAwesomeIcon icon={faShareAlt} className="text-xl" />
-    </button>
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
   </div>
-</div>
-        </div>
-      </li>
-      </Link>
-    ))}
-</ul>
-
-
-
-  {/* Pagination */}
-  <div className="flex justify-center mt-6 space-x-2">
-    <button
-      onClick={() => handlePageChange(currentPage - 1)}
-      className={`px-4 py-2 rounded-md ${
-        currentPage === 1
-          ? 'bg-gray-300 cursor-not-allowed'
-          : 'bg-blue-500 text-white hover:bg-blue-600'
-      }`}
-      disabled={currentPage === 1}
-    >
-      Previous
-    </button>
-
-    {Array.from({ length: totalPages }, (_, index) => (
-      <button
-        key={index}
-        onClick={() => handlePageChange(index + 1)}
-        className={`px-4 py-2 rounded-md ${
-          currentPage === index + 1
-            ? 'bg-blue-500 text-white'
-            : 'bg-gray-200 hover:bg-blue-100'
-        }`}
-      >
-        {index + 1}
+  <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-gray-500 text-xs sm:text-sm md:text-base mt-2 space-y-2 md:space-y-0">
+    <span>{new Date(blog.updatedAt).toDateString()}</span>
+    <div className="flex items-center space-x-3">
+      <button className="flex items-center space-x-1 hover:text-blue-500">
+        <FontAwesomeIcon icon={faThumbsUp} className="text-sm sm:text-base md:text-lg" />
+        <span className="likes-count">{blog.likes.length}</span>
       </button>
-    ))}
-
-    <button
-      onClick={() => handlePageChange(currentPage + 1)}
-      className={`px-4 py-2 rounded-md ${
-        currentPage === totalPages
-          ? 'bg-gray-300 cursor-not-allowed'
-          : 'bg-blue-500 text-white hover:bg-blue-600'
-      }`}
-      disabled={currentPage === totalPages}
-    >
-      Next
-    </button>
+      <button className="flex items-center space-x-1 hover:text-blue-500">
+        <FontAwesomeIcon icon={faComment} className="text-sm sm:text-base md:text-lg" />
+        <span className="comment-count">{blog.comments.length}</span>
+      </button>
+      <button className="transition hover:text-blue-500">
+        <FontAwesomeIcon icon={faShareAlt} className="text-sm sm:text-base md:text-lg" />
+      </button>
+    </div>
   </div>
 </div>
 
+
+          </li>
+        </Link>
+      ))}
+    </ul>
+
+    {/* Pagination */}
+    <div className="flex flex-wrap justify-center mt-6 space-x-2 sm:space-x-4">
+      <button
+        onClick={() => handlePageChange(currentPage - 1)}
+        className={`px-3 py-1 sm:px-4 sm:py-2 rounded-md text-sm sm:text-base ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
+        disabled={currentPage === 1}
+      >
+        Previous
+      </button>
+
+      <div className="flex flex-wrap justify-center gap-2">
+        {[...Array(totalPages)].slice(0, 2).map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handlePageChange(index + 1)}
+            className={`px-3 py-1 sm:px-4 sm:py-2 rounded-md text-sm sm:text-base ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-blue-100'}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+
+      <button
+        onClick={() => handlePageChange(currentPage + 1)}
+        className={`px-3 py-1 sm:px-4 sm:py-2 rounded-md text-sm sm:text-base ${currentPage >= totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
+        disabled={currentPage >= totalPages}
+      >
+        Next
+      </button>
+    </div>
+  </div>
 
 
           </div>

@@ -58,249 +58,95 @@ const ContactForm = () => {
     return (
         <>
             <Header />
-            <div style={styles.container}>
-                <div style={styles.leftSection}>
-                    <h2 style={styles.heading}>Let's Talk</h2>
-                    <p style={styles.description}>
+            <div className="flex flex-col lg:flex-row justify-between px-8 py-12 font-sans">
+                <div className="lg:w-2/5">
+                    <h2 className="text-3xl font-bold mt-24">Let's Talk</h2>
+                    <p className="mt-4 text-base leading-relaxed">
                         Have some big idea or brand to develop and need help? Then reach out,
                         we'd love to hear about your project and provide help.
                     </p>
-                    <div style={styles.contactDetails}>
-                        <h4>Email</h4>
-                        <div style={styles.email}>
+                    <div className="mt-6">
+                        <h4 className="font-semibold">Email</h4>
+                        <div className="flex items-center mt-2">
                             <p>info@example.com</p>
                         </div>
                         <br />
-                        <h4>Connect Us</h4>
-                        <div style={styles.socialIcons}>
+                        <h4 className="font-semibold mt-4">Connect Us</h4>
+                        <div className="flex gap-4 mt-3">
                             <a href="https://www.facebook.com/geeksarray" target="_blank" rel="noopener noreferrer">
-                                <img src={facebookLogo} alt="Facebook" style={{ width: '30px', height: '30px' }} />
+                                <img src={facebookLogo} alt="Facebook" className="w-8 h-8" />
                             </a>
                             <a href="https://github.com/geeksarray" target="_blank" rel="noopener noreferrer">
-                                <img src={GitLogo} alt="GitHub" style={{ width: '30px', height: '30px' }} />
+                                <img src={GitLogo} alt="GitHub" className="w-8 h-8" />
                             </a>
                             <a href="https://x.com/geeksarray" target="_blank" rel="noopener noreferrer">
-                                <img src={twitterLogo} alt="Twitter" style={{ width: '30px', height: '30px' }} />
+                                <img src={twitterLogo} alt="Twitter" className="w-8 h-8" />
                             </a>
                         </div>
                     </div>
                 </div>
-                <div style={styles.rightSection}>
-                    <form style={styles.form} onSubmit={handleSubmit}>
-                        <br></br>
+                <div className="lg:w-3/5 flex justify-center items-center mt-16 lg:mt-0">
+                    <form className="w-full max-w-lg" onSubmit={handleSubmit}>
                         <input 
                             type="text" 
                             name="name" 
                             placeholder="Name" 
-                            style={styles.input} 
+                            className="w-full p-4 mb-4 border border-gray-300 rounded-lg"
                             value={formData.name} 
                             onChange={handleInputChange} 
                             required 
                         />
-                        <br></br>
+                        <br />
                         <input 
                             type="email" 
                             name="email" 
                             placeholder="Email" 
-                            style={styles.input} 
+                            className="w-full p-4 mb-4 border border-gray-300 rounded-lg"
                             value={formData.email} 
                             onChange={handleInputChange} 
                             required 
                         />
-                        <br></br>
+                        <br />
                         <input 
                             type="text" 
                             name="subject" 
                             placeholder="Subject" 
-                            style={styles.input} 
+                            className="w-full p-4 mb-4 border border-gray-300 rounded-lg"
                             value={formData.subject} 
                             onChange={handleInputChange} 
                         />
-                        <br></br>
+                        <br />
                         <textarea 
                             name="message" 
                             placeholder="Message" 
-                            style={styles.textarea} 
+                            className="w-full p-4 mb-6 border border-gray-300 rounded-lg h-36"
                             value={formData.message} 
                             onChange={handleInputChange} 
                             required 
                         />
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <button type="submit" style={styles.button}>Send</button>
+                        <br />
+                        <button type="submit" className="w-1/4 py-3 bg-black text-white rounded-lg text-lg hover:bg-gray-800">
+                            Send
+                        </button>
                     </form>
                 </div>
             </div>
-            <br></br>
 
             {showPopup && (
-                <div style={styles.popupOverlay}>
-                    <div style={styles.popup}>
-                        <p style={styles.message}>Thank you for contacting us!</p>
-                        <button onClick={() => setShowPopup(false)} style={styles.closePopupButton}>Close</button>
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-xl text-center max-w-sm w-full">
+                        <p className="text-lg text-gray-800 mb-4">Thank you for contacting us!</p>
+                        <button onClick={() => setShowPopup(false)} className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500">
+                            Close
+                        </button>
                     </div>
                 </div>
             )}
 
-            {error && <p style={styles.error}>{error}</p>}
+            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
             <Footer />
         </>
     );
 };
-
-const styles = {
-    container: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        padding: '40px',
-        fontFamily: 'Arial, sans-serif',
-        flexDirection: 'row', // Default for larger screens
-    },
-    leftSection: {
-        width: '40%',
-    },
-    heading: {
-        fontSize: '2rem',
-        fontWeight: 'bold',
-        marginTop: '100px',
-    },
-    description: {
-        margin: '20px 0',
-        fontSize: '1rem',
-        lineHeight: '1.5',
-    },
-    contactDetails: {
-        marginTop: '20px',
-    },
-    email: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-    socialIcons: {
-        display: 'flex',
-        gap: '10px',
-        marginTop: '10px',
-    },
-    rightSection: {
-        width: '50%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: '60px',
-        marginBottom: '60px',
-    },
-    form: {
-        width: '100%',
-        maxWidth: '500px',
-    },
-    input: {
-        width: '100%',
-        padding: '15px',
-        margin: '10px 0',
-        borderRadius: '5px',
-        border: '1px solid #ddd',
-    },
-    textarea: {
-        width: '100%',
-        padding: '10px',
-        margin: '10px 0',
-        borderRadius: '5px',
-        border: '1px solid #ddd',
-        height: '150px',
-    },
-    button: {
-        width: '25%',
-        padding: '10px',
-        borderRadius: '5px',
-        border: 'none',
-        backgroundColor: '#000',
-        color: 'white',
-        fontSize: '1rem',
-        cursor: 'pointer',
-    },
-    popupOverlay: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 1000
-    },
-    popup: {
-        backgroundColor: '#fff',
-        padding: '20px',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        textAlign: 'center',
-        maxWidth: '400px',
-        width: '100%'
-    },
-    message: {
-        margin: '0 0 15px',
-        fontSize: '18px',
-        color: '#333'
-    },
-    closePopupButton: {
-        backgroundColor: '#007BFF',
-        color: '#fff',
-        padding: '10px 20px',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        fontSize: '16px'
-    },
-
-    // Media queries for responsiveness
-    '@media (max-width: 1024px)': {
-        container: {
-            padding: '20px',
-            flexDirection: 'column', // Stack sections vertically on smaller screens
-        },
-        leftSection: {
-            width: '100%',
-            marginBottom: '20px', // Space between sections
-        },
-        rightSection: {
-            width: '100%',
-        },
-        button: {
-            width: '100%', // Full width for button on smaller screens
-        }
-    },
-
-    '@media (max-width: 768px)': {
-        heading: {
-            fontSize: '1.5rem', // Smaller heading size on tablet
-        },
-        description: {
-            fontSize: '0.9rem', // Adjust description size for readability
-        },
-        input: {
-            padding: '8px', // Reduce input padding on smaller screens
-        },
-        textarea: {
-            height: '80px', // Shorter height on smaller screens
-        }
-    },
-
-    '@media (max-width: 480px)': {
-        heading: {
-            fontSize: '1.2rem', // Smaller heading for mobile
-        },
-        description: {
-            fontSize: '0.8rem', // Further reduce description font size
-        },
-    }
-
-    
-};
-
-
-
 
 export default ContactForm;

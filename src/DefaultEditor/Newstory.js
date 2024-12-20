@@ -192,9 +192,10 @@ const Newstory = () => {
     placeholder="Title"
     onChange={handleTitleChange}
     style={{
-      marginTop: "10px",
+      padding:"10px",
       width: "100%",
-      height: "25px",
+      height: "50px",
+      border: "none",
     }}
   />
   <hr
@@ -208,9 +209,9 @@ const Newstory = () => {
     placeholder="Add Description"
     onChange={handleDescriptionChange}
     style={{
-      marginTop: "10px",
+      padding: "10px",
       width: "100%",
-      height: "25px",
+      height: "50px",
     }}
   />
   <hr
@@ -240,7 +241,7 @@ const Newstory = () => {
   /> */}
           <div style={{
                 padding: "0px 20px",
-                margin: "10px 0px",
+                margin: "20px 0px 10px 0px",
               }}>
             <label>Tags:</label>
             <div
@@ -357,7 +358,7 @@ const Newstory = () => {
               backgroundColor: isTyping ? "#04870f" : "#d3d3d3",
               disabled: !isTyping,
               position: 'absolute',  
-              top: '100px',           
+              top: '80px',           
               right: '40px',         
               margin: '10px',       
             }}
