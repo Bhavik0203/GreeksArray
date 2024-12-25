@@ -164,14 +164,29 @@ const Newstory = () => {
     <>
       <Header />
        {/* Bootstrap Toast Element */}
-       <div className="toast-container position-fixed top-50 start-50 translate-middle p-3" style={{ zIndex: 1055 }}>
-  <div id="errorToast" className="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+       <div
+  className="toast-container position-fixed"
+  style={{ top: "100px", right: "50px", zIndex: 1055 }}
+>
+  <div
+    id="errorToast"
+    className="toast align-items-center text-white border-0"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
     <div className="d-flex">
       <div id="errorToastBody" className="toast-body"></div>
-      <button type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      <button
+        type="button"
+        className="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
     </div>
   </div>
 </div>
+
 
 
       <div style={styles.editorBodyContainer}>
@@ -327,15 +342,30 @@ const Newstory = () => {
               </div>
             )}
           </div>
-          <label  style={{ margin: "10px 20px", }}>Upload Blog Cover Image :</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            style={{ margin: "10px 20px", }}
-          />
+          <label style={{ margin: "10px 20px", }}>Upload Blog Cover Image :</label>
+<input
+  type="file"
+  accept="image/*"
+  onChange={(e) => {
+    const file = e.target.files[0];
+    const validFormats = ['image/jpeg', 'image/png'];
+    const maxSize = 200 * 1024 * 1024; // 200MB in bytes
 
-{/* <label style={{ margin: "10px 20px" }}>Source Code (GitHub Link or URL):</label> */}
+    if (file) {
+      if (!validFormats.includes(file.type)) {
+        alert('Please upload a JPG, JPEG, or PNG image.');
+        e.target.value = ''; // Reset the file input
+      } else if (file.size > maxSize) {
+        alert('File size must be less than 200MB.');
+        e.target.value = ''; // Reset the file input
+      } else {
+        handleImageUpload(e); 
+      }
+    }
+  }}
+  style={{ margin: "10px 20px", }}
+/>
+
 <div>
       <input
         type="url"
@@ -369,6 +399,7 @@ const Newstory = () => {
           </button>
       
                   </div>
+                  <div className="flex">
                   <button
             style={{
               ...styles.publishButton,
@@ -384,6 +415,22 @@ const Newstory = () => {
           >
             Publish
           </button>
+                  <button
+            style={{
+              ...styles.publishButton,
+              backgroundColor: isTyping ? "#000000" : "#000000",
+              disabled: !isTyping,
+              // position: 'absolute',  
+              // top: '100px',           
+              // right: '40px', 
+              width: '150px',         
+              margin: '10px 20px',       
+            }}
+            onClick={handleSubmitBlog}
+          >
+            Save to Draft
+          </button>
+                  </div>
                 </div>
                 {showModal && <SuccessModal isOpen={showModal} onClose={() => setShowModal(false)} />}
               </>

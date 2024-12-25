@@ -65,7 +65,7 @@ const SignIn = () => {
   return (
     <>
       <Header />
-      <section className="relative flex flex-wrap lg:h-screen lg:items-center min-h-[800px] h-screen" style={{ backgroundColor: "#D2E0FB"  }}>
+      <section className="relative flex flex-wrap lg:h-screen lg:items-center min-h-[600px] lg:min-h-[600px] h-screen" style={{ backgroundColor: "#D2E0FB"  }}>
         <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
           <div className="mx-auto max-w-lg text-center">
             <h1 className="text-2xl font-bold sm:text-3xl">Sign In</h1>

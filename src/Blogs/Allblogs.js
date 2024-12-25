@@ -13,7 +13,7 @@ import axios from 'axios';
 import { faThumbsUp, faComment, faBookmark, faShareAlt } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import TabNavigation from "./TabNavigation";
-
+import defaultImage from '../assets/Images/Blogimg/blog-post-content-writing-service-500x500.webp';
 const Allblogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [filteredBlogs, setFilteredBlogs] = useState([]); // State to hold filtered blogs
@@ -260,63 +260,71 @@ useEffect(() => {
     <ul className="pl-0 ">
       {currentBlogs.map((blog) => (
         <Link to={`/blogs/${blog.slug}`} className="block text-xl font-bold text-black no-underline" key={blog.id}>
-          <li className="flex flex-col md:flex-row items-start border rounded-lg shadow-lg pl-3 pr-3 pt-2 pb-2 bg-white m-[20px]">
-            {/* Blog Image */}
-            <img
-              src={blog.blogImage && blog.blogImage.length > 1 ? blog.blogImage[0] : blog.blogImage}
-              alt="Blog thumbnail"
-              className="w-full md:w-40 h-32 object-cover rounded-md"
-              style={{ marginTop: '20px' }}
-            />
-            {/* Blog Content */}
-            <div className="flex-1 ml-2 mt-2 md:ml-4 md:mt-0">
-  <p className="hover:underline text-sm sm:text-base md:text-lg">
-    {blog.blogTitle}
-  </p>
-  <p className="text-gray-700 text-xs sm:text-sm md:text-base mt-1">
-    {blog.blogDescription.length > 180
-      ? `${blog.blogDescription.substring(0, 180)}...`
-      : blog.blogDescription}
-  </p>
-  <div className="mt-2 space-y-2 text-xs sm:text-sm md:text-base text-gray-500">
-    <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
-      <span className="font-semibold">by</span>
-      <span className="text-orange-500">{blog.writer}</span>
+         <li className="flex flex-col md:flex-row items-start border rounded-lg shadow-lg pl-3 pr-3 pt-2 pb-2 bg-white m-[20px]">
+  {/* Blog Image */}
+  <img
+    src={
+      blog.blogImage && blog.blogImage.length > 0
+        ? blog.blogImage.length > 1
+          ? blog.blogImage[0]
+          : blog.blogImage
+        : defaultImage
+    }
+    className="w-full md:w-40 h-32 object-cover rounded-md"
+    style={{ marginTop: '20px' }}
+  />
+  {/* Blog Content */}
+  <div className="flex-1 ml-2 mt-2 md:ml-4 md:mt-0">
+    <div className="flex justify-between items-start">
+      <p className="hover:underline text-sm sm:text-base md:text-lg">
+        {blog.blogTitle}
+      </p>
+      <button className="flex items-center space-x-1 hover:text-blue-500 text-gray-400">
+  <FontAwesomeIcon icon={faBookmark} className="text-sm sm:text-base md:text-lg" />
+</button>
     </div>
-    <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
-      <span className="font-semibold">in</span>
-      <div className="flex flex-wrap gap-2">
-        {blog.tags.map((tag, index) => (
-          <span
-            key={index}
-            className="bg-red-400 text-white text-[10px] sm:text-xs md:text-sm py-1 px-2 rounded-full"
-          >
-            {tag}
-          </span>
-        ))}
+    <p className="text-gray-700 text-xs sm:text-sm md:text-base mt-1">
+      {blog.blogDescription.length > 180
+        ? `${blog.blogDescription.substring(0, 180)}...`
+        : blog.blogDescription}
+    </p>
+    <div className="mt-2 space-y-2 text-xs sm:text-sm md:text-base text-gray-500">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
+        <span className="font-semibold">by</span>
+        <span className="text-orange-500">{blog.writer}</span>
+      </div>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
+        <span className="font-semibold">in</span>
+        <div className="flex flex-wrap gap-2">
+          {blog.tags.map((tag, index) => (
+            <span
+              key={index}
+              className="bg-red-400 text-white text-[10px] sm:text-xs md:text-sm py-1 px-2 rounded-full"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-gray-500 text-xs sm:text-sm md:text-base mt-2 space-y-2 md:space-y-0">
+      <span>{new Date(blog.updatedAt).toDateString()}</span>
+      <div className="flex items-center space-x-3">
+        <button className="flex items-center space-x-1 hover:text-blue-500">
+          <FontAwesomeIcon icon={faThumbsUp} className="text-sm sm:text-base md:text-lg" />
+          <span className="likes-count">{blog.likes.length}</span>
+        </button>
+        <button className="flex items-center space-x-1 hover:text-blue-500">
+          <FontAwesomeIcon icon={faComment} className="text-sm sm:text-base md:text-lg" />
+          <span className="comment-count">{blog.comments.length}</span>
+        </button>
+        <button className="transition hover:text-blue-500">
+          <FontAwesomeIcon icon={faShareAlt} className="text-sm sm:text-base md:text-lg" />
+        </button>
       </div>
     </div>
   </div>
-  <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-gray-500 text-xs sm:text-sm md:text-base mt-2 space-y-2 md:space-y-0">
-    <span>{new Date(blog.updatedAt).toDateString()}</span>
-    <div className="flex items-center space-x-3">
-      <button className="flex items-center space-x-1 hover:text-blue-500">
-        <FontAwesomeIcon icon={faThumbsUp} className="text-sm sm:text-base md:text-lg" />
-        <span className="likes-count">{blog.likes.length}</span>
-      </button>
-      <button className="flex items-center space-x-1 hover:text-blue-500">
-        <FontAwesomeIcon icon={faComment} className="text-sm sm:text-base md:text-lg" />
-        <span className="comment-count">{blog.comments.length}</span>
-      </button>
-      <button className="transition hover:text-blue-500">
-        <FontAwesomeIcon icon={faShareAlt} className="text-sm sm:text-base md:text-lg" />
-      </button>
-    </div>
-  </div>
-</div>
-
-
-          </li>
+</li>
         </Link>
       ))}
     </ul>

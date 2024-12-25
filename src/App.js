@@ -18,15 +18,12 @@ import Dashboard from "./AdminDashboard/Dashboard";
 import Termsandcodition from "./Termsandcodition";
 import BlogNew from "./Blogs/BlogNew";
 import PrivateRoute from "./PrivateRoute";
-import CodeSnippetButton from "./DefaultEditor/CodeSnippetButton";
 import ForgotPassword from "./SignIn/ForgotPassword";
 import OtpPage from "./SignIn/OtpPage";
-import EmailVerification from "./Register/EmailVerification";
-import TagsPage from "./Register/TagsPage";
-import CongratulationsPage from "./Register/CongratulationsPage.js";
 import EditBlog from "./Blogs/EditBlog.js";
 import FAQs from "./FAQs.js";
 import OurStory from "./Our-Story.js";
+import BookMarkedBlog from "./Blogs/BookMarkedBlog.js";
 
 
 
@@ -66,10 +63,8 @@ function App() {
         <Route path="/EditBlog" element={<EditBlog/>} />
         <Route path="/terms&conditions" element={<Termsandcodition />} />
         <Route path="/blognew" element={<BlogNew />} />
-        <Route path="/Email-Verification" element={<EmailVerification/>} />
-        <Route path="/Tags" element={<TagsPage/>} />
-        <Route path="/Congo" element={<CongratulationsPage/>} />
-        {/* <Route path="/new-story" element={<Newstory />} /> */}
+        <Route path="/bookMarkedBlog" element={< BookMarkedBlog/>} />
+        
       </Routes>
     </Router>
   );

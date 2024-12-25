@@ -167,7 +167,7 @@ const Header = ({ show }) => {
     <Link to="/blogs" className="text-sm text-gray-500 hover:text-black"> Blog </Link>
   </li>
   <li>
-    <Link to="/Profile" className="text-sm text-gray-500 hover:text-black"> Our Publication </Link>
+    <Link to="/BookMarkedBlog" className="text-sm text-gray-500 hover:text-black"> BookMarked Blogs </Link>
   </li>
   <li>
     <Link to="/About" className="text-sm text-gray-500 hover:text-black"> About us </Link>

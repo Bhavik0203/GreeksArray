@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from 'axios'; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp, faComment, faShareAlt } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp, faComment, faShareAlt, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -12,9 +12,17 @@ import GitLogo from "../assets/Images/Socialmediaimg/github.jpeg";
 import twitterLogo from "../assets/Images/Socialmediaimg/twitter.jpeg";
 import { Link } from "react-router-dom";
 import './Blog.css';
+import linkedinLogo from '../assets/Images/Socialmediaimg/linkedin.jpg';
 import { Helmet } from "react-helmet";
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
 
-const Blog = ({ readOnly = false }) => {
+const Blog = ({  }) => {
   const { blogId } = useParams(); // Extract blogId from the URL parameters
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,6 +38,9 @@ const Blog = ({ readOnly = false }) => {
   const commentInputRef = useRef(null);
   const [newloading, setNewloading] = useState(false);
   const [showAll, setShowAll] = useState(false);
+  const moreOptionsRef1 = useRef();
+  const contentUrl = `http://geeksarray-001-site7.atempurl.com/api/Blog?slug=${slug}`;
+  const message = "Check out this content!";
   // const firstName = user?.firstName || 'Unknown'; // Use optional chaining
 
   // Fetch blog details when slug changes
@@ -107,36 +118,6 @@ const Blog = ({ readOnly = false }) => {
     setShowMoreOptions((prevState) => !prevState);
     console.log("More options toggled."); 
   };
-
-
-  const handleShare = (platform) => {
-    let shareUrl = "";
-    const message = "Check out this content!";
-    const contentUrl = "https://yourcontenturl.com"; // Replace with your actual content URL
-
-    if (platform === "whatsapp") {
-        // WhatsApp URL with pre-filled message
-        shareUrl = `https://wa.me/?text=${encodeURIComponent(message + ' ' + contentUrl)}`;
-    } else if (platform === "gmail") {
-        // Gmail URL for sharing content
-        shareUrl = `mailto:?subject=Check this out&body=${encodeURIComponent(message + ' ' + contentUrl)}`;
-    } else if (platform === "x") {
-        // X (Twitter) URL for sharing content
-        shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message + ' ' + contentUrl)}`;
-    } else if (platform === "facebook") {
-        // Facebook URL for sharing content
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(contentUrl)}`;
-    } else if (platform === "linkedin") {
-        // LinkedIn URL for sharing content
-        shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(contentUrl)}&title=${encodeURIComponent(message)}`;
-    }
-
-    if (shareUrl) {
-        // Open the URL in a new tab
-        window.open(shareUrl, "_blank");
-    }
-};
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -311,49 +292,61 @@ const Blog = ({ readOnly = false }) => {
                 </button>
               </div>
               <div className="flex items-center space-x-4 relative">
-                {/* <button onClick={() => handleShare("save")} className="transition hover:text-blue-500">
+                <button onClick={() => {}} className="transition hover:text-blue-500">
                   <FontAwesomeIcon icon={faBookmark} className="text-xl" />
-                </button> */}
+                </button>
+
                <button onClick={handleMoreOptions} className="transition hover:text-blue-500">
   <FontAwesomeIcon icon={faShareAlt} className="text-xl" />
 </button>
 
                 {/* More Options Dropdown */}
                 {showMoreOptions && (
-                  <div ref={moreOptionsRef} className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg">
-                    <button
-                        onClick={() => handleShare("whatsapp")}
-                        className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
-                      >
-                        Share on WhatsApp
-                  </button>
-
-                  <button
-                    onClick={() => handleShare("x")}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
-                  >
-                    Share via X
-                  </button>
-                  <button
-                    onClick={() => handleShare("facebook")}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
-                  >
-                    Share via facebook
-                  </button>
-                  <button
-                    onClick={() => handleShare("linkedin")}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
-                  >
-                    Share via linkedin
-                  </button>
-                  <button
-                    onClick={() => handleShare("email")}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
-                  >
-                    Share via Email
-                  </button>
-
-                  </div>
+                   <div
+                   ref={moreOptionsRef1}
+                   className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg"
+                 >
+                   <WhatsappShareButton
+                     url={contentUrl}
+                     title={message}
+                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
+                   >
+                     Share on WhatsApp
+                   </WhatsappShareButton>
+             
+                   <TwitterShareButton
+                     url={contentUrl}
+                     title={message}
+                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
+                   >
+                     Share via X
+                   </TwitterShareButton>
+             
+                   <FacebookShareButton
+                     url={contentUrl}
+                     quote={message}
+                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
+                   >
+                     Share via Facebook
+                   </FacebookShareButton>
+             
+                   <LinkedinShareButton
+                     url={contentUrl}
+                     title={message}
+                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
+                   >
+                     Share via LinkedIn
+                   </LinkedinShareButton>
+             
+                   <EmailShareButton
+                     url={contentUrl}
+                     subject="Check this out"
+                     body={message}
+                     className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 transition"
+                   >
+                     Share via Email
+                   </EmailShareButton>
+                 </div>
                 )}
               </div>
             </div>
@@ -392,44 +385,41 @@ const Blog = ({ readOnly = false }) => {
                   Follow <strong>GeeksArray</strong>
                 </p>
                 <div style={styles.socialIcons}>
-                  <a
-                    href="https://www.facebook.com/geeksarray"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img
-                      src={facebookLogo}
-                      alt="Facebook"
-                      style={styles.socialIcon}
-                    />
-                  </a>
-                  <a
-                    href="https://github.com/geeksarray"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img src={GitLogo} alt="GitHub" style={styles.socialIcon} />
-                  </a>
-                  <a
-                    href="https://x.com/geeksarray"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img
-                      src={twitterLogo}
-                      alt="Twitter"
-                      style={styles.socialIcon}
-                    />
-                  </a>
+                <a
+              href="https://www.facebook.com/geeksarray"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10"
+            >
+              <img src={facebookLogo} alt="Facebook" className="rounded-full" />
+            </a>
+            <a
+              href="https://github.com/geeksarray"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10"
+            >
+              <img src={GitLogo} alt="GitHub" className="rounded-full" />
+            </a>
+            <a
+              href="https://x.com/geeksarray"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10"
+            >
+              <img src={twitterLogo} alt="Twitter" className="rounded-full" />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/82497437"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10"
+            >
+              <img src={linkedinLogo} alt="LinkedIn" className="rounded-full" />
+            </a>
                 </div>
 
                 {/* Contact Section */}
-                <p style={styles.paragraph}>
-                  For any query, concern, or suggestion, please{" "}
-                  <Link to="/Contact-us" style={styles.contactLink}>
-                    contact us
-                  </Link>
-                </p>
 
             {/* Render comments section */}
             <div className="user-comments bg-white rounded-lg shadow-md p-6 my-6 mx-2 border border-gray-200">

@@ -4,7 +4,7 @@ import Footer from './Footer/Footer';
 import facebookLogo from './assets/Images/Socialmediaimg/fb.jpeg'; 
 import GitLogo from './assets/Images/Socialmediaimg/github.jpeg'; 
 import twitterLogo from './assets/Images/Socialmediaimg/twitter.jpeg';
-
+import linkedinLogo from './assets/Images/Socialmediaimg/linkedin.jpg';
 const ContactForm = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -73,15 +73,38 @@ const ContactForm = () => {
                         <br />
                         <h4 className="font-semibold mt-4">Connect Us</h4>
                         <div className="flex gap-4 mt-3">
-                            <a href="https://www.facebook.com/geeksarray" target="_blank" rel="noopener noreferrer">
-                                <img src={facebookLogo} alt="Facebook" className="w-8 h-8" />
-                            </a>
-                            <a href="https://github.com/geeksarray" target="_blank" rel="noopener noreferrer">
-                                <img src={GitLogo} alt="GitHub" className="w-8 h-8" />
-                            </a>
-                            <a href="https://x.com/geeksarray" target="_blank" rel="noopener noreferrer">
-                                <img src={twitterLogo} alt="Twitter" className="w-8 h-8" />
-                            </a>
+                        <a
+              href="https://www.facebook.com/geeksarray"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10"
+            >
+              <img src={facebookLogo} alt="Facebook" className="rounded-full" />
+            </a>
+            <a
+              href="https://github.com/geeksarray"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10"
+            >
+              <img src={GitLogo} alt="GitHub" className="rounded-full" />
+            </a>
+            <a
+              href="https://x.com/geeksarray"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10"
+            >
+              <img src={twitterLogo} alt="Twitter" className="rounded-full" />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/82497437"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10"
+            >
+              <img src={linkedinLogo} alt="LinkedIn" className="rounded-full" />
+            </a>
                         </div>
                     </div>
                 </div>
@@ -135,7 +158,7 @@ const ContactForm = () => {
             {showPopup && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-white p-6 rounded-lg shadow-xl text-center max-w-sm w-full">
-                        <p className="text-lg text-gray-800 mb-4">Thank you for contacting us!</p>
+                        <p className="text-lg text-gray-800 mb-4">Thank you for contacting GeeksArray, we will get back to you as soon as possible.</p>
                         <button onClick={() => setShowPopup(false)} className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500">
                             Close
                         </button>

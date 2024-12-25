@@ -227,7 +227,7 @@ const handleFileChange = (e) => {
     } catch (error) {
       // Extract the first error message from the response
       const errorMessage = error.response?.data?.errors?.userRequestModel?.[0] || 
-                           error.response?.data?.Message || 
+                           error.response?.data?.Message.errors || 
                            "Registration failed. Please try again.";
   
       // Ensure a toast container exists
@@ -347,8 +347,11 @@ const handleFileChange = (e) => {
       <div>
         {/* Registration form */}
         <br></br>
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md min-h-[1100px] h-screen">
-            <div className="grid md:grid-cols-2 gap-8">
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md min-h-[1320px] lg:min-h-[1000px] h-screen"
+        >
+   <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">First Name</label>
                 <input
@@ -452,25 +455,31 @@ const handleFileChange = (e) => {
 <div className="mt-8">
   <label className="text-gray-800 text-sm mb-2 block">Or Choose Your Profile Picture</label>
   <input
-    type="file"
-    name="upload"
-    accept=".jpg, .jpeg, .png"
-    className={`border-gray border bg-gray-100 focus:bg-transparent px-4 py-3 text-gray-800 rounded-md text-sm outline-blue-500 transition-all w-full ${selectedAvatar !== null ? "opacity-50 pointer-events-none" : ""}`}
-    onChange={(e) => {
-      const file = e.target.files[0];
-      const validFormats = ['image/jpeg', 'image/png'];
+  type="file"
+  name="upload"
+  accept=".jpg, .jpeg, .png"
+  className={`border-gray border bg-gray-100 focus:bg-transparent px-4 py-3 text-gray-800 rounded-md text-sm outline-blue-500 transition-all w-full ${selectedAvatar !== null ? "opacity-50 pointer-events-none" : ""}`}
+  onChange={(e) => {
+    const file = e.target.files[0];
+    const validFormats = ['image/jpeg', 'image/png'];
+    const maxSize = 200 * 1024 * 1024; // 200MB in bytes
 
-      if (file && !validFormats.includes(file.type)) {
+    if (file) {
+      if (!validFormats.includes(file.type)) {
         alert('Please upload a JPG, JPEG, or PNG image.');
+        e.target.value = ''; // Reset the file input
+      } else if (file.size > maxSize) {
+        alert('File size must be less than 200MB.');
         e.target.value = ''; // Reset the file input
       } else {
         handleFileChange(e); 
         setSelectedAvatar(null); // Reset avatar if file is uploaded
       }
-    }}
-  />
+    }
+  }}
+/>
   <p style={{ fontSize: '12px' }}>
-    Please use JPG, PNG, or JPEG format
+    Please use JPG, PNG, or JPEG format & max size 200MB.
   </p>
 </div>
 

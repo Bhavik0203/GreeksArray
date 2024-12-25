@@ -1,12 +1,12 @@
 import React from "react";
-import facebookLogo from "../assets/Images/Socialmediaimg/fb.jpeg";
+import facebookLogo from "../assets/Images/Socialmediaimg/facebook.jpg";
 import GitLogo from "../assets/Images/Socialmediaimg/github.jpeg";
 import twitterLogo from "../assets/Images/Socialmediaimg/twitter.jpeg";
 import aboutbanner from "../assets/Images/banners/Banner 2.jpg";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-
+import linkedinLogo from '../assets/Images/Socialmediaimg/linkedin.jpg';
 const About = () => {
   return (
     <>
@@ -111,6 +111,14 @@ const About = () => {
               className="w-10 h-10"
             >
               <img src={twitterLogo} alt="Twitter" className="rounded-full" />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/82497437"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10"
+            >
+              <img src={linkedinLogo} alt="LinkedIn" className="rounded-full" />
             </a>
           </div>
           <div className="mt-12 text-center">

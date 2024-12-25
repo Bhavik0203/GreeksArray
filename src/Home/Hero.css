@@ -54,7 +54,7 @@
 .welcome-section {
   background: linear-gradient(135deg, #8dfcfc, #f5d395);
   width: 100%;
-  min-height: 1000px;
+  min-height: 950px;
   height: 100vh; /* Full viewport height */
   display: flex;
   align-items: center; 

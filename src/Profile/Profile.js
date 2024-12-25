@@ -3,7 +3,6 @@ import "./Profile.css";
 import {Helmet} from "react-helmet";
 import Header from "../Header/Header";
 import doublecheck from "../assets/Images/Blogimg/double-check.gif";
-// import { Link } from "react-router-dom";-
 import axios from "axios";
 import blog from "../assets/noblog.gif";
 import User_1 from "../assets/Images/Avatar/user_1.jpg";
@@ -41,6 +40,7 @@ const Profile = () => {
   const avatars = [User_1, User_10, User_2, User_3, User_4, User_5, User_6, User_7, User_8, User_9];
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const { userName, email } = userData;
+  const [activeTab, setActiveTab] = useState('Your Publish');
 
   // Check if the required fields are filled
   const isFormValid = firstName.trim() !== "" && lastName.trim() !== "";
@@ -221,7 +221,7 @@ const Profile = () => {
         <title> Your Profile - GeeksArray</title>
         <meta name="description" content="Welcome to My Awesome Website. Discover our services and explore more through our latest notices and updates." />
         <meta name="keywords" content="Awesome Website, React, SEO, Notices, Services" />
-        <meta property="og:title" content="Home - My Awesome Website" />
+        <meta property="og:title" content="Your Publish - My Awesome Website" />
  
      
       </Helmet>
@@ -299,7 +299,38 @@ const Profile = () => {
   </div>
 ) : (
   [...blogs].reverse().map((blog) => (
-    <article
+    <div className="font-sans p-4 bg-white">
+      {/* Tab Headers */}
+      <ul className="flex">
+        <li
+          onClick={() => setActiveTab('Your Publish')}
+          className={`tab text-[15px] py-2.5 px-5 border-b-2 cursor-pointer ${
+            activeTab === 'Your Publish'
+              ? 'text-blue-600 font-bold border-blue-600'
+              : 'text-gray-600 font-semibold border-transparent'
+          }`}
+        >
+          Your Publish
+        </li>
+        <li
+          onClick={() => setActiveTab('settings')}
+          className={`tab text-[15px] py-2.5 px-5 border-b-2 cursor-pointer ${
+            activeTab === 'settings'
+              ? 'text-blue-600 font-bold border-blue-600'
+              : 'text-gray-600 font-semibold border-transparent'
+          }`}
+        >
+          Default Saved
+        </li>
+        
+      </ul>
+
+      {/* Tab Content */}
+      <div className={`tab-content max-w-2xl mt-8 ${activeTab === 'Your Publish' ? 'block' : 'hidden'}`}>
+        <h4 className="text-lg font-bold text-gray-600">Your Publish </h4>
+        <p className="text-sm text-gray-600 mt-4">
+          
+        <article
   key={blog.slug}
   className="relative flex flex-col sm:flex-row bg-white transition hover:shadow-xl mb-6"
   style={{
@@ -325,6 +356,8 @@ const Profile = () => {
     maxHeight: "250px",
   }}
 >
+<Link
+        to={`/blogs/${blog.slug}`}>
   <img
     alt="Blog cover"
     src={
@@ -338,6 +371,7 @@ const Profile = () => {
       borderRadius: "8px",
     }}
   />
+  </Link>
 </div>
 
   {/* Content */}
@@ -349,7 +383,8 @@ const Profile = () => {
         borderLeft: "1px solid #e5e7eb",
       }}
     >
-      <a href="#">
+      <Link
+        to={`/blogs/${blog.slug}`}>
         <h3
           className="font-bold uppercase text-gray-900"
           style={{
@@ -359,7 +394,7 @@ const Profile = () => {
         >
           {blog.blogTitle}
         </h3>
-      </a>
+      </Link>
 
       <p
   className=" line-clamp-3 text-sm text-gray-700"
@@ -437,6 +472,159 @@ const Profile = () => {
     </div>
   </div>
 </article>
+        </p>
+      </div>
+
+      <div className={`tab-content max-w-2xl mt-8 ${activeTab === 'settings' ? 'block' : 'hidden'}`}>
+        <h4 className="text-lg font-bold text-gray-600">Default Saved</h4>
+        <p className="text-sm text-gray-600 mt-4">
+        <article
+  key={blog.slug}
+  className="relative flex flex-col sm:flex-row bg-white transition hover:shadow-xl mb-6"
+  style={{
+    padding: "10px",
+    border: "1px solid #e5e7eb", // Light gray border
+    borderRadius: "8px", // Rounded corners
+  }}
+>
+  {/* Edit Button */}
+  {/* <Link to="/EditBlog">
+  </Link> */}
+    <button className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition" title="Edit Blog" style={{ background: "transparent", border: "none", cursor: "pointer", }} onClick={() => handleEditClick(blog)}>
+      <FontAwesomeIcon icon={faPenToSquare} />
+    </button>
+
+  {/* Image */}
+  <div
+  className="w-full sm:w-auto sm:basis-56 mb-4 sm:mb-0"
+  style={{
+    overflow: "hidden",
+    borderRadius: "8px",
+    maxWidth: "150px",
+    maxHeight: "250px",
+  }}
+>
+<Link
+        to={`/blogs/${blog.slug}`}>
+  <img
+    alt="Blog cover"
+    src={
+      blog.blogImage !== null && blog.blogImage.length > 1
+        ? blog.blogImage[0]
+        : blog.blogImage
+    }
+    className="w-full h-auto sm:h-[150px] object-cover mx-auto sm:my-4"
+    style={{
+      aspectRatio: "1 / 1",
+      borderRadius: "8px",
+    }}
+  />
+  </Link>
+</div>
+
+  {/* Content */}
+  <div className="flex flex-1 flex-col justify-between">
+    <div
+      className="border-t sm:border-t-0 sm:border-l border-gray-300 p-4 sm:p-6"
+      style={{
+        borderTop: "1px solid #e5e7eb",
+        borderLeft: "1px solid #e5e7eb",
+      }}
+    >
+      <Link
+        to={`/blogs/${blog.slug}`}>
+        <h3
+          className="font-bold uppercase text-gray-900"
+          style={{
+            fontSize: "1.125rem", // Slightly larger font size
+            marginBottom: "0.5rem",
+          }}
+        >
+          {blog.blogTitle}
+        </h3>
+      </Link>
+
+      <p
+  className=" line-clamp-3 text-sm text-gray-700"
+  style={{
+    fontSize: "0.875rem",
+    lineHeight: "1.5",
+    color: "#374151",
+  }}
+  dangerouslySetInnerHTML={{ __html: blog.blogDescription }}
+></p>
+
+    </div>
+
+    <div
+      className="pl-4 pr-4 pb-4 pt-0 sm:p-3"
+      style={{
+        fontSize: "0.75rem",
+        lineHeight: "1.25",
+        color: "#6b7280",
+      }}
+    >
+      <p className="text-xs text-black-500">
+        <span className="font-semibold">
+          <b>Written by :</b>
+        </span>{" "}
+        <b style={{ color: "#4f46e5" }}>{blog.writer}</b>
+      </p>
+      
+      <p className="text-xs text-black-100" style={{ margin: '10px' }}>
+  <span className="flex flex-wrap space-x-1">
+    {Array.isArray(blog.tags) &&
+      blog.tags.map((tag, index) => (
+        <span
+          key={index}
+          className="inline-block bg-blue-400 text-white px-2 rounded-full"
+          style={{ fontSize: '16px', margin: '7px' }}
+        >
+          {tag.trim()}
+        </span>
+      ))}
+  </span>
+</p>
+
+    </div>
+
+    {/* Buttons */}
+    <div
+      className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2"
+      style={{ padding: "0.5rem 0" }}
+    >
+      <button
+    className="block bg-red-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-red-600"
+    onClick={() => handleDeleteBlog(blog.id)}
+    style={{
+        borderRadius: "4px",
+        padding: "10px 20px",
+        cursor: "pointer",
+    }}
+>
+    Delete Blog
+</button>
+
+
+      <Link
+        to={`/blogs/${blog.slug}`}
+        className="block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400"
+        style={{
+          borderRadius: "4px",
+          padding: "10px 20px",
+          textDecoration: "none",
+        }}
+      >
+        Read Blog
+      </Link>
+    </div>
+  </div>
+</article>
+        </p>
+      </div>
+
+    </div>
+//     
 
   ))
 )}
