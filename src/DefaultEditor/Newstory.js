@@ -44,7 +44,6 @@ const Newstory = () => {
   const [tags, setTags] = useState([]);
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const [isDraft, setIsDraft] = useState(false);
   const [links, setLinks] = useState("");
   const [error, setError] = useState("");
 
@@ -124,8 +123,7 @@ const Newstory = () => {
     }
 
     try {
-      const response = await fetch(
-        isDraft ? "http://geeksarray-001-site5.atempurl.com/api/Blog?isDraft=true" : "http://geeksarray-001-site5.atempurl.com/api/Blog",
+      const response = await fetch("http://geeksarray-001-site5.atempurl.com/api/Blog",
         {
           method: "POST",
           body: formData,
@@ -145,8 +143,6 @@ const Newstory = () => {
       showToast("An error occurred while posting the blog.", "danger");
       console.error(error);
     }
-
-    setIsDraft(false);
   };
 
   const showToast = (message, type) => {
@@ -159,8 +155,49 @@ const Newstory = () => {
   };
 
   const handleDraftBlog = async () => {
-    setIsDraft(true);
-    await handleSubmitBlog();
+    if (!isFormValid) {
+      showToast("Please complete all fields.", "danger");
+      return;
+    }
+
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      showToast("Authentication token not found. Please log in.", "danger");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("id", 0);
+    formData.append("blogTitle", blogTitle);
+    formData.append("blogDescription", blogDescription);
+    formData.append("links", links);
+    formData.append("blogContent", blogContent);
+    formData.append("blogImage", blogImage);
+    if (tags.length > 0) {
+      formData.append("tags", JSON.stringify(tags));
+    }
+
+    try {
+      const response = await fetch("http://geeksarray-001-site5.atempurl.com/api/Blog?isdraft=true",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        showToast(`Failed to post blog: ${errorData.Message || "Server error"}`, "danger");
+      } else {
+        setShowModal(true);
+      }
+    } catch (error) {
+      showToast("An error occurred while posting the blog.", "danger");
+      console.error(error);
+    }
   }
 
   return (
