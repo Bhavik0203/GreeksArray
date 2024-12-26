@@ -35,6 +35,7 @@ const Profile = () => {
   // const [avatarId, setAvatarId] = useState("");
   const [avatarUrl, setAvatarUrl] = useState(""); // Uncommented
   const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isDraftEmpty, setIsDraftEmpty] = useState(false);
 
   const [userData, setUserData] = useState({});
   const avatars = [User_1, User_10, User_2, User_3, User_4, User_5, User_6, User_7, User_8, User_9];
@@ -95,19 +96,27 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
+    if (!activeTab) return;
+
     const authToken = localStorage.getItem("authToken");
 
     axios
-      .get("http://geeksarray-001-site5.atempurl.com/api/Blog?myBlogs=true", {
+      .get(activeTab === 'Default Saved' ? "http://geeksarray-001-site5.atempurl.com/api/Blog?draftblogs=true" : "http://geeksarray-001-site5.atempurl.com/api/Blog?myblogs=true", {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((response) => {
-        setBlogs(response.data);
+        if(activeTab === 'Default Saved' && response.data.length === 0){
+          setIsDraftEmpty(true);
+        }
+        else{
+          setIsDraftEmpty(false);
+          setBlogs(response.data);
+        }
       })
       .catch((error) => {
         console.error("Error fetching blogs:", error);
       });
-  }, []);
+  }, [activeTab]);
 
   const handleSaveProfile = async () => {
     // Create a FormData object to handle file upload
@@ -209,8 +218,9 @@ const Profile = () => {
     }
 };
 
-
-  
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  }
 
   return (
     <>
@@ -298,12 +308,12 @@ const Profile = () => {
     </Link>
   </div>
 ) : (
-  [...blogs].reverse().map((blog) => (
-    <div className="font-sans p-4 bg-white">
+  <div className="font-sans p-4 bg-white">
+    <div>
       {/* Tab Headers */}
       <ul className="flex">
         <li
-          onClick={() => setActiveTab('Your Publish')}
+          onClick={() => handleTabClick('Your Publish')}
           className={`tab text-[15px] py-2.5 px-5 border-b-2 cursor-pointer ${
             activeTab === 'Your Publish'
               ? 'text-blue-600 font-bold border-blue-600'
@@ -313,320 +323,188 @@ const Profile = () => {
           Your Publish
         </li>
         <li
-          onClick={() => setActiveTab('settings')}
+          onClick={() => handleTabClick('Default Saved')}
           className={`tab text-[15px] py-2.5 px-5 border-b-2 cursor-pointer ${
-            activeTab === 'settings'
+            activeTab === 'Default Saved'
               ? 'text-blue-600 font-bold border-blue-600'
               : 'text-gray-600 font-semibold border-transparent'
           }`}
         >
           Default Saved
         </li>
-        
       </ul>
-
-      {/* Tab Content */}
-      <div className={`tab-content max-w-2xl mt-8 ${activeTab === 'Your Publish' ? 'block' : 'hidden'}`}>
-        <h4 className="text-lg font-bold text-gray-600">Your Publish </h4>
-        <p className="text-sm text-gray-600 mt-4">
-          
-        <article
-  key={blog.slug}
-  className="relative flex flex-col sm:flex-row bg-white transition hover:shadow-xl mb-6"
-  style={{
-    padding: "10px",
-    border: "1px solid #e5e7eb", // Light gray border
-    borderRadius: "8px", // Rounded corners
-  }}
->
-  {/* Edit Button */}
-  {/* <Link to="/EditBlog">
-  </Link> */}
-    <button className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition" title="Edit Blog" style={{ background: "transparent", border: "none", cursor: "pointer", }} onClick={() => handleEditClick(blog)}>
-      <FontAwesomeIcon icon={faPenToSquare} />
-    </button>
-
-  {/* Image */}
-  <div
-  className="w-full sm:w-auto sm:basis-56 mb-4 sm:mb-0"
-  style={{
-    overflow: "hidden",
-    borderRadius: "8px",
-    maxWidth: "150px",
-    maxHeight: "250px",
-  }}
->
-<Link
-        to={`/blogs/${blog.slug}`}>
-  <img
-    alt="Blog cover"
-    src={
-      blog.blogImage !== null && blog.blogImage.length > 1
-        ? blog.blogImage[0]
-        : blog.blogImage
-    }
-    className="w-full h-auto sm:h-[150px] object-cover mx-auto sm:my-4"
-    style={{
-      aspectRatio: "1 / 1",
-      borderRadius: "8px",
-    }}
-  />
-  </Link>
-</div>
-
-  {/* Content */}
-  <div className="flex flex-1 flex-col justify-between">
-    <div
-      className="border-t sm:border-t-0 sm:border-l border-gray-300 p-4 sm:p-6"
+    </div>
+    { !isDraftEmpty ? 
+      [...blogs].reverse().map((blog) => (
+        <div key={blog.slug}>
+          {/* Tab Content */}
+          <div className="tab-content max-w-2xl mt-8">
+            <p className="text-sm text-gray-600 mt-4">
+              <article
+                key={blog.slug}
+                className="relative flex flex-col sm:flex-row bg-white transition hover:shadow-xl mb-6"
+                style={{
+                  padding: "10px",
+                  border: "1px solid #e5e7eb", // Light gray border
+                  borderRadius: "8px", // Rounded corners
+                }}
+              >
+                {/* Edit Button */}
+                <button
+                  className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition"
+                  title="Edit Blog"
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleEditClick(blog)}
+                >
+                  <FontAwesomeIcon icon={faPenToSquare} />
+                </button>
+    
+                {/* Image */}
+                <div
+                  className="w-full sm:w-auto sm:basis-56 mb-4 sm:mb-0"
+                  style={{
+                    overflow: "hidden",
+                    borderRadius: "8px",
+                    maxWidth: "150px",
+                    maxHeight: "250px",
+                  }}
+                >
+                  <Link to={`/blogs/${blog.slug}`}>
+                    <img
+                      alt="Blog cover"
+                      src={
+                        blog.blogImage !== null && blog.blogImage.length > 1
+                          ? blog.blogImage[0]
+                          : blog.blogImage
+                      }
+                      className="w-full h-auto sm:h-[150px] object-cover mx-auto sm:my-4"
+                      style={{
+                        aspectRatio: "1 / 1",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  </Link>
+                </div>
+    
+                {/* Content */}
+                <div className="flex flex-1 flex-col justify-between">
+                  <div
+                    className="border-t sm:border-t-0 sm:border-l border-gray-300 p-4 sm:p-6"
+                    style={{
+                      borderTop: "1px solid #e5e7eb",
+                      borderLeft: "1px solid #e5e7eb",
+                    }}
+                  >
+                    <Link to={`/blogs/${blog.slug}`}>
+                      <h3
+                        className="font-bold uppercase text-gray-900"
+                        style={{
+                          fontSize: "1.125rem", // Slightly larger font size
+                          marginBottom: "0.5rem",
+                        }}
+                      >
+                        {blog.blogTitle}
+                      </h3>
+                    </Link>
+    
+                    <p
+                      className=" line-clamp-3 text-sm text-gray-700"
+                      style={{
+                        fontSize: "0.875rem",
+                        lineHeight: "1.5",
+                        color: "#374151",
+                      }}
+                      dangerouslySetInnerHTML={{ __html: blog.blogDescription }}
+                    ></p>
+                  </div>
+    
+                  <div
+                    className="pl-4 pr-4 pb-4 pt-0 sm:p-3"
+                    style={{
+                      fontSize: "0.75rem",
+                      lineHeight: "1.25",
+                      color: "#6b7280",
+                    }}
+                  >
+                    <p className="text-xs text-black-500">
+                      <span className="font-semibold">
+                        <b>Written by :</b>
+                      </span>{" "}
+                      <b style={{ color: "#4f46e5" }}>{blog.writer}</b>
+                    </p>
+    
+                    <p className="text-xs text-black-100" style={{ margin: "10px" }}>
+                      <span className="flex flex-wrap space-x-1">
+                        {Array.isArray(blog.tags) &&
+                          blog.tags.map((tag, index) => (
+                            <span
+                              key={index}
+                              className="inline-block bg-blue-400 text-white px-2 rounded-full"
+                              style={{ fontSize: "16px", margin: "7px" }}
+                            >
+                              {tag.trim()}
+                            </span>
+                          ))}
+                      </span>
+                    </p>
+                  </div>
+    
+                  {/* Buttons */}
+                  <div
+                    className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2"
+                    style={{ padding: "0.5rem 0" }}
+                  >
+                    <button
+                      className="block bg-red-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-red-600"
+                      onClick={() => handleDeleteBlog(blog.id)}
+                      style={{
+                        borderRadius: "4px",
+                        padding: "10px 20px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Delete Blog
+                    </button>
+    
+                    <Link
+                      to={`/blogs/${blog.slug}`}
+                      className="block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400"
+                      style={{
+                        borderRadius: "4px",
+                        padding: "10px 20px",
+                        textDecoration: "none",
+                      }}
+                    >
+                      Read Blog
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            </p>
+          </div>
+        </div>
+      ))
+    : (
+      <div className="flex flex-col items-center">
+    <img
+      src={blog}
+      alt="No blogs found GIF"
+      className="mt-4"
       style={{
-        borderTop: "1px solid #e5e7eb",
-        borderLeft: "1px solid #e5e7eb",
+        height: "300px",
+        width: "300px",
       }}
-    >
-      <Link
-        to={`/blogs/${blog.slug}`}>
-        <h3
-          className="font-bold uppercase text-gray-900"
-          style={{
-            fontSize: "1.125rem", // Slightly larger font size
-            marginBottom: "0.5rem",
-          }}
-        >
-          {blog.blogTitle}
-        </h3>
-      </Link>
-
-      <p
-  className=" line-clamp-3 text-sm text-gray-700"
-  style={{
-    fontSize: "0.875rem",
-    lineHeight: "1.5",
-    color: "#374151",
-  }}
-  dangerouslySetInnerHTML={{ __html: blog.blogDescription }}
-></p>
-
-    </div>
-
-    <div
-      className="pl-4 pr-4 pb-4 pt-0 sm:p-3"
-      style={{
-        fontSize: "0.75rem",
-        lineHeight: "1.25",
-        color: "#6b7280",
-      }}
-    >
-      <p className="text-xs text-black-500">
-        <span className="font-semibold">
-          <b>Written by :</b>
-        </span>{" "}
-        <b style={{ color: "#4f46e5" }}>{blog.writer}</b>
-      </p>
-      
-      <p className="text-xs text-black-100" style={{ margin: '10px' }}>
-  <span className="flex flex-wrap space-x-1">
-    {Array.isArray(blog.tags) &&
-      blog.tags.map((tag, index) => (
-        <span
-          key={index}
-          className="inline-block bg-blue-400 text-white px-2 rounded-full"
-          style={{ fontSize: '16px', margin: '7px' }}
-        >
-          {tag.trim()}
-        </span>
-      ))}
-  </span>
-</p>
-
-    </div>
-
-    {/* Buttons */}
-    <div
-      className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2"
-      style={{ padding: "0.5rem 0" }}
-    >
-      <button
-    className="block bg-red-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-red-600"
-    onClick={() => handleDeleteBlog(blog.id)}
-    style={{
-        borderRadius: "4px",
-        padding: "10px 20px",
-        cursor: "pointer",
-    }}
->
-    Delete Blog
-</button>
-
-
-      <Link
-        to={`/blogs/${blog.slug}`}
-        className="block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400"
-        style={{
-          borderRadius: "4px",
-          padding: "10px 20px",
-          textDecoration: "none",
-        }}
-      >
-        Read Blog
-      </Link>
-    </div>
+    />
+    <p>
+      It looks like you haven't save any draft blogs yet.
+    </p>
   </div>
-</article>
-        </p>
-      </div>
-
-      <div className={`tab-content max-w-2xl mt-8 ${activeTab === 'settings' ? 'block' : 'hidden'}`}>
-        <h4 className="text-lg font-bold text-gray-600">Default Saved</h4>
-        <p className="text-sm text-gray-600 mt-4">
-        <article
-  key={blog.slug}
-  className="relative flex flex-col sm:flex-row bg-white transition hover:shadow-xl mb-6"
-  style={{
-    padding: "10px",
-    border: "1px solid #e5e7eb", // Light gray border
-    borderRadius: "8px", // Rounded corners
-  }}
->
-  {/* Edit Button */}
-  {/* <Link to="/EditBlog">
-  </Link> */}
-    <button className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 transition" title="Edit Blog" style={{ background: "transparent", border: "none", cursor: "pointer", }} onClick={() => handleEditClick(blog)}>
-      <FontAwesomeIcon icon={faPenToSquare} />
-    </button>
-
-  {/* Image */}
-  <div
-  className="w-full sm:w-auto sm:basis-56 mb-4 sm:mb-0"
-  style={{
-    overflow: "hidden",
-    borderRadius: "8px",
-    maxWidth: "150px",
-    maxHeight: "250px",
-  }}
->
-<Link
-        to={`/blogs/${blog.slug}`}>
-  <img
-    alt="Blog cover"
-    src={
-      blog.blogImage !== null && blog.blogImage.length > 1
-        ? blog.blogImage[0]
-        : blog.blogImage
-    }
-    className="w-full h-auto sm:h-[150px] object-cover mx-auto sm:my-4"
-    style={{
-      aspectRatio: "1 / 1",
-      borderRadius: "8px",
-    }}
-  />
-  </Link>
-</div>
-
-  {/* Content */}
-  <div className="flex flex-1 flex-col justify-between">
-    <div
-      className="border-t sm:border-t-0 sm:border-l border-gray-300 p-4 sm:p-6"
-      style={{
-        borderTop: "1px solid #e5e7eb",
-        borderLeft: "1px solid #e5e7eb",
-      }}
-    >
-      <Link
-        to={`/blogs/${blog.slug}`}>
-        <h3
-          className="font-bold uppercase text-gray-900"
-          style={{
-            fontSize: "1.125rem", // Slightly larger font size
-            marginBottom: "0.5rem",
-          }}
-        >
-          {blog.blogTitle}
-        </h3>
-      </Link>
-
-      <p
-  className=" line-clamp-3 text-sm text-gray-700"
-  style={{
-    fontSize: "0.875rem",
-    lineHeight: "1.5",
-    color: "#374151",
-  }}
-  dangerouslySetInnerHTML={{ __html: blog.blogDescription }}
-></p>
-
-    </div>
-
-    <div
-      className="pl-4 pr-4 pb-4 pt-0 sm:p-3"
-      style={{
-        fontSize: "0.75rem",
-        lineHeight: "1.25",
-        color: "#6b7280",
-      }}
-    >
-      <p className="text-xs text-black-500">
-        <span className="font-semibold">
-          <b>Written by :</b>
-        </span>{" "}
-        <b style={{ color: "#4f46e5" }}>{blog.writer}</b>
-      </p>
-      
-      <p className="text-xs text-black-100" style={{ margin: '10px' }}>
-  <span className="flex flex-wrap space-x-1">
-    {Array.isArray(blog.tags) &&
-      blog.tags.map((tag, index) => (
-        <span
-          key={index}
-          className="inline-block bg-blue-400 text-white px-2 rounded-full"
-          style={{ fontSize: '16px', margin: '7px' }}
-        >
-          {tag.trim()}
-        </span>
-      ))}
-  </span>
-</p>
-
-    </div>
-
-    {/* Buttons */}
-    <div
-      className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2"
-      style={{ padding: "0.5rem 0" }}
-    >
-      <button
-    className="block bg-red-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-red-600"
-    onClick={() => handleDeleteBlog(blog.id)}
-    style={{
-        borderRadius: "4px",
-        padding: "10px 20px",
-        cursor: "pointer",
-    }}
->
-    Delete Blog
-</button>
-
-
-      <Link
-        to={`/blogs/${blog.slug}`}
-        className="block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400"
-        style={{
-          borderRadius: "4px",
-          padding: "10px 20px",
-          textDecoration: "none",
-        }}
-      >
-        Read Blog
-      </Link>
-    </div>
-  </div>
-</article>
-        </p>
-      </div>
-
-    </div>
-//     
-
-  ))
+    )}
+</div>  
 )}
 
             </div>

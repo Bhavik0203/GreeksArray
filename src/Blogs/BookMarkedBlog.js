@@ -105,11 +105,22 @@ useEffect(() => {
   useEffect(() => {
     
     const fetchBlogs = async () => {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        setError('User is not logged in.');
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await fetch(
-          "http://geeksarray-001-site5.atempurl.com/api/Blog",
+          "http://geeksarray-001-site5.atempurl.com/api/Blog/bookmarkedblogs",
           {
             method: "GET",
+            headers: {
+              'Authorization': `Bearer ${token}`, 
+              'Content-Type': 'application/json',
+            },
           }
         );
 
@@ -258,7 +269,7 @@ useEffect(() => {
  
 <br></br>
           
-          <h2  style={{ fontSize: '30px', fontWeight: 'bold' }}>BookMarked Blogs</h2>
+          <h2  style={{ fontSize: '30px', fontWeight: 'bold' }}>Bookmarked Blogs</h2>
           <div className="w-full max-w-[100%] mx-auto p-2">
     <ul className="pl-0 ">
       {currentBlogs.map((blog) => (
@@ -283,7 +294,7 @@ useEffect(() => {
   {blog.blogTitle}
 </p>
       <button className="flex items-center space-x-1 hover:text-blue-500 text-gray-400">
-  <FontAwesomeIcon icon={faBookmark} className="text-sm sm:text-base md:text-lg" />
+  <FontAwesomeIcon icon={faBookmark} className={`text-sm sm:text-base md:text-lg ${blog.bookmarks.some(bookmark => bookmark.user.id == localStorage.getItem('UserId')) === true ? "text-blue-500" : ""}`} />
 </button>
     </div>
     <p className="text-gray-700 text-xs sm:text-sm md:text-base mt-1">
@@ -314,7 +325,7 @@ useEffect(() => {
       <span>{new Date(blog.updatedAt).toDateString()}</span>
       <div className="flex items-center space-x-3">
         <button className="flex items-center space-x-1 hover:text-blue-500">
-          <FontAwesomeIcon icon={faThumbsUp} className="text-sm sm:text-base md:text-lg" />
+          <FontAwesomeIcon icon={faThumbsUp} className={`text-sm sm:text-base md:text-lg ${blog.likes.some(like => like.user.id == localStorage.getItem('UserId')) === true ? "text-blue-500" : ""}`} />
           <span className="likes-count">{blog.likes.length}</span>
         </button>
         <button className="flex items-center space-x-1 hover:text-blue-500">

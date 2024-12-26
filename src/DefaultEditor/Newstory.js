@@ -44,9 +44,12 @@ const Newstory = () => {
   const [tags, setTags] = useState([]);
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const [isTyping, setIsTyping] = useState(false);
+  const [isDraft, setIsDraft] = useState(false);
   const [links, setLinks] = useState("");
   const [error, setError] = useState("");
+
+  // Check if both fields are not empty or null
+  const isFormValid = blogTitle.trim() !== '' && blogDescription.trim() !== '' && blogContent.trim() !== '' && blogContent.trim() !== '' && tags.length > 0;
 
   const handleInputChange1 = (e) => {
     const value = e.target.value;
@@ -68,13 +71,11 @@ const Newstory = () => {
   const handleTitleChange = (e) => {
     const value = e.target.value.trim();
     setBlogTitle(value);
-    setIsTyping(value !== "Title" || blogDescription.trim() !== "Add Description");
   };
 
   const handleDescriptionChange = (e) => {
     const value = e.target.value.trim();
     setBlogDescription(value);
-    setIsTyping(blogTitle.trim() !== "Title" || value !== "Add Description");
   };
 
   const addTag = (tag) => {
@@ -100,7 +101,7 @@ const Newstory = () => {
   };
 
   const handleSubmitBlog = async () => {
-    if (!blogTitle || !blogContent || !blogDescription) {
+    if (!isFormValid) {
       showToast("Please complete all fields.", "danger");
       return;
     }
@@ -124,7 +125,7 @@ const Newstory = () => {
 
     try {
       const response = await fetch(
-        "http://geeksarray-001-site5.atempurl.com/api/Blog",
+        isDraft ? "http://geeksarray-001-site5.atempurl.com/api/Blog?isDraft=true" : "http://geeksarray-001-site5.atempurl.com/api/Blog",
         {
           method: "POST",
           body: formData,
@@ -144,6 +145,8 @@ const Newstory = () => {
       showToast("An error occurred while posting the blog.", "danger");
       console.error(error);
     }
+
+    setIsDraft(false);
   };
 
   const showToast = (message, type) => {
@@ -155,11 +158,11 @@ const Newstory = () => {
     toast.show();
   };
 
-  
-     
-    
-  
- 
+  const handleDraftBlog = async () => {
+    setIsDraft(true);
+    await handleSubmitBlog();
+  }
+
   return (
     <>
       <Header />
@@ -386,8 +389,8 @@ const Newstory = () => {
        <button
             style={{
               ...styles.publishButton,
-              backgroundColor: isTyping ? "#04870f" : "#d3d3d3",
-              disabled: !isTyping,
+              backgroundColor: isFormValid ? "#04870f" : "#d3d3d3",
+              disabled: !isFormValid,
               position: 'absolute',  
               top: '80px',           
               right: '40px',         
@@ -403,8 +406,8 @@ const Newstory = () => {
                   <button
             style={{
               ...styles.publishButton,
-              backgroundColor: isTyping ? "#04870f" : "#d3d3d3",
-              disabled: !isTyping,
+              backgroundColor: isFormValid ? "#04870f" : "#d3d3d3",
+              disabled: !isFormValid,
               // position: 'absolute',  
               // top: '100px',           
               // right: '40px', 
@@ -418,15 +421,15 @@ const Newstory = () => {
                   <button
             style={{
               ...styles.publishButton,
-              backgroundColor: isTyping ? "#000000" : "#000000",
-              disabled: !isTyping,
+              backgroundColor: isFormValid ? "#000000" : "#d3d3d3",
+              disabled: !isFormValid,
               // position: 'absolute',  
               // top: '100px',           
               // right: '40px', 
               width: '150px',         
               margin: '10px 20px',       
             }}
-            onClick={handleSubmitBlog}
+            onClick={handleDraftBlog}
           >
             Save to Draft
           </button>

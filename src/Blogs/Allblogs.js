@@ -200,6 +200,10 @@ useEffect(() => {
 
   if (error) return <p>Error: {error}</p>;
 
+  const handleIconClick = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <>
     <Helmet>
@@ -280,7 +284,7 @@ useEffect(() => {
         {blog.blogTitle}
       </p>
       <button className="flex items-center space-x-1 hover:text-blue-500 text-gray-400">
-  <FontAwesomeIcon icon={faBookmark} className="text-sm sm:text-base md:text-lg" />
+  <FontAwesomeIcon icon={faBookmark} className={`text-sm sm:text-base md:text-lg ${blog.bookmarks.some(bookmark => bookmark.user.id == localStorage.getItem('UserId')) === true ? "text-blue-500" : ""}`} onClick={handleIconClick} />
 </button>
     </div>
     <p className="text-gray-700 text-xs sm:text-sm md:text-base mt-1">
@@ -310,16 +314,13 @@ useEffect(() => {
     <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-gray-500 text-xs sm:text-sm md:text-base mt-2 space-y-2 md:space-y-0">
       <span>{new Date(blog.updatedAt).toDateString()}</span>
       <div className="flex items-center space-x-3">
-        <button className="flex items-center space-x-1 hover:text-blue-500">
-          <FontAwesomeIcon icon={faThumbsUp} className="text-sm sm:text-base md:text-lg" />
+        <button onClick={handleIconClick} className="flex items-center space-x-1 hover:text-blue-500">
+          <FontAwesomeIcon icon={faThumbsUp} className={`text-sm sm:text-base md:text-lg ${blog.likes.some(like => like.user.id == localStorage.getItem('UserId')) === true ? "text-blue-500" : ""}`} />
           <span className="likes-count">{blog.likes.length}</span>
         </button>
-        <button className="flex items-center space-x-1 hover:text-blue-500">
+        <button onClick={handleIconClick} className="flex items-center space-x-1 hover:text-blue-500">
           <FontAwesomeIcon icon={faComment} className="text-sm sm:text-base md:text-lg" />
           <span className="comment-count">{blog.comments.length}</span>
-        </button>
-        <button className="transition hover:text-blue-500">
-          <FontAwesomeIcon icon={faShareAlt} className="text-sm sm:text-base md:text-lg" />
         </button>
       </div>
     </div>

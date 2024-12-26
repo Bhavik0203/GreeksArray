@@ -87,7 +87,9 @@ const Blog = ({  }) => {
 
           const userId = localStorage.getItem('UserId'); 
           const userHasLiked = blogData.likes.some(like => like.user.id == userId);
-          setIsLiked(userHasLiked); 
+          setIsLiked(userHasLiked);
+          const userHasBookmarked = blogData.bookmarks.some(bookmark => bookmark.user.id == userId);
+          setIsBookmarked(userHasBookmarked);
         }
       })
       .catch(error => alert(`Error fetching the blog data: ${error.message || error}`));
@@ -113,7 +115,24 @@ const Blog = ({  }) => {
       .catch(error => console.error('Error liking the blog:', error));
   };
 
- 
+  const handleBookmarkClick = () => {
+    if (!blog) return;
+
+    var formData = new FormData();
+    formData.append("isBookmarked", !isBookmarked);
+    formData.append("blogId", blog.id)
+    // Set the authorization header
+    axios.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem("authToken")}`;
+
+    // Send a POST request to the like API
+    axios
+      .post('http://geeksarray-001-site5.atempurl.com/api/Blog/bookmark', formData)
+      .then(response => {
+        setIsBookmarked(!isBookmarked);
+      })
+      .catch(error => console.error('Error bookmarking the blog:', error));
+  };
+
   const handleMoreOptions = () => {
     setShowMoreOptions((prevState) => !prevState);
     console.log("More options toggled."); 
@@ -292,8 +311,8 @@ const Blog = ({  }) => {
                 </button>
               </div>
               <div className="flex items-center space-x-4 relative">
-                <button onClick={() => {}} className="transition hover:text-blue-500">
-                  <FontAwesomeIcon icon={faBookmark} className="text-xl" />
+                <button onClick={handleBookmarkClick} className="transition hover:text-blue-500">
+                  <FontAwesomeIcon icon={faBookmark} className={`text-xl ${isBookmarked === true ? "text-blue-500" : ""}`} />
                 </button>
 
                <button onClick={handleMoreOptions} className="transition hover:text-blue-500">
