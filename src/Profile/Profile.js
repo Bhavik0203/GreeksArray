@@ -15,7 +15,7 @@ import User_7 from "../assets/Images/Avatar/user_7.jpg";
 import User_8 from "../assets/Images/Avatar/user_8.jpg";
 import User_9 from "../assets/Images/Avatar/user_9.jpg";
 import User_10 from "../assets/Images/Avatar/user_10.jpg";
-
+import defaultImage from '../assets/Images/Blogimg/blog-post-content-writing-service-500x500.webp';
 import Footer from "../Footer/Footer";
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -377,9 +377,11 @@ const Profile = () => {
                     <img
                       alt="Blog cover"
                       src={
-                        blog.blogImage !== null && blog.blogImage.length > 1
-                          ? blog.blogImage[0]
-                          : blog.blogImage
+                        blog.blogImage && blog.blogImage.length > 0
+                          ? blog.blogImage.length > 1
+                            ? blog.blogImage[0]
+                            : blog.blogImage
+                          : defaultImage
                       }
                       className="w-full h-auto sm:h-[150px] object-cover mx-auto sm:my-4"
                       style={{
@@ -470,9 +472,10 @@ const Profile = () => {
                       Delete Blog
                     </button>
     
-                    <Link
-                      to={`/blogs/${blog.slug}`}
-                      className="block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400"
+                    <button
+                      
+                      className="block bg-green-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-green-700"
+                      onClick={() => handleEditClick(blog)}
                       style={{
                         borderRadius: "4px",
                         padding: "10px 20px",
@@ -480,7 +483,7 @@ const Profile = () => {
                       }}
                     >
                       Read Blog
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </article>
