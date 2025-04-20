@@ -252,12 +252,7 @@ const Newstory = () => {
             style={styles.editorPlaceholder}
             onInput={handleInput}
           ></p>
-         <br></br> {/* <p
-            id="editorContent"
-            contentEditable={true}
-            style={styles.editorPlaceholder}
-            onInput={handleInput}
-          ></p> */}
+         <br></br> 
           <ReactQuill
             value={content}
             onChange={handleContentChange}

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaUserCircle } from "react-icons/fa";
 
+
 const Header = ({ show }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,6 +26,12 @@ const Header = ({ show }) => {
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
   };
+  const [openDropdown, setOpenDropdown] = useState(null);
+
+  const handleDropdownToggle = (dropdown) => {
+    setOpenDropdown((prevDropdown) => (prevDropdown === dropdown ? null : dropdown));
+  };
+
 
   const toggleModal = () => {
     setIsModalOpen((prevState) => !prevState);
@@ -66,7 +73,12 @@ const Header = ({ show }) => {
   const handleProfileImageChange = (e) => {
     setProfileImage(e.target.files[0]); // Get the selected file
   };
+  const handleServicesClick = () => {
+    console.log("Services link clicked");
+  };
+  const isIndia = true; // Or set it based on some condition
 
+  
   const fetchUserData = async () => {
     const token = localStorage.getItem("authToken");
 
@@ -131,6 +143,162 @@ const Header = ({ show }) => {
 
                 <li className={`max-lg:border-b max-lg:py-3 max-lg:px-3 relative ${activeItem === "contact" ? "lg:after:w-full" : "lg:after:w-0" } lg:after:absolute lg:after:bg-black lg:after:h-[2px] lg:after:block lg:after:top-6 lg:after:transition-all lg:after:duration-300`} >
                   <Link to="/Contact-us" className="text-white block text-[15px]" onClick={() => handleMenuClick("contact")} > Contact </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="collapse navbar-collapse " id="navbarNav">
+              <ul className="navbar-nav ms-auto pr-5">
+                {/* Navigation Links */}
+                <li className="nav-item dropdown">
+                  <Link
+                    className="nav-link dropdown-toggle text-dark text-decoration-none"
+                    to="#"
+                    id="navbarDropdownAbout"
+                    role="button"
+                    aria-expanded="false"
+                    style={{ letterSpacing: "0.5px" }}
+                  >
+                    About
+                  </Link>
+                  <ul
+                    className="dropdown-menu text-gray"
+                    aria-labelledby="navbarDropdownAbout"
+                  >
+                    <li>
+                      <Link className="dropdown-item" to="/whybfg">
+                        Why BFG
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/about/Ourteam">
+                        Our Team
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/howwedoit">
+                        How We Do It
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+
+                <li className="nav-item dropdown">
+                  <Link
+                    className="nav-link dropdown-toggle text-dark text-decoration-none"
+                    to="/Services"
+                    id="navbarDropdownHistory"
+                    role="button"
+                    aria-expanded="false"
+                    onClick={handleServicesClick}
+                    style={{ letterSpacing: "0.5px" }}
+                  >
+                    Services
+                  </Link>
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdownHistory"
+                  >
+                    <li>
+                      <Link
+                        className="dropdown-item"
+                        to="/accounting-and-transaction-processing"
+                      >
+                        Accounting & Transaction Processing
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className="dropdown-item"
+                        to="/taxregulatorycompliances"
+                      >
+                        Tax & Regulatory Compliances
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/payrolladvisory">
+                        Payroll Advisory
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className="dropdown-item"
+                        to="/consultingandadvisoryservices"
+                      >
+                        Consulting & Advisory
+                      </Link>
+                    </li>
+                    {isIndia && (
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to="/startupsolutionservices"
+                        >
+                          Startup Solution
+                        </Link>
+                      </li>
+                    )}
+                  </ul>
+                </li>
+
+                <li className="nav-item">
+                  <Link
+                    className="nav-link text-dark text-decoration-none"
+                    to="/cpabackoffice"
+                    style={{ letterSpacing: "0.5px" }}
+                  >
+                    CPA Back Office
+                  </Link>
+                </li>
+
+                <li className="nav-item dropdown">
+                  <Link
+                    className="nav-link dropdown-toggle text-dark text-decoration-none "
+                    to="#"
+                    role="button"
+                    aria-expanded="false"
+                    style={{ letterSpacing: "0.5px" }}
+                  >
+                    Info Center
+                  </Link>
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdownHistory"
+                  >
+                    <li>
+                      <Link className="dropdown-item" to="/blogs">
+                        Blogs
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/casestudies">
+                        Case Studies
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/mediahits">
+                        Media Hits
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/careers">
+                        Careers
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/our-publication">
+                        Our Publications
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li className="nav-item ">
+                  <Link
+                    className="nav-link text-dark text-decoration-none"
+                    to="/contactus"
+                    style={{ letterSpacing: "0.5px" }}
+                  >
+                    Contact
+                  </Link>
                 </li>
               </ul>
             </div>
